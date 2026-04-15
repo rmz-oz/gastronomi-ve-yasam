@@ -1,30 +1,12 @@
-# Gastronomi ve Yaşam — İnteraktif Ders Notları
+# Gastronomi ve Yaşam — Ders Notları
 
-GitHub Pages üzerinde çalışan, ders notları ve quiz sekmelerinden oluşan interaktif çalışma sitesi.
+> Interactive study notes with built-in quizzes
 
-## Site
+## [Open Interactive Site](https://rmz-oz.github.io/gastronomi-ve-yasam/)
 
-**[rmz-oz.github.io/gastronomi-ve-yasam](https://rmz-oz.github.io/gastronomi-ve-yasam)**
+| Topic | Status | Link |
+|-------|--------|------|
+| 1 · Gastronomiye Giriş · Tarihçe · Pişirme Yöntemleri · Konaklama | Ready — 50 Q | [Open](https://rmz-oz.github.io/gastronomi-ve-yasam/topic1.html) |
+| 2 · Sinema ve Gastronomi · Julie & Julia Analizi | Ready — 50 Q | [Open](https://rmz-oz.github.io/gastronomi-ve-yasam/topic2.html) |
 
-## Konular
-
-| # | Başlık | Soru |
-|---|--------|------|
-| 1 | Gastronomiye Giriş, Tarihçe, Pişirme Yöntemleri ve Konaklama | 50 |
-| 2 | Sinema ve Gastronomi: Julie & Julia Analizi | 50 |
-
-## Yapı
-
-```
-docs/
-├── index.html       ← Ana sayfa
-├── topic1.html      ← Konu 1: Ders + Quiz
-└── topic2.html      ← Konu 2: Ders + Quiz
-```
-
-## GitHub Pages Kurulumu
-
-1. **Settings → Pages**
-2. Source: `Deploy from a branch`
-3. Branch: `main` / klasör: `docs`
-4. Kaydet
+Each topic includes a **lesson page** and an **interactive quiz** with instant feedback.
