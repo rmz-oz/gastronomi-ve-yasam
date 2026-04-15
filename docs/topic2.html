@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konu 2 — Sinema ve Gastronomi: Julie & Julia</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f0; color: #1a1a1a; padding: 2rem 1rem; }
+.container { max-width: 880px; margin: 0 auto; }
+.back { display: inline-block; color: #1a3a6e; text-decoration: none; font-size: 0.9rem; margin-bottom: 1.5rem; }
+.back:hover { text-decoration: underline; }
+h1 { font-size: 1.5rem; font-weight: 700; color: #1a3a6e; }
+.subtitle { color: #555; font-size: 0.9rem; margin: 0.3rem 0 1.5rem; }
+.tabs { display: flex; gap: 8px; margin-bottom: 1.5rem; border-bottom: 2px solid #e0e0d8; padding-bottom: 0; }
+.tab-btn { padding: 0.5rem 1.25rem; border: none; background: none; cursor: pointer; font-size: 0.9rem; color: #666; border-bottom: 2px solid transparent; margin-bottom: -2px; font-weight: 500; }
+.tab-btn.active { color: #1a3a6e; border-bottom-color: #1a3a6e; }
+.section { display: none; }
+.section.active { display: block; }
+h2 { font-size: 1.15rem; font-weight: 600; color: #1a3a6e; margin: 1.5rem 0 0.75rem; }
+h3 { font-size: 1rem; font-weight: 600; color: #333; margin: 1rem 0 0.5rem; }
+p { line-height: 1.65; margin-bottom: 0.75rem; color: #333; }
+ul, ol { padding-left: 1.5rem; margin-bottom: 0.75rem; }
+li { line-height: 1.6; margin-bottom: 0.35rem; }
+.card { background: #fff; border: 1px solid #e0e0d8; border-radius: 10px; padding: 1.1rem 1.25rem; margin-bottom: 1rem; }
+.card-title { font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+.blue .card-title { color: #1a3a6e; }
+.teal .card-title { color: #0f766e; }
+.amber .card-title { color: #92400e; }
+.coral .card-title { color: #c2410c; }
+.purple .card-title { color: #7c3aed; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+.info-box { border-left: 4px solid #3b82f6; background: #eff6ff; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; }
+.success-box { border-left: 4px solid #4caf50; background: #f0fdf4; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; }
+.warning-box { border-left: 4px solid #f59e0b; background: #fffbeb; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; }
+table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; font-size: 0.9rem; }
+th { background: #1a3a6e; color: #fff; padding: 0.5rem 0.75rem; text-align: left; }
+td { padding: 0.45rem 0.75rem; border-bottom: 1px solid #e0e0d8; }
+tr:nth-child(even) td { background: #f9f9f6; }
+blockquote { border-left: 4px solid #1a3a6e; background: #f0f4fb; padding: 0.85rem 1rem 0.85rem 1.25rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; font-style: italic; color: #333; }
+.score-bar { background: #e0e0d8; border-radius: 8px; height: 8px; margin-bottom: 1.5rem; overflow: hidden; }
+#scorefill { height: 100%; background: #1a3a6e; border-radius: 8px; width: 0%; transition: width 0.4s; }
+.score-text { font-size: 0.85rem; color: #555; margin-bottom: 0.5rem; }
+.q-block { background: #fff; border: 1px solid #e0e0d8; border-radius: 10px; padding: 1.1rem 1.25rem; margin-bottom: 1rem; }
+.q-text { font-weight: 500; margin-bottom: 0.75rem; font-size: 0.95rem; }
+.opt { padding: 0.6rem 0.9rem; border: 1px solid #e0e0d8; border-radius: 7px; margin-bottom: 0.4rem; cursor: pointer; font-size: 0.9rem; transition: background 0.1s; }
+.opt:hover:not(.correct):not(.wrong) { background: #f0f0eb; }
+.opt.correct { background: #d1fae5; border-color: #4caf50; color: #065f46; pointer-events: none; }
+.opt.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; pointer-events: none; }
+.opt.disabled { pointer-events: none; color: #aaa; }
+.explanation { margin-top: 0.6rem; font-size: 0.85rem; color: #555; background: #f5f5f0; padding: 0.6rem 0.8rem; border-radius: 6px; display: none; }
+.section-label { display: inline-block; background: #1a3a6e; color: #fff; font-size: 0.7rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; margin-bottom: 0.5rem; letter-spacing: 0.06em; }
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back" href="index.html">← Geri</a>
+  <h1>Sinema ve Gastronomi: Julie &amp; Julia Analizi</h1>
+  <p class="subtitle">Gastronomi ve Yaşam · Konu 2</p>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('lesson', this)">Ders Notu</button>
+    <button class="tab-btn" onclick="switchTab('quiz', this)">Quiz (50 S)</button>
+  </div>
+
+  <!-- ═══ DERS NOTU ═══ -->
+  <div id="lesson" class="section active">
+
+    <h2>Gastro-Sinema Kavramı</h2>
+    <p><strong>Gastro-sinema</strong>, yemeğin sinemada salt dekor ya da beslenme sahnesinin ötesinde; kimlik, kültür, çatışma ve dönüşümün anlatı aracı olarak kullanılmasını inceleyen bir analiz çerçevesidir. <em>Julie &amp; Julia</em> (2009), bu kavramın en somut örneklerinden biridir: yemek, filmde bir <strong>toplumsal kimlik inşası</strong>, <strong>kültürel transfer</strong> ve <strong>varoluşsal ifade biçimi</strong> olarak işlev görür.</p>
+
+    <div class="info-box">
+      <strong>Temel İlke:</strong> Sinemada bir karakterin <em>ne yediği</em> ve <em>nasıl pişirdiği</em>, onun sınıfsal konumunu, etnik kimliğini ve yaşam tarzını temsil eder.
+    </div>
+
+    <h2>1. Yemek Pişirmenin Temsili ve Kimlik İnşası</h2>
+    <div class="grid2">
+      <div class="card blue">
+        <div class="card-title">Julia Child</div>
+        <p>Fransız mutfağı, Brillat-Savarin'in <em>"Bana ne yediğini söyle, sana kim olduğunu söyleyeyim"</em> felsefesinin tezahürüdür. Julia, yabancı bir kültürün "mide yasalarını" (<em>gastros-nomos</em>) öğrenerek kendini <strong>yeniden inşa</strong> eder.</p>
+      </div>
+      <div class="card teal">
+        <div class="card-title">Julie Powell</div>
+        <p>Yemek pişirmek, sanayileşmiş ve hızlanmış modern yaşamın kaosundan kaçıp, sonucun somut olduğu bir <strong>"bilimsel disipline" sığınma</strong> çabasıdır. Yemek onun için bir <em>proje</em>ye dönüşür.</p>
+      </div>
+    </div>
+
+    <blockquote>"Bana ne yediğini söyle, sana kim olduğunu söyleyeyim." — Jean Anthelme Brillat-Savarin</blockquote>
+
+    <h2>2. Fransız Mutfağı vs. Amerikan Bağlamı: Bir Kültür Metaforu</h2>
+    <p>Gastronominin çıkış noktası <strong>19. yüzyıl Fransız mutfağı</strong>dır. Film, bu tarihsel derinliği Amerikan pragmatizmiyle karşı karşıya getirir.</p>
+    <table>
+      <tr><th>Boyut</th><th>Fransız Mutfağı (Julia)</th><th>Amerikan Bağlamı (Julie)</th></tr>
+      <tr><td>Hız</td><td>Yavaş, sabır gerektiren süreç</td><td>Hızlı ve pratik odak</td></tr>
+      <tr><td>Yaklaşım</td><td>Sanatsal, ustalık gerektiren</td><td>Projeye dayalı, sistematik</td></tr>
+      <tr><td>Teknik</td><td>Beurre blanc, roux, et suları</td><td>Tarife bağlı uygulama</td></tr>
+      <tr><td>Motivasyon</td><td>İçsel, organik kimlik arayışı</td><td>Dışsal, blog/izleyici için performans</td></tr>
+    </table>
+    <div class="warning-box">
+      <strong>Carême'in etkisi:</strong> Haute Cuisine, Marie-Antoine Carême'ın geliştirdiği et suları, soslar (Espagnole, Velouté, Béchamel, Allemande) ve hassas pişirme tekniklerine büyük önem verir. 1950'lerin Amerika'sı bu anlayışla keskin bir karşıtlık oluşturur.
+    </div>
+
+    <h2>3. Teknoloji, Blog Kültürü ve Gastro-İletişim</h2>
+    <p><strong>Gastro-iletişim</strong>, sanayileşme ve kentleşmeyle birlikte beslenmenin kitlelere göre organize edilmesiyle ortaya çıkan; yemeğin küresel bir metaya dönüşme sürecini inceleyen alandır.</p>
+    <div class="grid2">
+      <div class="card amber">
+        <div class="card-title">Demokratikleşme mi?</div>
+        <p>Julie'nin blog yazması, yemeği kitlelere açan modern iletişim süreçlerinin parçasıdır. Ancak yemeği <strong>"performatif"</strong> (izleyici için yapılan) bir eyleme dönüştürür.</p>
+      </div>
+      <div class="card coral">
+        <div class="card-title">İçini Boşaltma mı?</div>
+        <p>Julia'nın mutfağı daha <strong>"organik ve içsel"</strong>dir. Carême-Escoffier geleneğini takip eden Julia, yeni bir bilgi mirası bırakırken; Julie mevcut bilgiyi teknoloji aracılığıyla yeniden üretir.</p>
+      </div>
+    </div>
+
+    <h2>4. İmkânlar ve Özgünlük Paradoksu</h2>
+    <div class="grid2">
+      <div class="card blue">
+        <div class="card-title">Julia Child'ın Dönemi</div>
+        <p>Gastronomi bilgisine erişim kısıtlı; kadınlara yönelik mutfak önyargısı güçlü. Kısıtlı imkânlarla <strong>Slow Food prensiplerine yakın</strong> (temiz, adil gıda) bir arayış.</p>
+      </div>
+      <div class="card teal">
+        <div class="card-title">Julie Powell'ın Dönemi</div>
+        <p>İnternet ve kaynak bolluğu içinde yaşar. Modern dünyanın "hızlı" yapısı içinde bu disiplini bir <strong>"proje" olarak tüketir</strong>; süreçten çok sonuca odaklanır.</p>
+      </div>
+    </div>
+
+    <h2>5. Cinsiyet Eşitliği ve Mutfaktaki Güç Mücadelesi</h2>
+    <p>Film, mutfağın iki farklı yüzünü sergiler:</p>
+    <ul>
+      <li><strong>Hapsedilmişlik vs. Meşruiyet:</strong> Mutfak tarihsel olarak kadına atfedilmiş olsa da Auguste Escoffier'nin kurduğu hiyerarşik <em>brigade sistemi</em>, profesyonel gastronominin erkek egemenliğini pekiştirmiştir.</li>
+      <li><strong>Julia'nın Mücadelesi:</strong> Le Cordon Bleu'daki varlığı, kadının evdeki "hazırlık" rolünden mutfağın <em>"yönetim ve bilim"</em> kademesine geçişini temsil eder.</li>
+      <li><strong>Statü ve Güç:</strong> Yemek, bir statü göstergesi ve güç alanı olarak yeniden tanımlanır.</li>
+    </ul>
+    <div class="success-box">
+      <strong>Özet:</strong> Filmdeki yemek sahneleri sadece görsel bir şölen değil; karakterler arasındaki bağın kurulmasını sağlayan, çatışmayı yumuşatan ve dramatik dönüşümü mümkün kılan birer <strong>anlatı aracı</strong>dır.
+    </div>
+
+    <h2>6. Sinema ve Yemek: Kuramsal Çerçeve</h2>
+    <h3>Yemeğin Sinemadaki İşlevleri</h3>
+    <div class="grid3">
+      <div class="card blue">
+        <div class="card-title">Kimlik Temsili</div>
+        <p>Ne yendiği ve sofrada nasıl davranıldığı, karakterin sınıfsal konumunu, etnik kimliğini ve yaşam tarzını yansıtır.</p>
+      </div>
+      <div class="card teal">
+        <div class="card-title">Empati Aracı</div>
+        <p>"Öteki" bir karakterin yemek eşliğinde sunulması, izleyicinin o karakterle empati kurmasını kolaylaştırır ve çatışmayı yumuşatır.</p>
+      </div>
+      <div class="card amber">
+        <div class="card-title">Evrensel Gösterge</div>
+        <p>Yemek, şiddet ve cinsellik gibi diğer evrensel göstergeler gibi kültürlerarası çeviri gerektirmeden anlaşılabilir.</p>
+      </div>
+    </div>
+    <div class="info-box">
+      <strong>Food Styling:</strong> Film prodüksiyonunda yemek stilistleri, kamera karşısında yiyeceklerin estetik ve iştah açıcı görünmesini sağlar. Filmdeki yemekler asla rastgele seçilmez; her biri <em>kültür, duygular, semboller ve pazarlama</em> gözetilerek belirlenir.
+    </div>
+
+    <h2>7. Filmler ve Diziler Listesi</h2>
+    <table>
+      <tr><th>Yapım</th><th>Yıl</th><th>Tür</th><th>Konu</th></tr>
+      <tr><td>Big Night</td><td>1996</td><td>Film</td><td>İtalyan mutfağı, sanatsal mükemmeliyetçilik ve kültürel onur</td></tr>
+      <tr><td>Chocolat (Çikolata)</td><td>2000</td><td>Film</td><td>Özgürleşme ve toplumsal tabu kırma</td></tr>
+      <tr><td>Julie and Julia</td><td>2009</td><td>Film</td><td>Kimlik inşası, Fransız mutfağı, gastro-sinema</td></tr>
+      <tr><td>Burnt</td><td>2015</td><td>Film</td><td>Bradley Cooper — Michelin yıldızı arayışı</td></tr>
+      <tr><td>Ratatouille</td><td>2007</td><td>Animasyon</td><td>"Anyone can cook" — gastronominin demokratikleşmesi</td></tr>
+      <tr><td>The Hundred-Foot Journey</td><td>2014</td><td>Film</td><td>Hint ve Fransız mutfağının karşılaşması</td></tr>
+      <tr><td>Eat Pray Love</td><td>—</td><td>Film</td><td>Kendini keşfetme, yemek ve yeniden doğuş</td></tr>
+      <tr><td>Haute Cuisine / The Chef</td><td>2012</td><td>Film</td><td>Fransız mutfak kültürü</td></tr>
+      <tr><td>The Bear</td><td>2022</td><td>TV Dizisi</td><td>Mutfak hiyerarşisi, baskı, mükemmeliyetçilik</td></tr>
+    </table>
+
+    <h2>8. Yemek Temalı Animeler</h2>
+    <table>
+      <tr><th>Anime</th><th>Yıllar</th><th>Konu</th></tr>
+      <tr><td>Oishinbo</td><td>1988–1992</td><td>Japon mutfak felsefesini işleyen öncü yapıt</td></tr>
+      <tr><td>Yakitate!! Japan</td><td>2004–2006</td><td>Ekmek yapımı ve fırıncılık sanatı</td></tr>
+      <tr><td>Bartender</td><td>2006</td><td>Bar ve kokteyller; içeceğin terapötik etkisi</td></tr>
+      <tr><td>Food Wars! (Shokugeki no Sōma)</td><td>—</td><td>Yemek yarışmaları ve mutfak düelloları</td></tr>
+      <tr><td>Ms. Koizumi Loves Ramen Noodles</td><td>2018</td><td>Ramen erişte tutkusu ve çeşitleri</td></tr>
+    </table>
+
+    <div class="success-box">
+      <strong>İlkay Kanık — Gastro Sinema:</strong> Yemek ve sinema arasındaki kültürel ve anlatısal ilişkiyi akademik çerçevede inceleyen temel kaynak eser.
+    </div>
+
+  </div>
+
+  <!-- ═══ QUİZ ═══ -->
+  <div id="quiz" class="section">
+    <p class="score-text">Skor: <span id="scorenum">0</span> / 50</p>
+    <div class="score-bar"><div id="scorefill"></div></div>
+    <div id="quiz-container"></div>
+  </div>
+</div>
+
+<script>
+function switchTab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+const questions = [
+  /* ── KAYNAK SORULAR (1-25) ── */
+  { q: "Sinemada bir karakterin ne yediği ve sofrada nasıl davrandığı öncelikle neyi temsil eder?", opts: ["Sadece açlık durumunu", "Karakterin sınıfsal konumunu, etnik kimliğini veya yaşam tarzını", "Yönetmenin kişisel yemek zevkini", "Filmin çekildiği ülkenin ekonomisini"], ans: 1, exp: "Sinemada yemek seçimleri ve sofra davranışları, karakterin kim olduğunu, hangi kültürden geldiğini ve sosyal konumunu simgeler." },
+  { q: "Filmlerde 'öteki' (yabancı/farklı) bir karakterin yemek eşliğinde sunulmasının temel işlevi nedir?", opts: ["Filmin süresini uzatmak", "Karakterin tehlikeli olduğunu göstermek", "Karakterle empati kurulmasını sağlamak ve çatışmayı yumuşatmak", "Ürün yerleştirme yapmak"], ans: 2, exp: "Yabancı bir karakterin yemek ritüelleri, izleyicinin o karakteri daha iyi anlamasını ve onunla empati kurmasını sağlayan güçlü bir araçtır." },
+  { q: "Yemek sahnelerinin kültürlerarası çeviri gerektirmeden anlaşılabilen bir temsil aracına dönüşmesi hangi unsurlarla kıyaslanmıştır?", opts: ["Komedi ve macera", "Şiddet ve cinsellik", "Müzik ve dans", "Tarih ve coğrafya"], ans: 1, exp: "Yemek, tıpkı şiddet ve cinsellik gibi evrensel anlam taşıyan; kültürel sınırları aşabilen güçlü bir sinematografik göstergedir." },
+  { q: "\"Yemek iletişimi\" (Gastro-iletişim) modern yaşamda neden önemli bir yer tutmaktadır?", opts: ["Yemek tariflerinin unutulmasını önlediği için", "Sanayileşme ve kentleşme ile beslenmenin kitlelere göre organize edilmesi gerektiği için", "Filmlerde daha fazla görsel efekt kullanılmasına izin verdiği için", "Sadece reklamcılık sektörü için geliştirildiği için"], ans: 1, exp: "Sanayileşme ve kentleşme, gıdanın toplu üretim ve tüketim süreçlerine girmesiyle gastro-iletişimi zorunlu kılan dönüşümleri beraberinde getirdi." },
+  { q: "Filmlerdeki yemeklerin rastgele seçilmediğini gösteren anahtar kavramlar nelerdir?", opts: ["Para, zaman, mekan", "Kültür, duygular, semboller, pazarlama", "Işık, ses, kamera açısı", "Oyuncu kadrosu ve senaryo uzunluğu"], ans: 1, exp: "Sinemada her yemek seçimi, karakterin kültürel arka planını, duygusal durumunu ve toplumsal anlamları yansıtmak üzere bilinçli biçimde yapılır." },
+  { q: "Aşağıdakilerden hangisi 2007 yapımı, bir farenin aşçılık serüvenini anlatan animasyon filmidir?", opts: ["Big Night", "Ratatouille", "Burnt", "Chef"], ans: 1, exp: "Ratatouille (2007), 'Anyone can cook' (Herkes pişirebilir) temasıyla gastronominin demokratikleşmesini işleyen Pixar animasyonudur." },
+  { q: "2022 yılında yayımlanan ve mutfak temalı olan TV dizisi hangisidir?", opts: ["The Chef", "The Bear", "Last Holiday", "No Reservations"], ans: 1, exp: "The Bear (2022), mutfak hiyerarşisini, mükemmeliyetçiliği ve duygusal gerilimi gerçekçi bir anlatımla sunan TV dizisidir." },
+  { q: "Bradley Cooper'ın başrolünde oynadığı yemek temalı film hangisidir?", opts: ["Burnt", "Chocolat", "Haute Cuisine", "Julie and Julia"], ans: 0, exp: "Burnt (2015), Bradley Cooper'ın Michelin yıldızı peşindeki bir şefi canlandırdığı yemek temalı filmdir." },
+  { q: "Meryl Streep'in ünlü aşçı Julia Child'ı canlandırdığı 2009 yapımı film hangisidir?", opts: ["Eat Pray Love", "Julie and Julia", "No Reservations", "Marie Antoinette"], ans: 1, exp: "Julie and Julia (2009), Julia Child'ın anılarıyla modern bir blog yazarının hikâyesini paralel anlatan ve Meryl Streep'in başrolde yer aldığı filmdir." },
+  { q: "1996 yapımı yemek temalı ilk film hangisidir?", opts: ["Big Night", "The Chef", "Ratatouille", "Burnt"], ans: 0, exp: "Big Night (1996), iki İtalyan göçmenin restoranındaki sanatsal mükemmeliyetçilik ve kültürel onur mücadelesini anlatan filmdir." },
+  { q: "2000 yapımı, tatlı bir ikramın insan hayatını nasıl değiştirdiğine odaklanan film hangisidir?", opts: ["Chocolat (Çikolata)", "Charlie and the Chocolate Factory", "Last Holiday", "Eat Drink Man Woman"], ans: 0, exp: "Chocolat (2000), Vianne'nin çikolatalarının kasabanın katı ahlak anlayışına meydan okuyarak insanları özgürleştirmesini anlatan filmdir." },
+  { q: "Aşağıdakilerden hangisi 2014 yapımı bir filmdir?", opts: ["The Hundred-Foot Journey", "Eat Pray Love", "No Reservations", "Haute Cuisine"], ans: 0, exp: "The Hundred-Foot Journey (2014), bir Hint ailesinin Fransa'ya göç ederek Fransız mutfak kültürüyle yaşadığı çatışma ve uzlaşmayı anlatır." },
+  { q: "Ekmek yapımı üzerine odaklanan (2004-2006) yemek temalı anime hangisidir?", opts: ["Food Wars!", "Yakitate!! Japan", "Bartender", "Silver Spoon"], ans: 1, exp: "Yakitate!! Japan, Japon ekmek yapımı kültürünü ve fırıncılık sanatını mizahi ve dramatik bir anlatımla işleyen animedir." },
+  { q: "Ramen eriştesine olan tutkuyu konu alan 2018 yapımı anime hangisidir?", opts: ["Ms. Koizumi Loves Ramen Noodles", "Oishinbo", "Yumeiro Patissiere", "Gourmet Girl Graffiti"], ans: 0, exp: "Ms. Koizumi Loves Ramen Noodles, Koizumi adlı karakterin ülke genelinde farklı ramen çeşitlerini tatması ve bu tutkusunu paylaşması üzerine kuruludur." },
+  { q: "Mutfak düellolarıyla tanınan 'Shokugeki no Sōma' olarak da bilinen popüler anime hangisidir?", opts: ["Food Wars!", "Bartender", "Silver Spoon", "Today's Menu For The Emiya Family"], ans: 0, exp: "Food Wars! / Shokugeki no Soma, pişirme yarışmaları ve mutfak düelloları etrafında kurulu; teknik yetkinlik ve yaratıcılığı dramatik biçimde sunan bir anime serisidir." },
+  { q: "Bir barda hazırlanan içecekler ve kokteylller üzerine odaklanan 2006 yapımı anime hangisidir?", opts: ["Bartender", "Oishinbo", "Yakitate!! Japan", "Silver Spoon"], ans: 0, exp: "Bartender (2006), bir barda hazırlanan özel kokteyllerin insanların ruhuna nasıl dokunduğunu anlatan; içeceği terapötik bir araç olarak sunan animedir." },
+  { q: "En eski tarihli (1988-1992) yemek animesi hangisidir?", opts: ["Oishinbo", "Yakitate!! Japan", "Food Wars!", "Yumeiro Patissiere"], ans: 0, exp: "Oishinbo (1988-1992), Japon mutfak kültürünü ve gastronomi felsefesini kapsamlı biçimde işleyen türün öncü ve en uzun soluklu yapıtlarından biridir." },
+  { q: "Brillat-Savarin'in 'Tat Fizyolojisi' kitabındaki hangi meşhur sözü sinemada karakter analizine temel oluşturur?", opts: ["\"Mutfak bir sanattır.\"", "\"Bana ne yediğini söyle, sana kim olduğunu söyleyeyim.\"", "\"İyi yemek iyi insan yapar.\"", "\"Gastronomi bilimin temelidir.\""], ans: 1, exp: "Bu söz, sinemada bir karakterin yemek seçimlerinin onun kim olduğunu ortaya koyduğunu ifade eden temel analiz çerçevesini sağlar." },
+  { q: "Sinemada yemek sahnelerinin dramatik dönüşümü mümkün kılması neyi ifade eder?", opts: ["Yemeğin sadece dekor olduğunu", "Karakterler arasındaki bağın yemek aracılığıyla kurulduğunu", "Oyuncuların sahnede gerçekten acıktığını", "Filmin bütçesinin arttığını"], ans: 1, exp: "Yemek sahneleri, karakterler arasındaki ilişkiyi güçlendirir, gerginlikleri çözer ve anlatıdaki dramatik dönüm noktalarını görünür kılar." },
+  { q: "\"Food Styling\" (Yemek Stilistliği) filmlerde neden kullanılır?", opts: ["Yemeklerin tadını güzelleştirmek için", "Yemeklerin kamera karşısında daha iştah açıcı ve estetik görünmesini sağlamak için", "Yemeklerin bozulmasını önlemek için", "Daha az malzeme kullanmak için"], ans: 1, exp: "Yemek stilistleri, çekimde kullanılan yiyeceklerin görsel olarak mükemmel ve iştah açıcı görünmesini sağlayan uzmanlardır." },
+  { q: "Küreselleşen dünyada yemek, 'öteki'nin tanımlanmasında neden güçlü bir araçtır?", opts: ["Pahalı olduğu için", "Herkesin kendi kültürüne özgü yemekleri olduğu için", "Yemek pişirmek zor olduğu için", "Sadece zenginlerin yemeğe erişimi olduğu için"], ans: 1, exp: "Yemek, kültürel kimliğin en doğal ve evrensel göstergelerinden biridir; bir topluluğun 'biz' ve 'öteki' sınırlarını belirlemede sembolik güç taşır." },
+  { q: "İlkay Kanık tarafından yazılan kitabın adı nedir?", opts: ["Sinema ve Mutfak", "Gastro Sinema", "Yemek ve Kültür", "Perdedeki Lezzetler"], ans: 1, exp: "Gastro Sinema, yemek ve sinema arasındaki kültürel ve anlatısal ilişkiyi akademik bir perspektiften ele alan temel başvuru eseridir." },
+  { q: "\"The Chef\" / \"Haute Cuisine\" (2012) filmi hangi ülkenin mutfak kültürüne odaklanır?", opts: ["Japonya", "Fransa", "Türkiye", "Amerika"], ans: 1, exp: "Film, Fransız mutfak geleneğini ve fine dining kültürünü merkeze alır." },
+  { q: "\"Eat Pray Love\" filminde yemeğin temsil ettiği ana duygu hangisidir?", opts: ["Şiddet", "Kendini keşfetme ve hayattan zevk alma", "Siyasi eleştiri", "Korku"], ans: 1, exp: "İtalya'da yeme deneyimi, karakterin kendini yeniden keşfetme yolculuğunun ilk adımını ve hayattan zevk almayı simgeler." },
+  { q: "Sinemada yemeğin 'aktarılması mümkün olmayan'ın temsilinde baskın bir gösterge olması ne anlama gelir?", opts: ["Duyguların ve kültürel kodların kelimelere dökülmeden yemek ritüelleriyle verilmesi", "Yemeklerin tarifinin filmde verilmemesi", "Oyuncuların konuşmadan yemek yemesi", "Filmin sadece sessiz çekilmesi"], ans: 0, exp: "Yemek, anlatılması güç duygu ve kültürel kodları kelimesiz biçimde izleyiciye taşıyabilen güçlü bir sinematografik araçtır." },
+
+  /* ── OLUŞTURULAN SORULAR (26-50) ── */
+  { q: "Julia Child'ın Fransız mutfağını öğrenerek kendini yeniden inşa etmesi hangi felsefeyle örtüşür?", opts: ["Slow Food hareketi", "Farm-to-table anlayışı", "Brillat-Savarin'in 'Bana ne yediğini söyle, sana kim olduğunu söyleyeyim' felsefesi", "Gastro-iletişim kuramı"], ans: 2, exp: "Julia'nın yabancı bir kültürün 'mide yasalarını' (gastros-nomos) öğrenerek kimliğini yeniden kurması, Brillat-Savarin'in bu sözüyle doğrudan bağdaşır." },
+  { q: "'Gastro-sinema' kavramının en temel özelliği nedir?", opts: ["Sinema salonlarında yemek servisi yapılması", "Yemeğin filmde kültürel ve kimliksel bir anlatı aracı olarak kullanılması", "Film setinde gerçek yemek pişirilmesi", "Belgesel türüne özgü bir kavram olması"], ans: 1, exp: "Gastro-sinema, yemeğin salt dekor ya da beslenme sahnesinin ötesinde; kimlik, kültür ve dönüşümün anlatı aracına dönüştüğü analiz çerçevesidir." },
+  { q: "Haute Cuisine anlayışı, 1950'lerin Amerikan mutfağı anlayışıyla nasıl karşıtlık oluşturur?", opts: ["Haute Cuisine daha ucuzdur", "Haute Cuisine daha hızlıdır", "Haute Cuisine sabır ve sanatı ön planda tutarken Amerikan mutfağı hız ve pratiği hedefler", "İki anlayış arasında anlamlı bir fark yoktur"], ans: 2, exp: "Film bu karşıtlığı 'kültürlerarası çeviri' aracı olarak kullanır; yavaş-sanatsal Fransız mutfağı ile hızlı-pratik Amerikan mutfağı çatışması anlatının eksenini oluşturur." },
+  { q: "Julie Powell'ın blog yazma eylemi, yemeği nasıl bir dönüşüme uğratır?", opts: ["Yemeği daha sağlıklı hale getirir", "Geleneksel mutfak pratiğini canlandırır", "Yemeği 'performatif' (izleyici için yapılan) bir eyleme dönüştürür", "Yemeği daha pahalı hale getirir"], ans: 2, exp: "Blog aracılığıyla yapılan yemek, izleyici/okuyucu kitlesi için bir performansa dönüşür; Julia'nın içsel ve organik pişirme anlayışından ayrışır." },
+  { q: "Auguste Escoffier'nin brigade sistemi, profesyonel gastronomide tarihsel olarak kimin egemenliğini pekiştirmiştir?", opts: ["Kadınların", "Genç aşçıların", "Erkeklerin", "Yabancı şeflerin"], ans: 2, exp: "Escoffier'nin hiyerarşik mutfak yapısı, profesyonel gastronominin erkek egemenliğinde kaldığını tarihsel olarak gösterir; Julia'nın bu alanda varlık göstermesi bu yapıya meydan okumaktır." },
+  { q: "Ratatouille (2007) filminin ana gastronomi mesajı nedir?", opts: ["Sadece eğitimli şefler iyi yemek yapabilir", "Gastronomi yalnızca Fransız kültürüne aittir", "Herkes pişirebilir ('Anyone can cook')", "Yemek bir endüstri ürünüdür"], ans: 2, exp: "'Anyone can cook' ilkesi filmin omurgasını oluşturur; gastronominin seçkinlere değil, herkese açık olduğunu savunur." },
+  { q: "Sinemada yemek sahneleri dramatik açıdan en yaygın biçimde hangi işlevi yerine getirir?", opts: ["Aksiyon sekanslarını başlatma", "Film müziğini vurgulama", "Karakterler arası bağ kurma, çatışma çözme ve dönüşümü temsil etme", "Sahne geçişlerini hızlandırma"], ans: 2, exp: "Yemek sahneleri, karakterler arasındaki ilişkiyi güçlendirir, gerginlikleri çözer ve anlatıdaki dramatik dönüm noktalarını mümkün kılar." },
+  { q: "\"The Bear\" (2022) dizisinin mutfak teması üzerinden aktardığı ana mesaj nedir?", opts: ["Slow Food ve organik beslenme savunuculuğu", "Uluslararası gastronomi yarışmaları", "Mükemmeliyetçilik, hiyerarşik baskı ve duygusal yoğunluk", "Vegan gastronomi hareketi"], ans: 2, exp: "The Bear, bir restoranın mutfağını gerçekçi biçimde gösterirken mükemmeliyetçilik, travma ve insanlar arası ilişkileri merkeze alır." },
+  { q: "Chocolat (2000) filminde çikolata hangi sembolik anlama sahiptir?", opts: ["Ekonomik refah göstergesi", "Özgürleşme, toplumsal tabu kırma ve bireysel dönüşüm", "Siyasi bir mesaj", "Kuzey-Güney kültür farkı"], ans: 1, exp: "Vianne'nin çikolataları, kasabanın katı ahlak anlayışına meydan okuyarak insanların özgürleşmesini ve kendi doğrularına ulaşmasını simgeler." },
+  { q: "Food Styling (Yemek Stilistliği) mesleğinin film prodüksiyonundaki temel rolü nedir?", opts: ["Tariflerin geliştirilmesi", "Set ekibinin yemeklerinin hazırlanması", "Kamera karşısında yemeğin estetik ve iştah açıcı görünmesini sağlama", "Oyuncuların diyetini düzenleme"], ans: 2, exp: "Yemek stilistleri, çekimde kullanılan yiyeceklerin görsel olarak mükemmel ve iştah açıcı görünmesini sağlayan uzmanlardır; tat değil görüntü ön plandadır." },
+  { q: "Oishinbo (1988-1992) animesinin gastronomi tarihindeki yeri nedir?", opts: ["İlk 3D yemek animasyonu olması", "Ramen kültürünü anlatan ilk anime olması", "Japon mutfak felsefesini kapsamlı biçimde işleyen öncü yapıt olması", "İlk uluslararası yarışma konulu anime olması"], ans: 2, exp: "Oishinbo, Japon gastronomisini ve mutfak değerlerini derin bir felsefi bakışla ele alan; türün en uzun soluklu ve kapsamlı öncü yapıtlarından biridir." },
+  { q: "Sinemada 'öteki' karakterin yemek sahnesiyle sunulmasının temel amacı nedir?", opts: ["Filmin süresini uzatmak", "Karakterin tehlikeli olduğunu vurgulamak", "Empati kurulmasını kolaylaştırmak ve kültürel farklılığı görünür kılmak", "Ürün yerleştirme yapmak"], ans: 2, exp: "Yabancı bir karakterin yemek ritüelleri, izleyicinin o karakteri daha iyi anlamasını ve onunla empati kurmasını sağlayan güçlü bir araçtır." },
+  { q: "\"Eat Pray Love\" filminde İtalya bölümünde yemeğin simgelediği şey nedir?", opts: ["Şiddet ve kaçış", "Siyasi bir duruş", "Zevk alma, kendini keşfetme ve yeniden doğuş", "Nostalji ve yalnızlık"], ans: 2, exp: "İtalya'da Liz'in yeme deneyimi, hayattan zevk almayı yeniden keşfetmesinin ve ruhsal yeniden doğuşunun ilk adımını simgeler." },
+  { q: "İlkay Kanık'ın 'Gastro Sinema' kitabı hangi alanı inceler?", opts: ["Sinema salonlarının tarihini", "Türk mutfağının tarihsel gelişimini", "Film setlerindeki ekipmanları", "Yemek ve sinema arasındaki kültürel ve anlatısal ilişkiyi"], ans: 3, exp: "Gastro Sinema, yemeğin sinemadaki sembolik, kültürel ve anlatısal işlevlerini akademik bir perspektiften ele alan temel başvuru eseridir." },
+  { q: "Yakitate!! Japan (2004-2006) animesinde hangi gastronomi alanı işlenir?", opts: ["Ramen kültürü", "Ekmek yapımı ve fırıncılık sanatı", "Sushi geleneği", "Kokteyl kültürü"], ans: 1, exp: "Yakitate!! Japan, Japonya'ya özgü ekmek geliştirme çabasını ve fırıncılık sanatını; mizahi ve dramatik bir anlatımla keşfeden animedir." },
+  { q: "Bartender (2006) animesinde yemeğin yerini hangi gastronomi ürünü alır?", opts: ["Sushi", "Ramen", "Tatlı çeşitleri", "Kokteyl ve özel içecekler"], ans: 3, exp: "Bartender, bir barda hazırlanan özel kokteyllerin insanların ruhuna nasıl dokunduğunu anlatan; içeceği terapötik bir araç olarak sunan animedir." },
+  { q: "\"The Hundred-Foot Journey\" (2014) filminde hangi kültürel çatışma yemek aracılığıyla işlenir?", opts: ["Kuzey ve Güney Amerika mutfak farklılıkları", "Hint ve Fransız mutfağının karşılaşması ve uzlaşması", "Japon ve Çin geleneklerinin çatışması", "İtalyan ve İspanyol rekabeti"], ans: 1, exp: "Bir Hint ailesinin Fransa'ya göç ederek Fransız mutfak kültürüyle yaşadığı çatışma ve uzlaşma, film boyunca yemek üzerinden dramatik biçimde aktarılır." },
+  { q: "Sinemada yemeğin evrensel bir anlatı aracı olarak öne çıkmasının temel nedeni nedir?", opts: ["Pahalı olmasıyla", "Kültürel engelleri aşan evrensel anlaşılabilirliğiyle", "Sansüre tabi olmamasıyla", "Çekim kolaylığıyla"], ans: 1, exp: "Yemek, müzik ve dans gibi, kültürel çeviri gerektirmeksizin evrensel duygular ve anlamlar taşıyan güçlü bir sinematografik göstergedir." },
+  { q: "Food Wars! / Shokugeki no Soma animesinin merkezinde hangi tema yer alır?", opts: ["Tarihi Japon saray mutfağı", "Ramen kültürü", "Yemek yarışmaları ve mutfak düelloları", "Fırıncılık geleneği"], ans: 2, exp: "Shokugeki no Soma, pişirme yarışmaları ve mutfak düelloları etrafında kurulu; teknik yetkinlik ve yaratıcılığı dramatik biçimde sunan bir anime serisidir." },
+  { q: "Julia Child'ın kendi dönemindeki pişirme anlayışı Slow Food prensiplerine nasıl yaklaşır?", opts: ["Bilinçli olarak Slow Food hareketine üye olmasıyla", "Fast food kültürünü tamamen reddetmesiyle", "Temiz-adil gıda arayışı ve sabırlı, özgün pişirme anlayışıyla", "Sadece organik ürün kullanmasıyla"], ans: 2, exp: "Julia'nın yerel malzeme, sabır ve ustalığa verdiği önem, sonradan şekillenen Slow Food hareketinin temel prensipleriyle örtüşmektedir." },
+  { q: "Julie & Julia filminde iki kadın kahramanın temel karşıtlığı nasıl özetlenebilir?", opts: ["Biri profesyonel şef, diğeri pastacıdır", "Biri Fransız, diğeri İngiliz kökenlidir", "Julia kısıtlı imkânlarla özgün bir deneyim yaşarken, Julie modern bolluğu içinde yemeği projeye dönüştürür", "Biri başarılı, diğeri başarısızdır"], ans: 2, exp: "İki kadın arasındaki fark, özgünlük ve erişim paradoksu üzerinden kurulur; bu karşıtlık filmin kuramsal omurgasını oluşturur." },
+  { q: "Julia Child'ın Le Cordon Bleu'da eğitim alması filmde ne anlama gelir?", opts: ["Sadece profesyonel kariyer değişikliği", "Fransız vatandaşlığı alma isteği", "Kadının 'hazırlık' rolünden mutfağın 'yönetim ve bilim' kademesine geçişi", "Bir yarışmaya hazırlık süreci"], ans: 2, exp: "Julia'nın bu adımı, kadının evdeki geleneksel mutfak rolünü aşarak profesyonel ve entelektüel bir alanda meşruiyet kazanmasının güçlü bir temsilidir." },
+  { q: "Ms. Koizumi Loves Ramen Noodles (2018) animesinin konusu nedir?", opts: ["Sushi kültürünü keşfeden genç bir şef", "Ramen erişteye olan tutkusunu ve ülke genelindeki çeşitlerini keşfeden bir karakter", "Fırıncılık yarışmaları", "Japon saray mutfağı tarihi"], ans: 1, exp: "Anime, Koizumi adlı karakterin ülke genelinde farklı ramen çeşitlerini tatması, bu tutkusunu keşfetmesi ve paylaşması üzerine kuruludur." },
+  { q: "Sinemada yemeğin 'varoluşsal bir ifade biçimi' olarak kullanılması ne anlama gelir?", opts: ["Karakterlerin her sahnede yemek yemesi", "Filmin yalnızca mutfak mekânında çekilmesi", "Yemeğin karakterin kim olduğunu, neye inandığını ve nasıl yaşadığını temsil etmesi", "Yemek tariflerinin anlatıya eklenmesi"], ans: 2, exp: "Yemek, karakterin varoluşsal kimliğini ve değerler sistemini yansıtan bir araçtır; 'ne pişirdiği' ve 'nasıl pişirdiği' o kişinin dünya görüşünü ortaya koyar." },
+  { q: "Big Night (1996) filminde yemek hangi temayı simgeler?", opts: ["Ticari çıkar ve rekabet", "Hızlı tüketim kültürü", "Sanatsal mükemmeliyetçilik ve kültürel onur", "Göçmenlik acısı"], ans: 2, exp: "İki İtalyan göçmenin yönettiği restoran sahneleri, gastronomiyi sanatsal mükemmeliyetçiliğin ve kültürel kimliğin korunmasının metaforuna dönüştürür." },
+];
+
+let answered = Array(questions.length).fill(false);
+let score = 0;
+
+function answer(qi, oi) {
+  if (answered[qi]) return;
+  answered[qi] = true;
+  const block = document.querySelectorAll('.q-block')[qi];
+  const opts = block.querySelectorAll('.opt');
+  opts.forEach((o, i) => {
+    if (i === questions[qi].ans) o.classList.add('correct');
+    else o.classList.add(i === oi ? 'wrong' : 'disabled');
+  });
+  block.querySelector('.explanation').style.display = 'block';
+  if (oi === questions[qi].ans) score++;
+  document.getElementById('scorenum').textContent = score;
+  document.getElementById('scorefill').style.width = (answered.filter(Boolean).length / questions.length * 100) + '%';
+}
+
+function buildQuiz() {
+  const c = document.getElementById('quiz-container');
+  questions.forEach((q, qi) => {
+    c.innerHTML += `<div class="q-block">
+      <div class="q-text">${qi + 1}. ${q.q}</div>
+      ${q.opts.map((o, oi) => `<div class="opt" onclick="answer(${qi},${oi})">${o}</div>`).join('')}
+      <div class="explanation">💡 ${q.exp}</div>
+    </div>`;
+  });
+}
+buildQuiz();
+</script>
+</body>
+</html>

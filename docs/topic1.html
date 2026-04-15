@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konu 1 — Gastronomiye Giriş ve Tarihçe</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f0; color: #1a1a1a; padding: 2rem 1rem; }
+.container { max-width: 880px; margin: 0 auto; }
+.back { display: inline-block; color: #1a3a6e; text-decoration: none; font-size: 0.9rem; margin-bottom: 1.5rem; }
+.back:hover { text-decoration: underline; }
+h1 { font-size: 1.5rem; font-weight: 700; color: #1a3a6e; }
+.subtitle { color: #555; font-size: 0.9rem; margin: 0.3rem 0 1.5rem; }
+.tabs { display: flex; gap: 8px; margin-bottom: 1.5rem; border-bottom: 2px solid #e0e0d8; padding-bottom: 0; }
+.tab-btn { padding: 0.5rem 1.25rem; border: none; background: none; cursor: pointer; font-size: 0.9rem; color: #666; border-bottom: 2px solid transparent; margin-bottom: -2px; font-weight: 500; }
+.tab-btn.active { color: #1a3a6e; border-bottom-color: #1a3a6e; }
+.section { display: none; }
+.section.active { display: block; }
+h2 { font-size: 1.15rem; font-weight: 600; color: #1a3a6e; margin: 1.5rem 0 0.75rem; }
+h3 { font-size: 1rem; font-weight: 600; color: #333; margin: 1rem 0 0.5rem; }
+p { line-height: 1.65; margin-bottom: 0.75rem; color: #333; }
+ul, ol { padding-left: 1.5rem; margin-bottom: 0.75rem; }
+li { line-height: 1.6; margin-bottom: 0.25rem; }
+.card { background: #fff; border: 1px solid #e0e0d8; border-radius: 10px; padding: 1.1rem 1.25rem; margin-bottom: 1rem; }
+.card-title { font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+.blue .card-title { color: #1a3a6e; }
+.teal .card-title { color: #0f766e; }
+.amber .card-title { color: #92400e; }
+.coral .card-title { color: #c2410c; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+.info-box { border-left: 4px solid #3b82f6; background: #eff6ff; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; }
+.success-box { border-left: 4px solid #4caf50; background: #f0fdf4; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; }
+.warning-box { border-left: 4px solid #f59e0b; background: #fffbeb; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; }
+table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; font-size: 0.9rem; }
+th { background: #1a3a6e; color: #fff; padding: 0.5rem 0.75rem; text-align: left; }
+td { padding: 0.45rem 0.75rem; border-bottom: 1px solid #e0e0d8; }
+tr:nth-child(even) td { background: #f9f9f6; }
+.score-bar { background: #e0e0d8; border-radius: 8px; height: 8px; margin-bottom: 1.5rem; overflow: hidden; }
+#scorefill { height: 100%; background: #1a3a6e; border-radius: 8px; width: 0%; transition: width 0.4s; }
+.score-text { font-size: 0.85rem; color: #555; margin-bottom: 0.5rem; }
+.q-block { background: #fff; border: 1px solid #e0e0d8; border-radius: 10px; padding: 1.1rem 1.25rem; margin-bottom: 1rem; }
+.q-text { font-weight: 500; margin-bottom: 0.75rem; font-size: 0.95rem; }
+.opt { padding: 0.6rem 0.9rem; border: 1px solid #e0e0d8; border-radius: 7px; margin-bottom: 0.4rem; cursor: pointer; font-size: 0.9rem; transition: background 0.1s; }
+.opt:hover:not(.correct):not(.wrong) { background: #f0f0eb; }
+.opt.correct { background: #d1fae5; border-color: #4caf50; color: #065f46; pointer-events: none; }
+.opt.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; pointer-events: none; }
+.opt.disabled { pointer-events: none; color: #aaa; }
+.explanation { margin-top: 0.6rem; font-size: 0.85rem; color: #555; background: #f5f5f0; padding: 0.6rem 0.8rem; border-radius: 6px; display: none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back" href="index.html">← Geri</a>
+  <h1>Gastronomiye Giriş, Tarihçe, Pişirme Yöntemleri ve Konaklama</h1>
+  <p class="subtitle">Gastronomi ve Yaşam · Konu 1</p>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('lesson', this)">Ders Notu</button>
+    <button class="tab-btn" onclick="switchTab('quiz', this)">Quiz (50 S)</button>
+  </div>
+
+  <!-- ═══ DERS NOTU ═══ -->
+  <div id="lesson" class="section active">
+
+    <h2>1. Gastronomi Nedir?</h2>
+    <div class="grid2">
+      <div class="card blue">
+        <div class="card-title">Etimoloji</div>
+        <p><strong>Gastros</strong> (mide) + <strong>Nomos</strong> (yasa/kural) — Yunanca kökenli bir kavram.</p>
+      </div>
+      <div class="card teal">
+        <div class="card-title">Tanım</div>
+        <p>Yemek ve beslenmeyi <strong>bilimsel</strong> bir perspektiften inceleyen, kültür, sanat ve tarihle kesişen multidisipliner bir alandır.</p>
+      </div>
+    </div>
+    <div class="info-box">
+      <strong>Tarihsel Kırılma Noktası:</strong> Gastronomi, 19. yüzyıl Fransız mutfağıyla dünyada bir "merak alanı" olarak yükselmiştir. Türkiye'de yemekle ilgili ilk bilimsel sempozyum <em>"Osmanlı İmparatorluğunda Yemek, İçecekler ve Sosyalleşme"</em> adını taşımaktadır.
+    </div>
+
+    <h2>2. Ünlü Şefler ve Fransız Mutfağı</h2>
+    <div class="grid3">
+      <div class="card blue">
+        <div class="card-title">Brillat-Savarin</div>
+        <p>"Tat Fizyolojisi" kitabı. <em>"Bana ne yediğini söyle, sana kim olduğunu söyleyeyim."</em></p>
+      </div>
+      <div class="card amber">
+        <div class="card-title">Marie-Antoine Carême</div>
+        <p>"Kralların Şefi" — <strong>Haute Cuisine</strong> ekolü. 4 temel sos: Espagnole, Velouté, Allemande, Béchamel.</p>
+      </div>
+      <div class="card teal">
+        <div class="card-title">Auguste Escoffier</div>
+        <p>"Aşçıların Kralı" — <strong>Brigade sistemi</strong> (hiyerarşik mutfak yapısı). Rus servisinden ilham aldı.</p>
+      </div>
+      <div class="card coral">
+        <div class="card-title">Fernand Point</div>
+        <p><strong>Nouvelle Cuisine</strong> (Yeni Mutfak) kurucusu. Daha hafif, taze ve sade pişirme anlayışı.</p>
+      </div>
+      <div class="card blue">
+        <div class="card-title">La Varenne</div>
+        <p>1651'de <em>"Le Cuisinier François"</em> kitabını yazdı. Soslarda roux (un-tereyağı) tekniğini sistematikleştirdi.</p>
+      </div>
+    </div>
+
+    <h2>3. Mutfak Akımları</h2>
+    <table>
+      <tr><th>Akım</th><th>Özelliği</th></tr>
+      <tr><td>Haute Cuisine</td><td>Simetrik ve gösterişli sunum, ağır soslar, kraliyet mutfağı anlayışı</td></tr>
+      <tr><td>Nouvelle Cuisine</td><td>İlk alakart menü, basitleştirilmiş pişirme, taze malzeme odağı</td></tr>
+      <tr><td>Fusion Cuisine</td><td>En az iki farklı ülke mutfağının birbirine baskın gelmeden birleşimi</td></tr>
+      <tr><td>Slow Food</td><td>Yerel malzeme, geleneksel tarif, temiz-adil gıda savunuculuğu</td></tr>
+    </table>
+
+    <h2>4. Hijyen: Kesme Tahtası Renk Sistemi</h2>
+    <div class="grid3">
+      <div class="card coral"><div class="card-title" style="color:#c2410c">Kırmızı</div><p>Çiğ kırmızı et</p></div>
+      <div class="card blue"><div class="card-title">Mavi</div><p>Çiğ balık</p></div>
+      <div class="card teal"><div class="card-title" style="color:#0f766e">Yeşil</div><p>Sebze ve meyveler</p></div>
+      <div class="card blue"><div class="card-title" style="color:#1e3a5f">Beyaz</div><p>Süt ürünleri</p></div>
+      <div class="card amber"><div class="card-title">Kahverengi</div><p>Pişmiş tüm ürünler</p></div>
+      <div class="card amber"><div class="card-title" style="color:#b45309">Sarı</div><p>Çiğ kümes hayvanları</p></div>
+    </div>
+
+    <h2>5. Pişirme Yöntemleri</h2>
+    <h3>Sulu Pişirme</h3>
+    <table>
+      <tr><th>Yöntem</th><th>Açıklama</th><th>Sıcaklık</th></tr>
+      <tr><td>Boiling (Haşlama)</td><td>Sürekli kabarcıkla kaynatma</td><td>100 °C</td></tr>
+      <tr><td>Simmering</td><td>Yavaş, kontrollü kaynatma</td><td>85–96 °C</td></tr>
+      <tr><td>Poaching</td><td>Kabarcıksız, az suyla pişirme</td><td>70–80 °C</td></tr>
+      <tr><td>Steaming</td><td>Buharla pişirme (vitamin koruma)</td><td>100 °C (buhar)</td></tr>
+      <tr><td>Stewing</td><td>Kapalı kapta az suyla yavaş pişirme</td><td>Düşük ateş</td></tr>
+      <tr><td>Braising</td><td>Önce kavurma, sonra az suyla pişirme</td><td>Düşük-orta</td></tr>
+    </table>
+    <h3>Kuru/Yağlı Pişirme</h3>
+    <table>
+      <tr><th>Yöntem</th><th>Açıklama</th></tr>
+      <tr><td>Roasting (Rosto)</td><td>Fırında az/hiç su olmadan büyük et parçaları</td></tr>
+      <tr><td>Broiling (Izgara)</td><td>Direkt ateş üstünde veya altında yüzey pişirme</td></tr>
+      <tr><td>Deep Frying</td><td>Tamamen daldırılmış derin yağ; ideal 165–180 °C</td></tr>
+      <tr><td>Shallow Frying</td><td>Yağ yarısına kadar gelir, ürün çevrilir</td></tr>
+      <tr><td>Stir Frying</td><td>Yüksek ısıda wok'ta az yağla hızlı; Çin-Japon kökenli</td></tr>
+    </table>
+    <h3>Özel Teknikler</h3>
+    <div class="grid3">
+      <div class="card amber">
+        <div class="card-title">Confit</div>
+        <p>Yağ içinde, iç ısı 90 °C'yi geçmeyecek şekilde uzun süreli pişirme.</p>
+      </div>
+      <div class="card teal">
+        <div class="card-title">Sous Vide</div>
+        <p>Vakum poşette 45–65 °C su banyosunda hassas pişirme.</p>
+      </div>
+    </div>
+
+    <h2>6. Gıda Güvenliği Sıcaklıkları</h2>
+    <div class="warning-box">
+      <strong>Tehlikeli Bölge (Danger Zone):</strong> 5 °C – 60 °C arasında bakteri hızla ürer. Gıdaları bu aralıkta mümkün olduğunca az tutun.
+    </div>
+    <table>
+      <tr><th>Gıda</th><th>Güvenli Sıcaklık</th></tr>
+      <tr><td>Tavuk eti (minimum iç sıcaklık)</td><td>74 °C</td></tr>
+      <tr><td>Dondurulmuş gıda saklama</td><td>–15 °C ve altı</td></tr>
+    </table>
+
+    <h2>7. Mutfak ve Restoran Türleri</h2>
+    <table>
+      <tr><th>Tür</th><th>Özelliği</th></tr>
+      <tr><td>Uydu (Servis) Mutfağı</td><td>Ana mutfak dışı birimler (oda servisi, ziyafet)</td></tr>
+      <tr><td>Fast Food</td><td>Sınırlı menü, hızlı servis, düşük kalifikasyon</td></tr>
+      <tr><td>Fine Dining</td><td>Yüksek kalite, kıyafet kuralı, öğle-akşam yemeği</td></tr>
+      <tr><td>Casual Dining</td><td>Orta segment, yüksek müşteri sirkülasyonu</td></tr>
+    </table>
+    <div class="info-box"><strong>Menü Türleri:</strong> <em>A la Carté</em> — her kalem ayrı seçilip sipariş edilir. &nbsp;|&nbsp; <em>Table d'hôte</em> — sabit fiyatlı set menü.</div>
+
+    <h2>8. Servis Çeşitleri</h2>
+    <table>
+      <tr><th>Servis</th><th>Özelliği</th></tr>
+      <tr><td>Fransız Servis</td><td>Gueridon (servis arabası) üzerinde tabaklanarak sunulur</td></tr>
+      <tr><td>Rus Servis</td><td>Gümüş kaplarda, soldan takdim; gösterişli</td></tr>
+      <tr><td>İngiliz Servis</td><td>"Aile servisi" — büyük kaplar masaya konur, misafirler kendi alır</td></tr>
+      <tr><td>Amerikan Servis</td><td>Mutfakta tabaklanmış, en yaygın yöntem</td></tr>
+    </table>
+    <div class="success-box"><strong>Genel Kural:</strong> Yemek <strong>soldan</strong> sunulur, boş tabaklar <strong>sağdan</strong> toplanır.</div>
+
+    <h2>9. Konaklama İşletmeleri</h2>
+    <table>
+      <tr><th>Tesis</th><th>Tanım</th></tr>
+      <tr><td>Motel</td><td>Araçlı yolculara, yerleşim dışı, karayolu kenarı</td></tr>
+      <tr><td>Oberj</td><td>Doğa turizmi, spor ve av; tabiat ön planda</td></tr>
+      <tr><td>Hostel</td><td>Ucuz, paylaşımlı; öğrenci ve bütçe gezginleri</td></tr>
+      <tr><td>Yüzer Tesis</td><td>Türk karasularında, hareket edebilen konaklama</td></tr>
+    </table>
+
+  </div>
+
+  <!-- ═══ QUİZ ═══ -->
+  <div id="quiz" class="section">
+    <p class="score-text">Skor: <span id="scorenum">0</span> / 50</p>
+    <div class="score-bar"><div id="scorefill"></div></div>
+    <div id="quiz-container"></div>
+  </div>
+</div>
+
+<script>
+function switchTab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+const questions = [
+  { q: "Gastronomi kelimesinin kökeni olan Yunanca \"Gastros\" ve \"Nomos\" kelimelerinin anlamları sırasıyla nedir?", opts: ["Yemek - Sanat", "Mide - Yasa/Kural", "Lezzet - Bilim", "Pişirme - Düzen"], ans: 1, exp: "\"Gastros\" mide, \"Nomos\" yasa/kural anlamına gelir; gastronomi bu iki kelimenin birleşiminden türemiştir." },
+  { q: "Gastronominin temel prensibi aşağıdakilerden hangisine dayanmaktadır?", opts: ["Sadece sanata", "Sadece kültüre", "Bilime", "Politikaya"], ans: 2, exp: "Gastronomi, yemek ve beslenmeyi bilimsel bir perspektiften inceleyen multidisipliner bir alandır." },
+  { q: "Tarihteki ilk aşçı olarak kabul edilen ilkel insanın keşfi nedir?", opts: ["Baharat kullanımı", "Etin ateşte ısındığında daha çiğnenebilir olması", "Suda haşlama yöntemi", "Tarım yapmaya başlaması"], ans: 1, exp: "Ateşin keşfiyle birlikte ilkel insan, etin ısıyla yumuşadığını ve daha kolay çiğnenebildiğini fark etti." },
+  { q: "Gastronominin bir \"merak alanı\" olarak dünyada yükseldiği ve çıkış noktası kabul edilen dönem hangisidir?", opts: ["15. Yüzyıl İtalyan Mutfağı", "17. Yüzyıl Osmanlı Mutfağı", "19. Yüzyıl Fransız Mutfağı", "20. Yüzyıl Amerikan Mutfağı"], ans: 2, exp: "19. yüzyıl Fransız mutfağı, gastronominin bir bilim ve sanat olarak dünyada tanınmasında kilit rol oynamıştır." },
+  { q: "Türkiye'de doğrudan yemekle ilgili düzenlenen ilk bilimsel sempozyumun adı nedir?", opts: ["Gastronomi ve Turizm", "Türk Mutfak Kültürü", "Osmanlı İmparatorluğunda Yemek, İçecekler ve Sosyalleşme", "Anadolu Lezzetleri"], ans: 2, exp: "Türkiye'de yemek üzerine düzenlenen ilk akademik sempozyum \"Osmanlı İmparatorluğunda Yemek, İçecekler ve Sosyalleşme\" adını taşımaktadır." },
+  { q: "\"The Physiology of Taste\" (Tat Fizyolojisi) kitabının yazarı ve \"Bana ne yediğini söyle, sana kim olduğunu söyleyeyim\" sözüyle tanınan kişi kimdir?", opts: ["Auguste Escoffier", "Marie-Antoine Careme", "Brillat Savarin", "Fernand Point"], ans: 2, exp: "Brillat-Savarin, tat fizyolojisi üzerine yazdığı kitapla gastronomiyi felsefi bir boyuta taşımıştır." },
+  { q: "\"Kralların Şefi\" olarak bilinen ve \"Haute Cuisine\" ekolünü geliştiren şef hangisidir?", opts: ["Marie-Antoine Careme", "François Pierre de La Varenne", "Fernand Point", "Mert Eker"], ans: 0, exp: "Marie-Antoine Carême hem krallara yemek yapması hem de Haute Cuisine'i sistematik bir sanat haline getirmesiyle tarihe geçmiştir." },
+  { q: "Carême tarafından belirlenen Fransız mutfağının dört temel sosu hangisidir?", opts: ["Mayonez, Ketçap, Hardal, Beşamel", "Espagnole, Veloute, Allemande, Beşamel", "Hollandez, Domates, Pesto, Veloute", "Tartar, BBQ, Salsa, Espagnole"], ans: 1, exp: "Carême, modern Fransız mutfağının temelini oluşturan Espagnole, Velouté, Allemande ve Béchamel soslarını tanımlamıştır." },
+  { q: "\"Aşçıların Kralı\" olarak anılan, mutfağa hiyerarşik yapıyı (tugay sistemi) getiren şef kimdir?", opts: ["Brillat Savarin", "Auguste Escoffier", "Fernand Point", "La Varenne"], ans: 1, exp: "Auguste Escoffier, mutfak organizasyonunu devrimleştiren \"brigade de cuisine\" (tugay) sistemini kurmuştur." },
+  { q: "\"Nouvelle Cuisine\" (Yeni Mutfak) akımının kurucusu olarak kabul edilen şef hangisidir?", opts: ["Auguste Escoffier", "Fernand Point", "Marie-Antoine Careme", "La Varenne"], ans: 1, exp: "Fernand Point, ağır ve karmaşık Haute Cuisine'den uzaklaşan Nouvelle Cuisine akımının öncüsü olmuştur." },
+  { q: "1651 yılında yayımlanan \"Le Cuisinier François\" kitabının yazarı kimdir?", opts: ["Fernand Point", "Brillat Savarin", "François Pierre de La Varenne", "Auguste Escoffier"], ans: 2, exp: "La Varenne'nin 1651'de yazdığı bu kitap, Fransız mutfağını sistematik biçimde ele alan ilk önemli eserlerden biridir." },
+  { q: "\"Haute Cuisine\" anlayışında servis nasıl olmalıdır?", opts: ["Karışık ve hızlı", "Masada aile tarzı", "Simetrik ve gösterişli", "Sadece self-servis"], ans: 2, exp: "Haute Cuisine'de sunum estetiği büyük önem taşır; yemekler simetrik ve gösterişli biçimde servis edilir." },
+  { q: "İlk alakart menüyü geliştiren ve pişirme sanatını basitleştiren akım hangisidir?", opts: ["Füzyon Mutfak", "Nouvelle Cuisine (Yeni Mutfak)", "Geleneksel Mutfak", "Moleküler Gastronomi"], ans: 1, exp: "Nouvelle Cuisine, ağır soslardan arınarak daha hafif ve taze malzeme odaklı bir yaklaşım benimsedi ve alakart menüyü yaygınlaştırdı." },
+  { q: "Sosların temelini oluşturan un-tereyağı karışımı (roux) hangi akım döneminde sistematikleştirilmiştir?", opts: ["Haute Cuisine", "Nouvelle Cuisine", "Ortaçağ", "Modern Çağ"], ans: 1, exp: "Roux tekniği, Nouvelle Cuisine döneminde sistemli biçimde tarif edilmiş ve temel sos yapısına dahil edilmiştir." },
+  { q: "En az iki farklı ülke mutfak kültürünün aynı tabakta birbirine baskın gelmeyecek şekilde birleştirilmesine ne ad verilir?", opts: ["Slow Food", "Fusion Cuisine (Füzyon Mutfak)", "Moleküler Mutfak", "Etnik Mutfak"], ans: 1, exp: "Füzyon mutfak, farklı kültürlerin yemek geleneklerini harmanlayarak yeni tatlar ortaya çıkarır." },
+  { q: "Yerel malzemeleri, geleneksel tarifleri korumayı ve temiz-adil gıdayı savunan uluslararası hareket hangisidir?", opts: ["Fast Food", "Catering", "Slow Food", "Nouvelle Cuisine"], ans: 2, exp: "Slow Food hareketi, 1989'da İtalya'da Carlo Petrini tarafından kurulmuş; yerel üreticiyi ve geleneksel tarifleri desteklemektedir." },
+  { q: "Çapraz bulaşmayı önlemek için çiğ kırmızı et hangi renk kesme tahtasında kesilmelidir?", opts: ["Mavi", "Yeşil", "Kırmızı", "Sarı"], ans: 2, exp: "Mutfak hijyen standartlarına göre çiğ kırmızı et için kırmızı renkli kesme tahtası kullanılır." },
+  { q: "\"Çiğ Balık\" için kullanılan kesme tahtasının rengi nedir?", opts: ["Beyaz", "Kahverengi", "Mavi", "Yeşil"], ans: 2, exp: "Çiğ balık için mavi renkli kesme tahtası kullanılarak diğer gıdalarla çapraz bulaşma önlenir." },
+  { q: "Sebze ve meyveler için standart olarak hangi renk kesme tahtası kullanılır?", opts: ["Sarı", "Yeşil", "Kırmızı", "Kahverengi"], ans: 1, exp: "Sebze ve meyveler için yeşil renkli kesme tahtası kullanılır." },
+  { q: "Süt ürünleri için hangi renk kesme tahtası tercih edilir?", opts: ["Mavi", "Sarı", "Beyaz", "Kırmızı"], ans: 2, exp: "Süt ve süt ürünleri için beyaz renkli kesme tahtası kullanılır." },
+  { q: "Pişmiş tüm ürünler için kullanılan kesme tahtası rengi nedir?", opts: ["Kırmızı", "Kahverengi", "Yeşil", "Beyaz"], ans: 1, exp: "Pişmiş tüm ürünler için kahverengi renkli kesme tahtası kullanılır." },
+  { q: "Su veya başka bir sıvının yüzeyinde sürekli kabarcıklar çıkararak kaynamasıyla yapılan pişirme yöntemi nedir?", opts: ["Poaching", "Simmering", "Boiling (Haşlamak)", "Steaming"], ans: 2, exp: "Boiling (haşlama), suyun 100 °C'ye ulaşıp sürekli kabarcıklar oluşturduğu aktif kaynama pişirme yöntemidir." },
+  { q: "Isının azaltılıp kabarcıkların yüzeye yavaşça çıkıp patladığı pişirme tekniğine ne ad verilir?", opts: ["Boiling", "Simmering (Yavaşça kaynatmak)", "Deep Frying", "Braising"], ans: 1, exp: "Simmering, 85–96 °C arasında gerçekleşen yavaş ve kontrollü bir pişirme tekniğidir; çorbalar ve soslar için idealdir." },
+  { q: "Suyun kabarcıklanmadığı, yavaş kaynatma yönteminden daha az suyla yapılan pişirme tekniği hangisidir?", opts: ["Boiling", "Poaching (Suda pişirmek)", "Stewing", "Roasting"], ans: 1, exp: "Poaching, 70–80 °C'de su kabarcıklanmadan gerçekleşir; yumurta ve balık gibi nazik gıdalar için kullanılır." },
+  { q: "Büyük parça etler veya tavuklar için fırında, az veya hiç su koyulmadan yapılan pişirme yöntemine ne denir?", opts: ["Baking", "Roasting (Rosto)", "Boiling", "Sautéing"], ans: 1, exp: "Roasting, fırın içinde kuru ısıyla büyük et parçalarının pişirilmesini sağlar; dışı kızarır, içi sulu kalır." },
+  { q: "Isı kaynağının direkt ateş olduğu ve gıdanın bir yüzey üzerinde pişirildiği yöntem nedir?", opts: ["Deep Frying", "Broiling (Izgarada kızartmak)", "Poaching", "Steaming"], ans: 1, exp: "Broiling, yüksek ve direkt ısı kaynağıyla gıdanın hızla pişirilmesi yöntemidir." },
+  { q: "Derin yağda kızartma (Deep Frying) için ideal yağ sıcaklığı aralığı kaçtır?", opts: ["100 – 120 °C", "165 – 180 °C", "200 – 250 °C", "80 – 90 °C"], ans: 1, exp: "165–180 °C arasındaki yağ, gıdanın dışını çabuk kızartırken içinin çiğ kalmamasını sağlar." },
+  { q: "Ürünlerin vitamin değerlerini kaybetmeden, yüksek ısıda ve çok az yağla hızlıca pişirildiği (Çin-Japon kökenli) teknik hangisidir?", opts: ["Stir Frying", "Deep Frying", "Braising", "Stewing"], ans: 0, exp: "Stir Frying, yüksek ateşte wok tavada az yağ kullanılarak malzemelerin hızla karıştırılarak pişirilmesini içerir." },
+  { q: "Yağın yiyeceklerin yarısına kadar geldiği ve ürünün çevrilerek pişirildiği yönteme ne denir?", opts: ["Deep Frying", "Shallow Frying (Sığ yağda kızartmak)", "Stir Frying", "Poaching"], ans: 1, exp: "Shallow Frying'de ürün yarısına kadar yağa daldırılır, bir yüzü kızarınca çevrilerek diğer yüzü de pişirilir." },
+  { q: "Kapalı bir tencerede, yiyeceklerin üstünü örtecek kadar az suyla yavaş yavaş pişirme yöntemine ne denir?", opts: ["Stewing (Az suyla pişirmek)", "Boiling", "Steaming", "Baking"], ans: 0, exp: "Stewing, az sıvıyla kapalı kapta uzun süre düşük ısıda pişirme yöntemidir; et ve sebze karışımları için idealdir." },
+  { q: "Yiyeceklerin önce az yağda kavrulup, sonra az su ile hafif ateşte bağ dokusu yumuşayana kadar pişirilmesi yöntemi nedir?", opts: ["Roasting", "Braising (Kavurmak)", "Confit", "Sous Vide"], ans: 1, exp: "Braising, önce soteleyip ardından düşük ısıda sıvıyla uzun süre pişirmedir; sert et parçalarını yumuşatmak için kullanılır." },
+  { q: "Ürünlerin yağ içerisine gömülüp, iç ısının 90 °C'yi geçmeyecek şekilde uzun süre pişirilmesi tekniği nedir?", opts: ["Sous Vide", "Confit", "Poaching", "Stewing"], ans: 1, exp: "Confit, Fransız mutfağından gelen bir teknik; et kendi yağında düşük ısıda saatlerce pişirilir." },
+  { q: "Vakum poşetine alınan etlerin 45–65 derece su banyosunda pişirilmesi tekniği hangisidir?", opts: ["Confit", "Sous Vide", "Stir Frying", "Simmering"], ans: 1, exp: "Sous Vide, vakumlu poşette hassas sıcaklık kontrolüyle pişirildiğinden gıdanın nem ve lezzetini mükemmel korur." },
+  { q: "Gıdalar için \"Tehlikeli Bölge\" (Danger Zone) olarak kabul edilen sıcaklık aralığı hangisidir?", opts: ["0 °C – 4 °C", "5 °C – 60 °C", "60 °C – 100 °C", "–18 °C – 0 °C"], ans: 1, exp: "5–60 °C aralığında bakteri üremesi hızla gerçekleşir; gıdalar bu aralıkta mümkün olduğunca az kalmalıdır." },
+  { q: "Tavuk eti için önerilen minimum iç pişirme sıcaklığı kaçtır?", opts: ["62 °C", "68 °C", "74 °C", "100 °C"], ans: 2, exp: "Tavuk etinin güvenli tüketim için iç sıcaklığının en az 74 °C'ye ulaşması gerekir." },
+  { q: "Dondurulmuş gıdalar (frozen food) hangi sıcaklıkta veya altında saklanmalıdır?", opts: ["0 °C", "–5 °C", "–15 °C", "5 °C"], ans: 2, exp: "Dondurulmuş gıdalar –15 °C veya altında saklanarak bozulma ve bakteri üremesi önlenir." },
+  { q: "Ana mutfak dışında kalan ziyafet, oda servisi gibi birimlere ne ad verilir?", opts: ["Merkez mutfak", "Uydu (servis) mutfağı", "Soğuk mutfak", "Endüstriyel mutfak"], ans: 1, exp: "Uydu mutfaklar, ana mutfaktan ayrı olup belirli servis alanlarına hizmet eden birimlerdir." },
+  { q: "Sınırlı menüsü olan, hızlı servis sunan ve çalışanların genellikle kalifiye olması beklenmeyen mutfak tipi hangisidir?", opts: ["Fine Dining", "Fast Food", "Catering", "Otel Mutfağı"], ans: 1, exp: "Fast Food mutfakları, standartlaşmış ve hızlı hazırlanabilen yemeklerle yoğun müşteri kitlesine hizmet eder." },
+  { q: "Yüksek kaliteli malzeme kullanan, belirli kıyafet kuralları olan restoran konsepti hangisidir?", opts: ["Casual Dining", "Fine Dining", "Esnaf Lokantası", "Fast Food"], ans: 1, exp: "Fine Dining restoranlar, üst düzey malzeme, ustalıklı sunum ve titiz servis anlayışıyla premium bir deneyim sunar." },
+  { q: "\"Esnaf lokantası\" tarzına benzeyen, popüler menülere sahip ve yüksek müşteri sirkülasyonu olan restoran tipi hangisidir?", opts: ["Fine Dining", "Casual Dining", "Otel Restoranı", "Havayolu İkramı"], ans: 1, exp: "Casual Dining, orta fiyatlı, rahat atmosferli ve geniş müşteri kitlesine hitap eden restoran kategorisidir." },
+  { q: "Her kalemin ayrı istendiği, müşterinin kendi damak tadına göre seçim yapabildiği menü türü nedir?", opts: ["Table d'hôte", "A la Carté", "Fix Menü", "Büfe"], ans: 1, exp: "A la Carté menüde her yemek ayrı fiyatlandırılır; misafir istediği kombinasyonu seçer." },
+  { q: "Yemeklerin masanın yanında \"Gueridon\" adı verilen bir istasyonda tabaklanarak servis edildiği yöntem hangisidir?", opts: ["Amerikan Servis", "Rus Servis", "Fransız Servis", "İngiliz Servis"], ans: 2, exp: "Fransız serviste garson, gueridon (servis arabası) üzerinde yemeği misafirin gözü önünde hazırlayıp tabaklar." },
+  { q: "Gümüşlerde servise dikkat edilen ve yiyeceklerin soldan takdim edildiği servis türü hangisidir?", opts: ["Fransız Servis", "Rus Servis", "İngiliz Servis", "Amerikan Servis"], ans: 1, exp: "Rus serviste yemekler büyük servis kaplarından misafirin solundan sunulur; gümüş servis ekipmanları kullanılır." },
+  { q: "\"Aile Servisi\" olarak da bilinen, ürünlerin masaya büyük kaplarda konulup misafirlerin birbirine pasladığı servis türü nedir?", opts: ["Rus Servis", "İngiliz Servis", "Amerikan Servis", "Fransız Servis"], ans: 1, exp: "İngiliz serviste yemekler büyük kaplarda masaya konur, misafirler birbirine aktararak kendi tabağına alır." },
+  { q: "Yiyeceklerin mutfakta tabaklanmış, soslanmış ve garnitürlenmiş olarak direkt masaya getirildiği en yaygın servis hangisidir?", opts: ["Fransız Servis", "Rus Servis", "Amerikan Servis (Tabak servisi)", "İngiliz Servis"], ans: 2, exp: "Amerikan servis, mutfakta hazırlanmış tabaklarla masaya sunulur; pratikliği nedeniyle en yaygın kullanılan servis biçimidir." },
+  { q: "Genel servis kuralına göre sunumlar hangi taraftan yapılmalı, boşlar hangi taraftan toplanmalıdır?", opts: ["Sağdan sunum – Soldan toplama", "Soldan sunum – Sağdan toplama", "Her ikisi de sağdan", "Her ikisi de soldan"], ans: 1, exp: "Genel servis kuralına göre yemek soldan sunulur ve boş tabaklar sağdan toplanır." },
+  { q: "Araçlarıyla yolculuk yapanların konaklama ve yeme-içme ihtiyaçlarını karşılayan, genellikle yerleşim dışında kurulan işletme nedir?", opts: ["Otel", "Motel", "Pansiyon", "Tatil Köyü"], ans: 1, exp: "Motel (motor hotel), karayolu kenarında araç sahibi yolculara hizmet veren konaklama tesisidir." },
+  { q: "Tabiat güzelliğinin ön planda olduğu, spor ve av turizmi yapmak isteyenlerin konakladığı tesis hangisidir?", opts: ["Hostel", "Oberj", "Kamping", "Apart Otel"], ans: 1, exp: "Oberj, doğayla iç içe konumlanan, özellikle av ve doğa sporları tutkunlarına hitap eden rustik konaklama tesisidir." },
+  { q: "Az gelirlilerin yararlanabileceği, bilgi edinme ve dinlenme amaçlı ucuz konaklama tesisleri nedir?", opts: ["Motel", "Pansiyon", "Hostel", "Tatil Köyü"], ans: 2, exp: "Hostel, paylaşımlı odaları ve ortak alanlarıyla bütçe dostu konaklama imkânı sunar; öğrenci ve genç gezginler arasında yaygındır." },
+  { q: "Türk karasularında konaklama ve yeme-içme hizmeti veren, kendiliğinden hareket edebilen veya çekilebilen tesis nedir?", opts: ["Apart Otel", "Yüzer Tesis", "Kamping", "Oberj"], ans: 1, exp: "Yüzer tesis, Türkiye'nin deniz, göl veya nehirlerinde hizmet veren, hareket edebilen ya da çekilebilen konaklama tesisidir." },
+];
+
+let answered = Array(questions.length).fill(false);
+let score = 0;
+
+function answer(qi, oi) {
+  if (answered[qi]) return;
+  answered[qi] = true;
+  const block = document.querySelectorAll('.q-block')[qi];
+  const opts = block.querySelectorAll('.opt');
+  opts.forEach((o, i) => {
+    if (i === questions[qi].ans) o.classList.add('correct');
+    else o.classList.add(i === oi ? 'wrong' : 'disabled');
+  });
+  block.querySelector('.explanation').style.display = 'block';
+  if (oi === questions[qi].ans) score++;
+  document.getElementById('scorenum').textContent = score;
+  document.getElementById('scorefill').style.width = (answered.filter(Boolean).length / questions.length * 100) + '%';
+}
+
+function buildQuiz() {
+  const c = document.getElementById('quiz-container');
+  questions.forEach((q, qi) => {
+    c.innerHTML += `<div class="q-block">
+      <div class="q-text">${qi + 1}. ${q.q}</div>
+      ${q.opts.map((o, oi) => `<div class="opt" onclick="answer(${qi},${oi})">${o}</div>`).join('')}
+      <div class="explanation">💡 ${q.exp}</div>
+    </div>`;
+  });
+}
+buildQuiz();
+</script>
+</body>
+</html>
