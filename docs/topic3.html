@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konu 3 — Edebiyat, Resim ve Yemek</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f0; color: #1a1a1a; padding: 2rem 1rem; }
+.container { max-width: 880px; margin: 0 auto; }
+.back { display: inline-block; color: #1a3a6e; text-decoration: none; font-size: 0.9rem; margin-bottom: 1.5rem; }
+.back:hover { text-decoration: underline; }
+h1 { font-size: 1.5rem; font-weight: 700; color: #1a3a6e; }
+.subtitle { color: #555; font-size: 0.9rem; margin: 0.3rem 0 1.5rem; }
+.tabs { display: flex; gap: 8px; margin-bottom: 1.5rem; border-bottom: 2px solid #e0e0d8; padding-bottom: 0; }
+.tab-btn { padding: 0.5rem 1.25rem; border: none; background: none; cursor: pointer; font-size: 0.9rem; color: #666; border-bottom: 2px solid transparent; margin-bottom: -2px; font-weight: 500; }
+.tab-btn.active { color: #1a3a6e; border-bottom-color: #1a3a6e; }
+.section { display: none; }
+.section.active { display: block; }
+
+h2 { font-size: 1.15rem; font-weight: 600; color: #1a3a6e; margin: 1.5rem 0 0.75rem; }
+h3 { font-size: 1rem; font-weight: 600; color: #333; margin: 1rem 0 0.5rem; }
+p { line-height: 1.65; margin-bottom: 0.75rem; color: #333; }
+ul, ol { padding-left: 1.5rem; margin-bottom: 0.75rem; }
+li { line-height: 1.6; margin-bottom: 0.25rem; }
+.card { background: #fff; border: 1px solid #e0e0d8; border-radius: 10px; padding: 1.1rem 1.25rem; margin-bottom: 1rem; }
+.card-title { font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+.blue .card-title { color: #1a3a6e; }
+.teal .card-title { color: #0f766e; }
+.amber .card-title { color: #92400e; }
+.coral .card-title { color: #c2410c; }
+.purple .card-title { color: #7c3aed; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+.info-box { border-left: 4px solid #3b82f6; background: #eff6ff; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; }
+.success-box { border-left: 4px solid #4caf50; background: #f0fdf4; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; }
+.warning-box { border-left: 4px solid #f59e0b; background: #fffbeb; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; }
+blockquote { border-left: 4px solid #1a3a6e; background: #f0f4ff; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; font-style: italic; color: #1a3a6e; }
+.divider { border: none; border-top: 2px dashed #e0e0d8; margin: 2rem 0; }
+
+.score-bar { background: #e0e0d8; border-radius: 8px; height: 8px; margin-bottom: 1.5rem; overflow: hidden; }
+#scorefill { height: 100%; background: #1a3a6e; border-radius: 8px; width: 0%; transition: width 0.4s; }
+.score-text { font-size: 0.85rem; color: #555; margin-bottom: 0.5rem; }
+.q-block { background: #fff; border: 1px solid #e0e0d8; border-radius: 10px; padding: 1.1rem 1.25rem; margin-bottom: 1rem; }
+.q-text { font-weight: 500; margin-bottom: 0.75rem; font-size: 0.95rem; }
+.opt { padding: 0.6rem 0.9rem; border: 1px solid #e0e0d8; border-radius: 7px; margin-bottom: 0.4rem; cursor: pointer; font-size: 0.9rem; transition: background 0.1s; }
+.opt:hover:not(.correct):not(.wrong) { background: #f0f0eb; }
+.opt.correct { background: #d1fae5; border-color: #4caf50; color: #065f46; pointer-events: none; }
+.opt.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; pointer-events: none; }
+.opt.disabled { pointer-events: none; color: #aaa; }
+.explanation { margin-top: 0.6rem; font-size: 0.85rem; color: #555; background: #f5f5f0; padding: 0.6rem 0.8rem; border-radius: 6px; display: none; }
+.section-badge { display: inline-block; background: #1a3a6e; color: #fff; font-size: 0.75rem; font-weight: 600; padding: 2px 10px; border-radius: 12px; margin-bottom: 0.5rem; }
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back" href="index.html">← Geri</a>
+  <h1>Edebiyat, Resim ve Yemek</h1>
+  <p class="subtitle">Gastronomi ve Yaşam · Konu 3 · 50 Soru</p>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('lesson', this)">Ders Notu</button>
+    <button class="tab-btn" onclick="switchTab('quiz', this)">Quiz (50 Soru)</button>
+  </div>
+
+  <!-- ═══ DERS NOTU ═══ -->
+  <div id="lesson" class="section active">
+
+    <!-- BÖLÜM A: EDEBİYAT VE YEMEK -->
+    <span class="section-badge">Bölüm A</span>
+    <h2>Edebiyat ve Yemek: Kuramsal Çerçeve</h2>
+
+    <div class="info-box">
+      <strong>Temel Soru:</strong> Yemek yalnızca biyolojik bir ihtiyaç mı, yoksa kültürel, sembolik ve edebi anlam taşıyıcısı mı?
+    </div>
+
+    <h3>Francis Bacon: Kitaplar ve Yemek Benzetmesi</h3>
+    <blockquote>
+      "Bazı kitaplar sadece tadılmak içindir, bazıları yutulur; çok azı ise çiğnenip sindirilir."
+    </blockquote>
+    <p>Okuma biçimlerini yemek yemeye paralel gören Bacon'a göre: tadılacak kitaplar yüzeysel göz atılanlardır; yutulacaklar hızlıca okunanlardır; sindirilecekler ise derinlemesine özümsenenlerdir.</p>
+
+    <h3>Claude Lévi-Strauss: Yemek Düşüncenin Aracıdır</h3>
+    <blockquote>"Yemek, düşünmek için iyi bir araçtır."</blockquote>
+    <p>Yapısalcı antropolog Lévi-Strauss, yiyeceklerin kültürel düşüncenin taşıyıcıları olduğunu savunur. Yemek pişirme, doğayı kültüre dönüştürmenin temel göstergesidir.</p>
+
+    <div class="grid2">
+      <div class="card blue">
+        <div class="card-title">Roland Barthes</div>
+        <p>Yemeği göstergebilimsel açıdan inceler. Yemek aynı anda:</p>
+        <ul>
+          <li>Bir <strong>iletişim sistemi</strong></li>
+          <li>Bir <strong>imgeler bütünü</strong></li>
+          <li>Davranışlara ilişkin bir <strong>protokol</strong></li>
+        </ul>
+      </div>
+      <div class="card teal">
+        <div class="card-title">Terry Eagleton</div>
+        <p>Yiyecek, <strong>post-yapısalcı bir metin</strong> gibi sonsuz yorumlanabilir: hediye veya tehdit, zehir veya karşılık, dayanışma veya boğulma.</p>
+        <p><strong>Yazmak = Yemek pişirmek:</strong> "Ham konuşmayı işleme sürecidir."</p>
+      </div>
+    </div>
+
+    <h3>Ben Jonson</h3>
+    <blockquote>"Şiir sanatı öğrenilip keşfedildiği gün, aşçılık sanatı da aynı gün öğrenilip keşfedildi."</blockquote>
+
+    <div class="warning-box">
+      <strong>Dikkat:</strong> Eagleton'a göre yiyecek "<em>sadece biyolojik bir yakıt</em>" olarak yorumlanamaz.
+    </div>
+
+    <h2>Şule Gürbüz: Yemek ve Varoluş</h2>
+
+    <div class="grid3">
+      <div class="card amber">
+        <div class="card-title">Paradoks 1</div>
+        <p>Yemek yemek = <strong>"ölmenin tersi"</strong></p>
+      </div>
+      <div class="card amber">
+        <div class="card-title">Paradoks 2</div>
+        <p><strong>"Ölümden en uzaklaştığımız an"</strong> = yemek yenilen an</p>
+      </div>
+      <div class="card coral">
+        <div class="card-title">Paradoks 3</div>
+        <p><strong>"En iğrenç var olma şekli"</strong> = yemek yemek</p>
+      </div>
+    </div>
+
+    <h2>Edebi Eserlerde Yemek Motifleri</h2>
+
+    <div class="grid2">
+      <div class="card blue">
+        <div class="card-title">Alice Harikalar Diyarında</div>
+        <ul>
+          <li><strong>Çay partisi:</strong> Sosyal ritüellerin oyunlaştırılması</li>
+          <li><strong>Çay ve kekler:</strong> Zaman ve mantık algısını sorgular</li>
+        </ul>
+      </div>
+      <div class="card teal">
+        <div class="card-title">Büyük Umutlar — Dickens</div>
+        <p><strong>Çorba ve ekmek:</strong> Yoksulluk ve sınıf farklılıklarının göstergesi</p>
+      </div>
+      <div class="card amber">
+        <div class="card-title">Suç ve Ceza — Dostoyevski</div>
+        <p><strong>Kvass:</strong> 19. yüzyıl Rusya halk yaşamını yansıtan fermente içecek</p>
+      </div>
+      <div class="card coral">
+        <div class="card-title">Aşk ve Gurur — Austen</div>
+        <p><strong>Çay ve şekerli tatlılar:</strong> İngiliz sosyal ritüelleri</p>
+      </div>
+      <div class="card blue">
+        <div class="card-title">Harry Potter</div>
+        <p><strong>Butterbeer:</strong> Gençlik ritüelleri ve sihirli dünyanın kültürel dokusu</p>
+      </div>
+      <div class="card teal">
+        <div class="card-title">Kürk Mantolu Madonna</div>
+        <p><strong>Sade kahve:</strong> Yalnızlık ve içsel dünyaları yansıtır</p>
+      </div>
+      <div class="card amber">
+        <div class="card-title">İnce Memed — Yaşar Kemal</div>
+        <p><strong>Bulgur ve mısır ekmeği:</strong> Köy yaşamı ve yoksulluk düzeyi</p>
+      </div>
+      <div class="card coral">
+        <div class="card-title">Sefiller — Victor Hugo</div>
+        <p><strong>Bayat ekmek, su, çorba:</strong> Sefalet ve toplumsal adaletsizlik — en iyi sosyoekonomik gösterge örneği</p>
+      </div>
+    </div>
+
+    <div class="success-box">
+      <strong>Jean Brillat-Savarin:</strong> "Bana ne yediğini söyle, sana kim olduğunu söyleyeyim." — Yemek kültürü, kendini üreten kültür hakkında zengin bir bilgi kaynağıdır.
+    </div>
+
+    <!-- BÖLÜM B: RESİM VE YEMEK -->
+    <hr class="divider">
+    <span class="section-badge">Bölüm B</span>
+    <h2>Resim Sanatında Yemek Sembolizmi</h2>
+
+    <div class="info-box">
+      <strong>Temel İlke:</strong> Tablolardaki yiyecek ve içecekler yalnızca görsel öğeler değil; toplumsal statü, günlük yaşam ve ritüelleri temsil eden çok katmanlı simgelerdir.
+    </div>
+
+    <div class="grid2">
+      <div class="card blue">
+        <div class="card-title">Ekmek Sembolizmi</div>
+        <ul>
+          <li>Temel gıda, yaşam, bereket, paylaşım</li>
+          <li><strong>Hristiyanlık:</strong> Beden (İsa'nın bedeni)</li>
+          <li><strong>Temsil etmez:</strong> Sadece zenginlik</li>
+          <li><em>Salvador Dalí — Basket of Bread</em></li>
+        </ul>
+      </div>
+      <div class="card teal">
+        <div class="card-title">Şarap Sembolizmi</div>
+        <ul>
+          <li><strong>Hristiyanlık:</strong> Kan (İsa'nın kanı)</li>
+          <li>Zevk, sosyal ritüeller, kutlamalar</li>
+          <li><strong>Bacchus/Dionysus:</strong> Sarhoşluk ve yaşamın zevkleri</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>Meyvelerin Sembolizmi</h2>
+
+    <div class="grid2">
+      <div class="card blue">
+        <div class="card-title">Elma</div>
+        <ul>
+          <li>Yasak meyve, masumiyet kaybı, günah, bilgelik</li>
+          <li><strong>Temsil etmez:</strong> Bereket ve refah</li>
+          <li><em>Magritte — The Son of Man: yüzü kapatan elma</em></li>
+        </ul>
+      </div>
+      <div class="card teal">
+        <div class="card-title">Üzüm</div>
+        <p>Bereket ve bolluk</p>
+        <div class="card-title" style="margin-top:0.75rem;">Limon</div>
+        <p>Refah · <strong>Soyulmuş kabuk → Geçicilik (vanitas)</strong></p>
+        <div class="card-title" style="margin-top:0.75rem;">Nar</div>
+        <p>Doğurganlık + Yaşam döngüsü + Bereket (hepsi)</p>
+      </div>
+    </div>
+
+    <div class="warning-box">
+      <strong>Vanitas:</strong> Çürük meyveler → "Hayat geçicidir, dünyevi güzellikler fanidir." Caravaggio'nun <em>Meyve Sepeti</em>ndeki çürük meyveler bu felsefi kavramı yansıtır.
+    </div>
+
+    <h2>Önemli Eserler</h2>
+
+    <div class="grid2">
+      <div class="card blue">
+        <div class="card-title">Caravaggio</div>
+        <ul>
+          <li><strong>Bacchus:</strong> Elinde şarap kadehi</li>
+          <li><strong>Basket of Fruit:</strong> Çürük meyveler → vanitas</li>
+          <li><strong>The Supper at Emmaus:</strong> Dini sofra sahnesi</li>
+        </ul>
+      </div>
+      <div class="card teal">
+        <div class="card-title">Diğer Ustalar</div>
+        <ul>
+          <li><em>Veronese — The Marriage at Cana:</em> Kalabalık ziyafet</li>
+          <li><em>Van Gogh — The Potato Eaters:</em> Yoksulluk ve paylaşım</li>
+          <li><em>Van Gogh — The Drinkers:</em> Alkol teması</li>
+          <li><em>Magritte — The Son of Man:</em> Elma + kimlik</li>
+          <li><em>Pieter Claesz — Still Life:</em> Turta, limon, fındık, ekmek</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="success-box">
+      <strong>Özet:</strong> Bereket → Ekmek + Üzüm &nbsp;|&nbsp; Fanilik → Çürük meyveler &nbsp;|&nbsp; Beden → Ekmek &nbsp;|&nbsp; Kan → Şarap &nbsp;|&nbsp; Günah → Elma &nbsp;|&nbsp; Doğurganlık → Nar
+    </div>
+
+  </div>
+
+  <!-- ═══ QUIZ ═══ -->
+  <div id="quiz" class="section">
+    <p class="score-text">Puan: <span id="scorenum">0</span> / 50</p>
+    <div class="score-bar"><div id="scorefill"></div></div>
+    <div id="quiz-container"></div>
+  </div>
+</div>
+
+<script>
+function switchTab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+const questions = [
+  // ── BÖLÜM A: EDEBİYAT VE YEMEK (1-25) ──
+  {
+    q: "Francis Bacon'un kitaplar ve yemek arasındaki benzerlik üzerine kurduğu meşhur alıntı aşağıdakilerden hangisidir?",
+    opts: ["A) Kitaplar bilgiyi, yemekler kültürü taşır.", "B) Bazı kitaplar sadece tadılmak içindir, bazıları yutulur; çok azı ise çiğnenip sindirilir.", "C) Yemek pişirmek bir sanat, kitap okumak bir disiplindir.", "D) Kitaplar midemizi doyurur, yemekler ruhumuzu."],
+    ans: 1,
+    exp: "Bacon okuma biçimlerini yemek yemeye benzetir: bazı kitaplar tadılır, bazıları yutulur, az bir kısmı çiğnenip sindirilir (derinlemesine özümsenir)."
+  },
+  {
+    q: "Terry Eagleton'a göre yiyecek, hangi teorik yapı gibi sonsuz biçimde yorumlanabilir?",
+    opts: ["A) Klasik bir trajedi", "B) Post-yapısalcı bir metin", "C) Modernist bir tablo", "D) Realist bir roman"],
+    ans: 1,
+    exp: "Eagleton'a göre yiyecek, tıpkı post-yapısalcı bir metin gibi sabit anlamı olmayan, bağlama göre sonsuz biçimde yorumlanabilen bir yapıdır."
+  },
+  {
+    q: "Terry Eagleton'a göre yiyecek aşağıdakilerden hangisi olarak yorumlanamaz?",
+    opts: ["A) Bir hediye veya bir tehdit", "B) Bir zehir veya bir karşılık", "C) Bir dayanışma veya bir boğulma", "D) Sadece biyolojik bir yakıt"],
+    ans: 3,
+    exp: "Eagleton'a göre yiyecek yalnızca biyolojik bir işlev görmez; hediye, tehdit, zehir, dayanışma gibi pek çok kültürel ve sembolik anlam taşır."
+  },
+  {
+    q: "'Yemek, düşünmek için iyi bir araçtır' sözü kime aittir?",
+    opts: ["A) Roland Barthes", "B) Levi-Strauss", "C) Terry Eagleton", "D) Francis Bacon"],
+    ans: 1,
+    exp: "Yapısalcı antropolog Lévi-Strauss'a ait bu söz, yiyeceği kültürel düşüncenin aracı olarak ele aldığını özetler."
+  },
+  {
+    q: "Roland Barthes'e göre yemek aşağıdakilerden hangisi olarak tanımlanabilir?",
+    opts: ["A) Bir iletişim sistemi", "B) Bir imgeler bütünü", "C) Davranışlara ilişkin bir protokol", "D) Hepsi"],
+    ans: 3,
+    exp: "Barthes yemeği hem iletişim sistemi, hem imgeler bütünü, hem de davranışsal protokol olarak tanımlar; yani üç tanımın hepsi doğrudur."
+  },
+  {
+    q: "'Şiir sanatı öğrenilip keşfedildiği gün, aşçılık sanatı da aynı gün öğrenilip keşfedildi' diyen şair kimdir?",
+    opts: ["A) Lewis Carroll", "B) Ben Jonson", "C) Charles Dickens", "D) Victor Hugo"],
+    ans: 1,
+    exp: "İngiliz şair Ben Jonson, şiir ile aşçılığı aynı yaratıcı keşfin ürünleri olarak görmüştür."
+  },
+  {
+    q: "Terry Eagleton, yazma sürecini neye benzeterek 'ham konuşmayı işleme sürecidir' demiştir?",
+    opts: ["A) Ekmek yapımına", "B) Hasat toplamaya", "C) Yemek pişirmeye", "D) Şarap mahzenlemeye"],
+    ans: 2,
+    exp: "Eagleton yazma eylemini yemek pişirmeye benzeterek ham sözlü ifadeyi (konuşmayı) dönüştürme ve rafine etme süreci olarak tanımlar."
+  },
+  {
+    q: "Şule Gürbüz'ün 'Coşkuyla Ölmek' kitabında, 'ölmenin tersi' olarak tanımlanan eylem nedir?",
+    opts: ["A) Yazmak", "B) Sevmek", "C) Yemek yemek", "D) Gezmek"],
+    ans: 2,
+    exp: "Gürbüz, yemek yemeyi varoluşsal bir eylem olarak ele alır ve 'ölmenin tersi' olarak tanımlar."
+  },
+  {
+    q: "Şule Gürbüz'e göre 'ölümden en uzaklaştığımız an' hangisidir?",
+    opts: ["A) Bir kitap bitirildiğinde", "B) Yemek yenildiğinde", "C) Uykudayken", "D) Seyahat ederken"],
+    ans: 1,
+    exp: "Gürbüz'e göre yemek yeme anı, bizi ölüm düşüncesinden en uzaklaştıran ve yaşamın somutluğuyla yüzleştiren andır."
+  },
+  {
+    q: "Alice Harikalar Diyarında eserindeki 'çay partisi' sahnesi neyi simgeler?",
+    opts: ["A) İngiliz mutfağının zenginliğini", "B) Karakterlerin tuhaflıklarını ve sosyal ritüellerin oyunlaştırılmasını", "C) Karakterlerin açlık korkusunu", "D) Kraliyet ailesine saygıyı"],
+    ans: 1,
+    exp: "Çay partisi sahnesi, Deli Şapkacı ve arkadaşlarının absürt davranışları aracılığıyla sosyal ritüellerin nasıl oyunlaştırılabileceğini gösterir."
+  },
+  {
+    q: "Alice Harikalar Diyarında eserinde çay ve kekler hangi algıyı oyunlaştırır?",
+    opts: ["A) Tat ve koku", "B) Zaman ve mantık", "C) Uzay ve derinlik", "D) Sevgi ve nefret"],
+    ans: 1,
+    exp: "Çay saati hiç bitmez ve kekler büyütüp küçültür; yiyecek ve içecek aracılığıyla zaman ve mantık algısı sorgulanır."
+  },
+  {
+    q: "Büyük Umutlar (Great Expectations) eserinde çorba ve ekmek neyin göstergesi olarak sunulur?",
+    opts: ["A) Lüks yaşamın", "B) Yoksulluk ve sınıf farklılıklarının", "C) Aile birliğinin", "D) Karakterin pişirme yeteneğinin"],
+    ans: 1,
+    exp: "Dickens'ın bu eserinde Pip'in yediği sade çorba ve ekmek, yoksul köken ile zengin sınıf arasındaki uçurumu simgeler."
+  },
+  {
+    q: "Dostoyevski'nin Suç ve Ceza eserinde geçen ve 19. yüzyıl Rusya'sındaki halk yaşamını yansıtan fermente içecek hangisidir?",
+    opts: ["A) Votka", "B) Kvass", "C) Çay", "D) Kahve"],
+    ans: 1,
+    exp: "Kvass, tahıldan yapılan düşük alkollü fermente bir Rus içeceğidir. Dostoyevski bunu 19. yüzyıl Petersburg'undaki halk yaşamını yansıtmak için kullanır."
+  },
+  {
+    q: "Aşk ve Gurur (Pride and Prejudice) romanında ön planda olan yiyecek/içecek grubu hangisidir?",
+    opts: ["A) Et ve şarap", "B) Çay ve şekerli tatlılar", "C) Kahve ve bisküvi", "D) Meyve ve peynir"],
+    ans: 1,
+    exp: "Jane Austen'ın bu romanında çay seremonisi ve tatlılar, İngiliz sosyal statüsünü ve incelmiş zevkleri temsil eder."
+  },
+  {
+    q: "Harry Potter serisindeki 'Butterbeer' (tereyağlı bira) edebi metinde neyi gösterir?",
+    opts: ["A) Karakterlerin fiziksel gelişimini", "B) Gençlik ritüellerini ve sihirli dünyanın kültürel dokusunu", "C) Siyasi bir eleştiriyi", "D) Sadece susuzluğu gidermeyi"],
+    ans: 1,
+    exp: "Butterbeer, Hogwarts'ın sosyal kültürünü ve öğrencilerin bir araya gelme ritüellerini renklendirir."
+  },
+  {
+    q: "Kürk Mantolu Madonna eserindeki 'sade kahve' motifi neyi yansıtır?",
+    opts: ["A) Sosyal statü hırsını", "B) Karakterlerin yalnızlık ve içsel dünyalarını", "C) 20. yüzyılın kaotik yapısını", "D) Mutfak sanatındaki gelişimi"],
+    ans: 1,
+    exp: "Sabahattin Ali'nin bu eserinde kahve sahneleri karakterlerin iç dünyasına ve melankolisine ayna tutar; sadelik kasıtlı bir estetik tercihtir."
+  },
+  {
+    q: "Yaşar Kemal'in İnce Memed eserinde bulgur ve mısır ekmeği neyin temsilidir?",
+    opts: ["A) Köy yaşamı ve yoksulluk düzeyi", "B) Zengin ağa sofraları", "C) Şehir hayatına özlem", "D) Batılılaşma süreci"],
+    ans: 0,
+    exp: "Bulgur ve mısır ekmeği, Anadolu köylüsünün yoksulluğunu ve ağa baskısı altındaki yaşam koşullarını doğrudan yansıtır."
+  },
+  {
+    q: "Victor Hugo'nun Sefiller eserinde bayat ekmek, su ve çorba neyin sembolüdür?",
+    opts: ["A) Sağlıklı beslenmenin", "B) Sefalet ve toplumsal adaletsizliğin", "C) Fransız mutfak zenginliğinin", "D) Karakterlerin dini oruçlarının"],
+    ans: 1,
+    exp: "Jean Valjean'ın bir somun ekmek çaldığı için mahkûm edilmesi, yiyeceğin toplumsal adaletsizliğin güçlü göstergesi olduğunu ortaya koyar."
+  },
+  {
+    q: "Post-yapısalcılara göre bir metin veya yemekle ilgili aşağıdakilerden hangisi doğrudur?",
+    opts: ["A) Tek bir amacı ve anlamı vardır.", "B) Birey ona yeni ve kendine özgü bir anlam kazandırabilir.", "C) Sadece yazarın/aşçının istediği şekilde yorumlanmalıdır.", "D) Anlamı evrenseldir ve asla değişmez."],
+    ans: 1,
+    exp: "Post-yapısalcılığa göre anlam, tüketici tarafından üretilir. Metin ya da yemek, her bireyin kendi deneyimiyle yeniden anlamlandırdığı açık bir yapıdır."
+  },
+  {
+    q: "Edebiyatta yemeğin 'sosyoekonomik gösterge' olduğu kitaplara en iyi örnek hangisidir?",
+    opts: ["A) Harry Potter", "B) Kürk Mantolu Madonna", "C) Sefiller", "D) Alice Harikalar Diyarında"],
+    ans: 2,
+    exp: "Sefiller, yiyeceği (ekmek) doğrudan sosyoekonomik adaletsizliğin simgesi haline getirir; bir ekmek hırsızlığı tüm romanın motor gücüdür."
+  },
+  {
+    q: "Şule Gürbüz'e göre 'en iğrenç ve en alt düzeyde var olma şekli' nedir?",
+    opts: ["A) Çalışmak", "B) Uyuklamak", "C) Yemek yemek", "D) Konuşmak"],
+    ans: 2,
+    exp: "Gürbüz bu paradoksal görüşte yemek yemeyi biyolojik zorunluluktan gelen bir eylem olarak nitelendirirken aynı zamanda onu yaşamın özü saymıştır."
+  },
+  {
+    q: "'Tell me what you eat, and I'll tell you what you are' sözü kime aittir?",
+    opts: ["A) Jean Brillat-Savarin", "B) Marie-Antoine Careme", "C) Auguste Escoffier", "D) Fernand Point"],
+    ans: 0,
+    exp: "Bu ünlü söz gastronominin babası sayılan Jean Anthelme Brillat-Savarin'e aittir (1825, Gastronominin Fizyolojisi)."
+  },
+  {
+    q: "Çocuk edebiyatı ve Asyalı Amerikalı edebiyatı gibi alanlarda yemeğin metinle ilişkilendirilmesi neyi ifade eder?",
+    opts: ["A) Sadece yemek tariflerinin paylaşıldığını", "B) Yiyeceği edebi metinle düşünmek için kapsamlı bir yöntemi", "C) Karakterlerin fiziksel ihtiyaçlarını", "D) Metnin türünü belirlediğini"],
+    ans: 1,
+    exp: "Bu alanlarda yemek ve edebiyat ilişkisi; kimlik, kültür, bellek ve yer duygusu gibi temaları araştırmak için kapsamlı bir analitik çerçeve sunar."
+  },
+  {
+    q: "Edebiyat kaynaklarına göre yemek kültürü hakkında ne söylenebilir?",
+    opts: ["A) Kendini üreten kültür hakkında sağlam bilgiler veren zengin bir bilgi kaynağıdır.", "B) Sadece karnın nasıl doyurulduğunu anlatır.", "C) Edebiyatla bir ilişkisi yoktur.", "D) Sadece tarihsel bir veridir."],
+    ans: 0,
+    exp: "Yemek kültürü; bir toplumun değerlerini, sosyal yapısını ve kimliğini yansıtan zengin bir bilgi kaynağıdır."
+  },
+  {
+    q: "Gastronomi ve edebiyat ilişkisi kapsamında yemeğin bir 'iletişim sistemi' olduğunu savunan kimdir?",
+    opts: ["A) Roland Barthes", "B) Levi-Strauss", "C) Terry Eagleton", "D) Francis Bacon"],
+    ans: 0,
+    exp: "Roland Barthes, göstergebilimsel yaklaşımıyla yiyeceğin tıpkı bir dil gibi kodlar ve anlamlar taşıdığını; yani bir 'iletişim sistemi' olduğunu savunmuştur."
+  },
+  // ── BÖLÜM B: RESİM VE YEMEK (26-50) ──
+  {
+    q: "Tablolardaki yiyecek ve içecekler için hangisi söylenebilir?",
+    opts: ["A) Sadece görsel birer öğedirler.", "B) Toplumsal statü, günlük yaşam ve ritüelleri temsil ederler.", "C) Ressamın acıktığını gösterirler.", "D) Tablodaki boşlukları doldurmak için kullanılırlar."],
+    ans: 1,
+    exp: "Resim sanatında yiyecek ve içecekler yalnızca dekoratif değil; toplumsal statüyü, kültürel ritüelleri ve günlük yaşamı simgeleyen çok katmanlı anlamlar taşır."
+  },
+  {
+    q: "Resim sanatında 'Ekmek' genel olarak aşağıdakilerden hangisini temsil etmez?",
+    opts: ["A) Temel gıda ve yaşamı", "B) Bereket ve yoksulluğu", "C) Sadece zenginliği", "D) Paylaşımı"],
+    ans: 2,
+    exp: "Ekmek temel gıda, bereket, yoksulluk ve paylaşımı temsil eder. 'Sadece zenginliği' temsil etmez; aksine yoksulluk sembolü olarak da kullanılır."
+  },
+  {
+    q: "Hristiyanlık sembolizminde resimdeki 'Ekmek' neyi temsil eder?",
+    opts: ["A) Kanı", "B) Bedeni", "C) Günahı", "D) Bilgeliği"],
+    ans: 1,
+    exp: "Ökarist ritüelinde kutsal ekmek Hz. İsa'nın bedenini temsil eder."
+  },
+  {
+    q: "Basket of Bread (Ekmek Sepeti) adlı eserin ressamı kimdir?",
+    opts: ["A) Caravaggio", "B) Salvador Dali", "C) Vincent van Gogh", "D) Pieter Claesz"],
+    ans: 1,
+    exp: "Basket of Bread, Salvador Dalí'ye aittir. Sürrealist yaklaşımla gündelik nesneyi kutsal hale getirir."
+  },
+  {
+    q: "Şarap ve diğer alkollü içecekler resim sanatında hangi temalarla ilişkilendirilir?",
+    opts: ["A) Zevk ve keyifli bir ruh hali", "B) Sosyal ritüeller ve etkileşim", "C) Kutlamalar ve toplanmalar", "D) Hepsi"],
+    ans: 3,
+    exp: "Şarap ve alkollü içecekler zevk, sosyal ritüeller ve kutlamalar gibi pek çok temayla birlikte ele alınır; tüm seçenekler doğrudur."
+  },
+  {
+    q: "Mitolojide yaşamın zevklerini ve sarhoşluğu temsil eden, Caravaggio tarafından da resmedilen figür kimdir?",
+    opts: ["A) Apollon", "B) Zeus", "C) Bacchus", "D) Hermes"],
+    ans: 2,
+    exp: "Bacchus (Yunan mitolojisinde Dionysus), şarap, sarhoşluk ve yaşamın zevklerinin tanrısıdır. Caravaggio bu figürü ünlü tablosunda şarap kadehi tutan genç olarak resmetmiştir."
+  },
+  {
+    q: "Hristiyanlık sembolizminde resimdeki 'Şarap' neyi temsil eder?",
+    opts: ["A) Bedeni", "B) Kanı", "C) Bilgiyi", "D) Orucu"],
+    ans: 1,
+    exp: "Ökarist ritüelinde kutsal şarap Hz. İsa'nın kanını temsil eder. Ekmek = Beden, Şarap = Kan Hristiyan ikonografisinin temelidir."
+  },
+  {
+    q: "The Supper at Emmaus (Emmaus'ta Akşam Yemeği) eserinin ressamı kimdir?",
+    opts: ["A) Michelangelo Merisi da Caravaggio", "B) Paolo Veronese", "C) René Magritte", "D) Pieter Claesz"],
+    ans: 0,
+    exp: "The Supper at Emmaus, Caravaggio'nun dini içerikli önemli eseridir. Hz. İsa'nın dirilişinden sonra iki öğrencisiyle sofra kurduğu anı dramatik ışık-gölge kullanımıyla resmeder."
+  },
+  {
+    q: "Vincent van Gogh'un alkollü içecek temalı sunumda yer alan eserinin adı nedir?",
+    opts: ["A) The Potato Eaters", "B) The Drinkers", "C) Starry Night", "D) Sunflowers"],
+    ans: 1,
+    exp: "The Drinkers, Van Gogh'un alkol temasını işlediği eseridir. The Potato Eaters ise yoksulluk ve paylaşım temalı ayrı bir eserdir."
+  },
+  {
+    q: "Paolo Veronese'nin kalabalık bir ziyafeti resmettiği eserin adı nedir?",
+    opts: ["A) Bacchus", "B) The Son of Man", "C) The Marriage at Cana", "D) Still Life"],
+    ans: 2,
+    exp: "The Marriage at Cana, Veronese'nin devasa boyutlardaki ünlü eseridir. Hz. İsa'nın suyu şaraba çevirdiği mucizevi düğün sahnesini görkemli bir ziyafet olarak resmeder."
+  },
+  {
+    q: "Resim sanatında 'Elma'nın temsil ettiği kavramlar arasında hangisi yoktur?",
+    opts: ["A) Yasak meyve ve masumiyet kaybı", "B) Bilinç ve bilgelik", "C) Bereket ve refah", "D) Günah"],
+    ans: 2,
+    exp: "Elma; yasak meyve, masumiyet kaybı, bilinç ve günah gibi kavramları temsil eder. Ancak 'bereket ve refah' elmanın sembolik anlamları arasında yer almaz."
+  },
+  {
+    q: "René Magritte'in The Son of Man eserinde karakterin yüzünü kapatan meyve hangisidir?",
+    opts: ["A) Limon", "B) Elma", "C) Nar", "D) Üzüm"],
+    ans: 1,
+    exp: "Magritte'in bu ünlü sürrealist tablosunda takım elbiseli adamın yüzü büyük yeşil bir elmayla kapatılmıştır. Kimlik ve görünmezlik temalarını işler."
+  },
+  {
+    q: "Resim sanatında 'Üzüm' genel olarak neyi temsil eder?",
+    opts: ["A) Fakirliği", "B) Bereketi", "C) Masumiyeti", "D) Geçiciliği"],
+    ans: 1,
+    exp: "Üzüm, resim sanatında bereket ve bolluğu temsil eder."
+  },
+  {
+    q: "Resim sanatında 'Limon'un temsil ettiği kavram nedir?",
+    opts: ["A) Yasak aşk", "B) Refah", "C) Ölüm", "D) Yoksulluk"],
+    ans: 1,
+    exp: "Limon resim sanatında refahı simgeler; bununla birlikte soyulmuş limon kabuğu geçiciliği (vanitas) temsil eder."
+  },
+  {
+    q: "Bir tabloda 'soyulmuş limon kabuğu'nun görülmesi neyi simgeler?",
+    opts: ["A) Sonsuzluğu", "B) Geçiciliği", "C) Doğurganlığı", "D) Bilgeliği"],
+    ans: 1,
+    exp: "Soyulmuş limon kabuğu vanitas sembolizmi çerçevesinde geçiciliği simgeler: parlak güzelliğin işe yaramaz hale gelmesi, hayatın fani doğasını yansıtır."
+  },
+  {
+    q: "'Nar' meyvesi resim sanatında hangi kavramlarla özdeşleştirilir?",
+    opts: ["A) Doğurganlık ve sonsuzluk", "B) Yaşam döngüsü", "C) Bereket", "D) Hepsi"],
+    ans: 3,
+    exp: "Nar; doğurganlık, sonsuzluk, yaşam döngüsü ve bereketı birlikte simgeler; yani tüm seçenekler doğrudur."
+  },
+  {
+    q: "Caravaggio'nun Basket of Fruit (Meyve Sepeti) eserindeki meyvelerin en belirgin özelliği nedir?",
+    opts: ["A) Çok parlak ve canlı olmaları", "B) Çürük olmaları (vanitas)", "C) Sadece egzotik meyvelerden oluşması", "D) Dev boyutlarda olmaları"],
+    ans: 1,
+    exp: "Caravaggio bu eserinde meyveleri çürük ve solmuş göstererek Vanitas anlayışını yansıtır: görünen güzelliğin altında çürüme yatmaktadır."
+  },
+  {
+    q: "Tablolardaki 'çürük meyveler' hangi felsefi kavramı ifade eder?",
+    opts: ["A) Vanitas (Fanilik)", "B) Üretkenlik", "C) Sosyal statü", "D) Mitolojik güç"],
+    ans: 0,
+    exp: "Çürük meyveler, Vanitas akımının temel simgesidir: hayatın geçiciliğini ve dünyevi güzelliklerin kalıcı olmadığını vurgular."
+  },
+  {
+    q: "'Hayat geçicidir, dünyevi güzellikler fanidir' mesajı veren resim türü/öğesi hangisidir?",
+    opts: ["A) Taze üzümler", "B) Çürük meyveler (ölüm/fanilik)", "C) Tam bir ekmek", "D) Kırmızı şarap"],
+    ans: 1,
+    exp: "Çürük meyveler Vanitas akımının başlıca temsilcisidir. Ressamlar hayatın geçiciliğini ve ölümün kaçınılmazlığını hatırlatmak için bu motifi kullanır."
+  },
+  {
+    q: "Still Life (Natürmort) eserleriyle tanınan ve sunumda bir tablosuna yer verilen ressam kimdir?",
+    opts: ["A) Pieter Claesz", "B) René Magritte", "C) Salvador Dali", "D) Paolo Veronese"],
+    ans: 0,
+    exp: "Pieter Claesz, 17. yüzyıl Hollanda natürmort geleneğinin önemli temsilcisidir. Günlük nesneleri ve yiyecekleri fanilik temaları çerçevesinde resmeder."
+  },
+  {
+    q: "Pieter Claesz'in Still Life tablosunda hangi yiyecekler görülmektedir?",
+    opts: ["A) Yarım yenmiş turta, limon, fındık, ekmek", "B) Sadece meyve sepeti", "C) Büyük bir balık ve şarap", "D) Av etleri ve sebzeler"],
+    ans: 0,
+    exp: "Claesz'in Still Life eserinde yarım yenmiş turta, limon, fındık ve ekmek yer alır. Bu sıradan nesneler günlük yaşamın geçiciliğini yansıtır."
+  },
+  {
+    q: "Caravaggio'nun Bacchus tablosunda Bacchus elinde ne tutmaktadır?",
+    opts: ["A) Bir kadeh şarap", "B) Bir sepet elma", "C) Bir somun ekmek", "D) Bir adet limon"],
+    ans: 0,
+    exp: "Caravaggio'nun Bacchus tablosunda şarap tanrısı Bacchus bir kadeh şarap tutmaktadır."
+  },
+  {
+    q: "Resimde yemeğin 'simgesel yaklaşımları' kapsamında 'Bereket'i en çok hangi iki öğe temsil eder?",
+    opts: ["A) Elma ve Limon", "B) Ekmek ve Üzüm", "C) Nar ve Çürük Meyve", "D) Su ve Şarap"],
+    ans: 1,
+    exp: "Bereket sembolizmi açısından ekmek (paylaşım, bolluk) ve üzüm (verim, bolluk) en güçlü bereket simgeleridir."
+  },
+  {
+    q: "Tablolarda yemeğin sadece görsel bir öğe olmadığını, insan hayatının ritüellerini yansıttığını gösteren temel yaklaşım nedir?",
+    opts: ["A) Simgesel Yaklaşımlar", "B) Teknik Yaklaşımlar", "C) Renk Analizi", "D) Perspektif Analizi"],
+    ans: 0,
+    exp: "Simgesel yaklaşımlar, resimdeki yiyeceklerin kültürel, dini ve sosyal anlamlarını inceler; tablolar bu yöntemle insan hayatının ritüellerini yansıtan bir metin gibi okunabilir."
+  },
+  {
+    q: "Van Gogh'un The Potato Eaters (Patates Yiyenler) tablosu genel olarak neyi temsil eder?",
+    opts: ["A) Zengin saray yaşamını", "B) Günlük yaşamdaki yoksulluk ve paylaşımı", "C) Mitolojik bir ziyafeti", "D) Dini bir töreni"],
+    ans: 1,
+    exp: "Van Gogh'un bu karanlık eseri, Hollandalı köylülerin loş bir lambann ışığında patates yediği sahneyi resmeder; yoksulluk, emek ve dayanışmayı güçlü biçimde yansıtır."
+  }
+];
+
+let answered = Array(questions.length).fill(false);
+let score = 0;
+
+function answer(qi, oi) {
+  if (answered[qi]) return;
+  answered[qi] = true;
+  const block = document.querySelectorAll('.q-block')[qi];
+  const opts = block.querySelectorAll('.opt');
+  opts.forEach((o, i) => {
+    if (i === questions[qi].ans) o.classList.add('correct');
+    else o.classList.add(i === oi ? 'wrong' : 'disabled');
+  });
+  block.querySelector('.explanation').style.display = 'block';
+  if (oi === questions[qi].ans) score++;
+  document.getElementById('scorenum').textContent = score;
+  document.getElementById('scorefill').style.width = (answered.filter(Boolean).length / questions.length * 100) + '%';
+}
+
+function buildQuiz() {
+  const c = document.getElementById('quiz-container');
+  questions.forEach((q, qi) => {
+    c.innerHTML += `<div class="q-block">
+      <div class="q-text">${qi+1}. ${q.q}</div>
+      ${q.opts.map((o,oi) => `<div class="opt" onclick="answer(${qi},${oi})">${o}</div>`).join('')}
+      <div class="explanation">💡 ${q.exp}</div>
+    </div>`;
+  });
+}
+buildQuiz();
+</script>
+</body>
+</html>

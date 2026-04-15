@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konu 4 — Yenilebilir Böcekler: Geleceğin Proteini</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f0; color: #1a1a1a; padding: 2rem 1rem; }
+.container { max-width: 880px; margin: 0 auto; }
+.back { display: inline-block; color: #1a3a6e; text-decoration: none; font-size: 0.9rem; margin-bottom: 1.5rem; }
+.back:hover { text-decoration: underline; }
+h1 { font-size: 1.5rem; font-weight: 700; color: #1a3a6e; }
+.subtitle { color: #555; font-size: 0.9rem; margin: 0.3rem 0 1.5rem; }
+.tabs { display: flex; gap: 8px; margin-bottom: 1.5rem; border-bottom: 2px solid #e0e0d8; padding-bottom: 0; }
+.tab-btn { padding: 0.5rem 1.25rem; border: none; background: none; cursor: pointer; font-size: 0.9rem; color: #666; border-bottom: 2px solid transparent; margin-bottom: -2px; font-weight: 500; }
+.tab-btn.active { color: #1a3a6e; border-bottom-color: #1a3a6e; }
+.section { display: none; }
+.section.active { display: block; }
+
+h2 { font-size: 1.15rem; font-weight: 600; color: #1a3a6e; margin: 1.5rem 0 0.75rem; }
+h3 { font-size: 1rem; font-weight: 600; color: #333; margin: 1rem 0 0.5rem; }
+p { line-height: 1.65; margin-bottom: 0.75rem; color: #333; }
+ul, ol { padding-left: 1.5rem; margin-bottom: 0.75rem; }
+li { line-height: 1.6; margin-bottom: 0.25rem; }
+.card { background: #fff; border: 1px solid #e0e0d8; border-radius: 10px; padding: 1.1rem 1.25rem; margin-bottom: 1rem; }
+.card-title { font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+.blue .card-title { color: #1a3a6e; }
+.teal .card-title { color: #0f766e; }
+.amber .card-title { color: #92400e; }
+.coral .card-title { color: #c2410c; }
+.green .card-title { color: #166534; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+.info-box { border-left: 4px solid #3b82f6; background: #eff6ff; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; }
+.success-box { border-left: 4px solid #4caf50; background: #f0fdf4; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; }
+.warning-box { border-left: 4px solid #f59e0b; background: #fffbeb; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; }
+.stat { background: #1a3a6e; color: #fff; border-radius: 10px; padding: 1rem 1.25rem; text-align: center; margin-bottom: 1rem; }
+.stat-num { font-size: 2rem; font-weight: 700; }
+.stat-label { font-size: 0.8rem; opacity: 0.85; margin-top: 0.2rem; }
+
+.score-bar { background: #e0e0d8; border-radius: 8px; height: 8px; margin-bottom: 1.5rem; overflow: hidden; }
+#scorefill { height: 100%; background: #1a3a6e; border-radius: 8px; width: 0%; transition: width 0.4s; }
+.score-text { font-size: 0.85rem; color: #555; margin-bottom: 0.5rem; }
+.q-block { background: #fff; border: 1px solid #e0e0d8; border-radius: 10px; padding: 1.1rem 1.25rem; margin-bottom: 1rem; }
+.q-text { font-weight: 500; margin-bottom: 0.75rem; font-size: 0.95rem; }
+.opt { padding: 0.6rem 0.9rem; border: 1px solid #e0e0d8; border-radius: 7px; margin-bottom: 0.4rem; cursor: pointer; font-size: 0.9rem; transition: background 0.1s; }
+.opt:hover:not(.correct):not(.wrong) { background: #f0f0eb; }
+.opt.correct { background: #d1fae5; border-color: #4caf50; color: #065f46; pointer-events: none; }
+.opt.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; pointer-events: none; }
+.opt.disabled { pointer-events: none; color: #aaa; }
+.explanation { margin-top: 0.6rem; font-size: 0.85rem; color: #555; background: #f5f5f0; padding: 0.6rem 0.8rem; border-radius: 6px; display: none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back" href="index.html">← Geri</a>
+  <h1>Yenilebilir Böcekler: Geleceğin Proteini</h1>
+  <p class="subtitle">Gastronomi ve Yaşam · Konu 4</p>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('lesson', this)">Ders Notu</button>
+    <button class="tab-btn" onclick="switchTab('quiz', this)">Quiz (30 Soru)</button>
+  </div>
+
+  <!-- ═══ DERS NOTU ═══ -->
+  <div id="lesson" class="section active">
+
+    <h2>1. Küresel İhtiyaç ve Kriz</h2>
+
+    <div class="grid3">
+      <div class="stat">
+        <div class="stat-num">10 Milyar</div>
+        <div class="stat-label">2050 yılı tahmini dünya nüfusu</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">2 Milyar</div>
+        <div class="stat-label">Dünyada böcek tüketen insan sayısı</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">735–820M</div>
+        <div class="stat-label">FAO 2023: açlık çeken insan (tahmini)</div>
+      </div>
+    </div>
+
+    <p>Mevcut hayvancılık sistemi <strong>sürdürülebilir değildir</strong>; yüksek sera gazı salınımı, yoğun su ve arazi kullanımı nedeniyle gezegen üzerinde büyük baskı oluşturmaktadır. Küresel gıdanın <strong>%66'sı yalnızca 9 ürün</strong> tarafından karşılanmakta; bu durum hem beslenme çeşitliliğini hem de gıda güvenliğini tehdit etmektedir.</p>
+
+    <div class="warning-box">
+      <strong>Kritik Sorun:</strong> Artan nüfusa yetecek protein, mevcut sistemin çökeceği tahmin edildiğinde nereden gelecek? Böcekler bu sorunun yanıtı olabilir.
+    </div>
+
+    <h2>2. Temel Kavramlar</h2>
+
+    <div class="grid2">
+      <div class="card blue">
+        <div class="card-title">Entomofaji</div>
+        <p>Böceklerin gıda olarak tüketilmesi anlamına gelir. Binlerce yıllık tarihsel ve kültürel bir pratiktir; modern bir akım değildir.</p>
+      </div>
+      <div class="card amber">
+        <div class="card-title">Neofobi</div>
+        <p>Yeni gıdalara karşı duyulan <strong>korku veya deneme isteksizliği</strong>. Batı'da böcek tüketiminin önündeki en büyük psikolojik engeldir.</p>
+      </div>
+    </div>
+
+    <h2>3. Besin Değeri</h2>
+
+    <div class="info-box">
+      <strong>Böcekler oldukça besleyicidir:</strong> Türlerine göre <strong>%20 ile %70</strong> arasında protein içerirler.
+    </div>
+
+    <div class="grid2">
+      <div class="card teal">
+        <div class="card-title">Makro Besinler</div>
+        <ul>
+          <li><strong>Protein:</strong> %20–70 (türe göre)</li>
+          <li><strong>Cırcır böceği (100g):</strong> ~18.9 g protein</li>
+          <li><strong>Yağ:</strong> Balıktaki sağlıklı yağlarla kıyaslanabilir düzeyde (Omega-3/6)</li>
+        </ul>
+      </div>
+      <div class="card coral">
+        <div class="card-title">Mikro Besinler</div>
+        <ul>
+          <li><strong>Vitaminler:</strong> B12, Riboflavin</li>
+          <li><strong>Mineraller:</strong> Demir, Çinko</li>
+          <li>Demir ve çinko → <strong>malnütrisyon (yetersiz beslenme)</strong> ile mücadelede kritik</li>
+          <li><strong>Bağışıklık desteği:</strong> Antibakteriyel özellikler</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="success-box">
+      <strong>Protein Kalitesi:</strong> Böcekler tüm <strong>temel amino asitleri</strong> içerir; bu nedenle protein kalitesi yalnızca kalori miktarıyla değil, amino asit profiliyle ölçülür.
+    </div>
+
+    <h2>4. Çevresel ve Ekonomik Avantajlar</h2>
+
+    <div class="grid3">
+      <div class="card green">
+        <div class="card-title">Yem Verimliliği</div>
+        <ul>
+          <li>Cırcır böceği: sığıra göre <strong>12 kat daha az yem</strong></li>
+          <li>Cırcır böceği: tavuktan <strong>2 kat daha verimli</strong></li>
+          <li><strong>Yüksek yem dönüşüm oranı</strong> = az girdi, çok protein</li>
+        </ul>
+      </div>
+      <div class="card green">
+        <div class="card-title">Arazi ve Su</div>
+        <ul>
+          <li>Tavuktan <strong>5-10 kat daha az arazi</strong></li>
+          <li>Geleneksel hayvancılığa göre çok daha az su tüketimi</li>
+        </ul>
+      </div>
+      <div class="card green">
+        <div class="card-title">Karbon Ayak İzi</div>
+        <ul>
+          <li>Çok daha düşük sera gazı salınımı</li>
+          <li>Organik atıklarla beslenebilirler</li>
+          <li>Döngüsel ekonomiye uygun</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>5. Kültürel Algı ve Neofobi</h2>
+
+    <p>Böcek tüketimi, dünya genelinde <strong>yaklaşık 2 milyar insan</strong> tarafından gerçekleştirilen köklü bir gelenektir. Dünyada tespit edilmiş <strong>2000'den fazla</strong> yenilebilir böcek türü bulunmaktadır.</p>
+
+    <div class="card amber">
+      <div class="card-title">Ülkeden Ülkeye Fark</div>
+      <ul>
+        <li><strong>Meksika:</strong> 500'den fazla tür tüketilmektedir</li>
+        <li><strong>Tayland, Çin, Brezilya:</strong> Yaygın tüketim</li>
+        <li><strong>Batı ülkeleri:</strong> Neofobi en büyük engel</li>
+      </ul>
+    </div>
+
+    <div class="info-box">
+      <strong>Tüketici Motivasyonu (sıralama):</strong>
+      <ol style="margin-top:0.5rem; padding-left:1.5rem;">
+        <li><strong>Merak (%40+)</strong> — ilk sırada</li>
+        <li>Sürdürülebilirlik</li>
+        <li>Sağlık</li>
+        <li>Fiyat</li>
+      </ol>
+      <p style="margin-top:0.5rem;"><strong>Daha açık gruplar:</strong> Gençler ve eğitim seviyesi yüksek bireyler</p>
+    </div>
+
+    <div class="warning-box">
+      <strong>Gıda Güvenliği Riski:</strong> Böcek tüketiminde en büyük risklerden biri <strong>alerjen etkiler</strong>dir; özellikle kabuklu deniz ürünlerine alerjisi olanlar dikkatli olmalıdır.
+    </div>
+
+    <h2>6. Gastronomik Entegrasyon</h2>
+
+    <p>Tüketici direncini kırmak için "görünmez protein" stratejisi uygulanmaktadır: böcekler <strong>un veya toz haline getirilerek</strong> işlenmiş ürünlerin içine karıştırılır.</p>
+
+    <div class="grid2">
+      <div class="card blue">
+        <div class="card-title">Aldento</div>
+        <p><strong>Un kurdu (Mealworm)</strong> tozundan makarna üretir. Böcek protein kaynağını görünmez kılarak tüketici direncini aşar.</p>
+      </div>
+      <div class="card teal">
+        <div class="card-title">Chirps</div>
+        <p><strong>Cırcır böceği (Cricket)</strong> tozu kullanarak cips üretir. Böcek proteinini tanıdık bir atıştırmalık formatına taşır.</p>
+      </div>
+    </div>
+
+    <p>Böcek tozu aynı zamanda <strong>bira, dondurma, hamburger ve enerji barları</strong> gibi pek çok üründe katkı maddesi olarak kullanılabilmektedir. <strong>Maden suyu</strong> ise böcek tozu katkısı için sayılmayan bir üründür.</p>
+
+    <h2>7. Pazar Büyüklüğü</h2>
+
+    <div class="card blue">
+      <div class="card-title">Yenilebilir Böcek Pazarı</div>
+      <p>2023 yılında <strong>500 milyon dolar üzerinde</strong> bir büyüklüğe ulaşmıştır ve hızla büyümeye devam etmektedir.</p>
+    </div>
+
+    <h2>8. Asıl Mesele</h2>
+
+    <div class="success-box">
+      Böcek tüketimi yalnızca bir <strong>gıda meselesi değil</strong>; aynı zamanda bir <strong>kültür ve algı meselesi</strong>dir. Bilimsel veriler tüm avantajları ortaya koymaktadır; ancak değişim için kültürel direncin aşılması gerekmektedir.
+    </div>
+
+  </div>
+
+  <!-- ═══ QUIZ ═══ -->
+  <div id="quiz" class="section">
+    <p class="score-text">Puan: <span id="scorenum">0</span> / 30</p>
+    <div class="score-bar"><div id="scorefill"></div></div>
+    <div id="quiz-container"></div>
+  </div>
+</div>
+
+<script>
+function switchTab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+const questions = [
+  {
+    q: "Böceklerin gıda olarak tüketilmesine ne ad verilir?",
+    opts: ["A) Entomofobi", "B) Entomofaji", "C) Neofobi", "D) Gastronomi"],
+    ans: 1,
+    exp: "Entomofaji, böceklerin gıda olarak tüketilmesi anlamına gelir. Binlerce yıllık tarihsel ve kültürel bir pratiktir; modern bir akım değildir."
+  },
+  {
+    q: "Kaynaklara göre dünya genelinde yaklaşık kaç kişi böcek tüketmektedir?",
+    opts: ["A) 500 milyon", "B) 1 milyar", "C) 2 milyar", "D) 4 milyar"],
+    ans: 2,
+    exp: "Dünya genelinde yaklaşık 2 milyar insan böcek tüketmektedir. Bu, böcek tüketiminin marjinal değil, köklü ve yaygın bir gıda pratiği olduğunu gösterir."
+  },
+  {
+    q: "Günümüzde tespit edilmiş yaklaşık kaç adet yenilebilir böcek türü bulunmaktadır?",
+    opts: ["A) 500+", "B) 1000+", "C) 2000+", "D) 5000+"],
+    ans: 2,
+    exp: "Dünyada 2000'den fazla yenilebilir böcek türü tespit edilmiştir. Bu rakam, böceklerin ne denli geniş bir gıda kaynağı potansiyeli taşıdığını ortaya koyar."
+  },
+  {
+    q: "2050 yılında dünya nüfusunun yaklaşık kaç milyara ulaşması öngörülmektedir?",
+    opts: ["A) 8 milyar", "B) 10 milyar", "C) 12 milyar", "D) 15 milyar"],
+    ans: 1,
+    exp: "Dünya nüfusunun 2050'de yaklaşık 10 milyara ulaşması öngörülmektedir. Bu artış, mevcut protein üretim sistemlerinin sürdürülemeyeceğini ve alternatif kaynaklara ihtiyaç duyulduğunu göstermektedir."
+  },
+  {
+    q: "Mevcut gıda sisteminde küresel gıdanın %66'sını yalnızca kaç adet ürün oluşturmaktadır?",
+    opts: ["A) 3", "B) 9", "C) 25", "D) 50"],
+    ans: 1,
+    exp: "Küresel gıdanın %66'sı yalnızca 9 ürün tarafından karşılanmaktadır. Bu tek tipleşme hem beslenme çeşitliliğini hem de gıda güvenliğini tehdit eder."
+  },
+  {
+    q: "Böceklerin genel protein içeriği yüzde kaç aralığındadır?",
+    opts: ["A) %5 - %10", "B) %20 - %70", "C) %80 - %95", "D) %10 - %20"],
+    ans: 1,
+    exp: "Böcekler türlerine göre %20 ile %70 arasında protein içerir. Bu oran, birçok geleneksel hayvansal protein kaynağıyla kıyaslanabilir veya onları geçer düzeydedir."
+  },
+  {
+    q: "1 kg protein üretmek için cırcır böceği, sığıra göre kaç kat daha az yem tüketir?",
+    opts: ["A) 2 kat", "B) 5 kat", "C) 12 kat", "D) 20 kat"],
+    ans: 2,
+    exp: "Cırcır böcekleri 1 kg protein üretmek için sığıra göre 12 kat daha az yem tüketir. Bu üstün yem dönüşüm oranı, böcek yetiştiriciliğini çevresel açıdan çok daha verimli kılar."
+  },
+  {
+    q: "Yeni gıdalara karşı duyulan korku veya deneme isteksizliği terimi nedir?",
+    opts: ["A) Teknofobi", "B) Neofobi", "C) Entomofaji", "D) Vanitas"],
+    ans: 1,
+    exp: "Neofobi, yeni ve tanıdık olmayan gıdaları deneme konusunda duyulan korku veya isteksizliktir. Batı ülkelerinde böcek tüketiminin önündeki en büyük psikolojik engeldir."
+  },
+  {
+    q: "Hangi ülkede 500'den fazla yenilebilir böcek türü tüketilmektedir?",
+    opts: ["A) Çin", "B) Meksika", "C) Tayland", "D) Brezilya"],
+    ans: 1,
+    exp: "Meksika'da 500'den fazla yenilebilir böcek türü tüketilmektedir. Chapulines (çekirge), hormigas (karınca) ve escamoles gibi türler yüzyıllardır Meksika mutfağının parçasıdır."
+  },
+  {
+    q: "Böcekler hangi vitamin açısından hayvansal gıdalara güçlü bir alternatiftir?",
+    opts: ["A) C Vitamini", "B) B12 Vitamini", "C) D Vitamini", "D) K Vitamini"],
+    ans: 1,
+    exp: "Böcekler B12 vitamini açısından zengindir. B12 genellikle yalnızca hayvansal kaynaklarda bulunduğundan böcekler, bu vitamini almak için iyi bir alternatif protein kaynağı sunar."
+  },
+  {
+    q: "Cırcır böcekleri protein üretimi açısından tavuktan kaç kat daha verimlidir?",
+    opts: ["A) 2 kat", "B) 4 kat", "C) 6 kat", "D) 10 kat"],
+    ans: 0,
+    exp: "Cırcır böcekleri, tavukla kıyaslandığında 2 kat daha verimlidir. Sığıra göre 12 kat olan oran, tavuk için 2 kata düşmektedir; ancak her iki durumda da böcekler daha verimlidir."
+  },
+  {
+    q: "Böceklerin gastronomiye dahil edilmesinde kullanılan 'görünmez protein' stratejisi neyi ifade eder?",
+    opts: ["A) Böceklerin sadece geceleri servis edilmesini", "B) Böceklerin un veya toz haline getirilerek ürünlere karıştırılmasını", "C) Böceklerin şeffaf kaplarda saklanmasını", "D) Tadının hiç anlaşılmamasını"],
+    ans: 1,
+    exp: "Görünmez protein stratejisi, böceklerin un veya toz haline getirilerek makarna, cips veya enerji barları gibi tanıdık ürünlere katılmasıdır. Bu yöntemle tüketici direnci kırılmaya çalışılır."
+  },
+  {
+    q: "Yenilebilir böcek pazarı 2023 yılında yaklaşık ne kadarlık bir büyüklüğe ulaşmıştır?",
+    opts: ["A) 33 milyon $", "B) 100 milyon $", "C) 500+ milyon $", "D) 5 milyar $"],
+    ans: 2,
+    exp: "Yenilebilir böcek pazarı 2023'te 500 milyon doların üzerine çıkmıştır ve sektörün hızla büyümeye devam etmesi beklenmektedir."
+  },
+  {
+    q: "'Aldento' markası hangi böcek türünden makarna üretmektedir?",
+    opts: ["A) Cırcır böceği", "B) Un kurdu (Mealworm)", "C) Çekirge", "D) Karınca"],
+    ans: 1,
+    exp: "Aldento, un kurdu (Mealworm) tozunu kullanarak makarna üretmektedir. Bu ürün, görünmez protein stratejisinin somut bir örneğidir."
+  },
+  {
+    q: "'Chirps' markası ürünlerinde hangi böcek tozunu kullanmaktadır?",
+    opts: ["A) Un kurdu", "B) Cırcır böceği (Cricket)", "C) İpek böceği", "D) Arı larvası"],
+    ans: 1,
+    exp: "Chirps, cırcır böceği (cricket) tozundan cips üretmektedir. Tanıdık bir atıştırmalık formatı kullanarak böcek proteinini tüketiciye sunmaktadır."
+  },
+  {
+    q: "Böcek tüketiminin en önemli çevresel avantajı nedir?",
+    opts: ["A) Daha renkli tabaklar sunulması", "B) Daha düşük sera gazı ve su kullanımı", "C) Üretiminin çok pahalı olması", "D) Her iklimde aynı hızda büyümesi"],
+    ans: 1,
+    exp: "Böcek yetiştiriciliği, geleneksel hayvancılığa kıyasla çok daha düşük sera gazı salınımına yol açar ve çok daha az su tüketir; bu da onu çevresel açıdan belirgin biçimde üstün kılar."
+  },
+  {
+    q: "Böceklerde bulunan demir ve çinko gibi mineraller hangi küresel sorunla mücadelede kritiktir?",
+    opts: ["A) Obezite", "B) Yetersiz beslenme (Malnütrisyon)", "C) Diabet", "D) Su kirliliği"],
+    ans: 1,
+    exp: "Demir ve çinko eksikliği, yetersiz beslenme (malnütrisyon) sorunlarının başında gelir. Böceklerin bu mineraller açısından zengin olması, onları özellikle gelişmekte olan ülkelerde önemli bir besin kaynağı haline getirir."
+  },
+  {
+    q: "Tüketicilerin böcek deneme motivasyonunda %40+ ile ilk sırada yer alan faktör nedir?",
+    opts: ["A) Sağlık", "B) Sürdürülebilirlik", "C) Merak", "D) Fiyat"],
+    ans: 2,
+    exp: "Araştırmalar, tüketicilerin böcek tüketmeyi denemesindeki birincil motivasyonun %40'ın üzerinde bir oranla merak olduğunu göstermektedir. Sürdürülebilirlik ve sağlık bunu takip eder."
+  },
+  {
+    q: "Böceklerin protein kalitesi ne ile ölçülür?",
+    opts: ["A) Sadece kalori miktarıyla", "B) İçerdiği tüm temel amino asitlerle", "C) Sertlik derecesiyle", "D) Rengiyle"],
+    ans: 1,
+    exp: "Protein kalitesi, içerdiği temel amino asitlerle belirlenir. Böcekler tüm temel amino asitleri içerdiğinden yüksek kaliteli bir protein kaynağı sayılır."
+  },
+  {
+    q: "Böcek tüketiminde gıda güvenliği açısından belirtilen en büyük risklerden biri hangisidir?",
+    opts: ["A) Tadının kötü olması", "B) Alerjen etkiler", "C) Şeker içeriği", "D) Lif eksikliği"],
+    ans: 1,
+    exp: "Böcek tüketimindeki en önemli gıda güvenliği risklerinden biri alerjen etkilerdir. Özellikle kabuklu deniz ürünlerine (karides, ıstakoz) alerjisi olan bireylerde çapraz alerji reaksiyonu görülebilir."
+  },
+  {
+    q: "Böceklerin yağ içeriği hangi besin grubuyla kıyaslanabilir düzeydedir?",
+    opts: ["A) Tahıllar", "B) Meyveler", "C) Balık (sağlıklı yağlar)", "D) Tereyağı"],
+    ans: 2,
+    exp: "Böceklerin yağ içeriği, özellikle omega-3 ve omega-6 yağ asitleri bakımından balıktakiyle kıyaslanabilir düzeydedir. Bu sağlıklı yağlar kalp ve beyin sağlığı için önemlidir."
+  },
+  {
+    q: "'Entomofaji' kelimesinin tarihsel kökeni hakkında ne söylenebilir?",
+    opts: ["A) Yeni bir akımdır.", "B) Binlerce yıllık tarihsel ve kültürel bir pratiktir.", "C) Sadece kıtlık zamanlarında ortaya çıkmıştır.", "D) Sadece Avrupa mutfağında görülür."],
+    ans: 1,
+    exp: "Entomofaji, yalnızca 2 milyar insanın bugün uyguladığı değil; insanlık tarihinin başından beri varolan bir beslenme pratiğidir. Antik medeniyetlerden bu yana pek çok kültürde yer almaktadır."
+  },
+  {
+    q: "Cırcır böceği 100 gramda yaklaşık kaç gram protein içerir?",
+    opts: ["A) 5 g", "B) 10.5 g", "C) 18.9 g", "D) 40 g"],
+    ans: 2,
+    exp: "Cırcır böceği, 100 gramda yaklaşık 18.9 gram protein içerir. Bu oran, tavuk göğsüyle (yaklaşık 23 g) karşılaştırılabilir düzeyde yüksektir."
+  },
+  {
+    q: "Böceklerin 'yem dönüşüm oranı' ile ilgili hangisi doğrudur?",
+    opts: ["A) Çok verimsizdirler.", "B) Sığırlardan daha çok yem tüketirler.", "C) Yüksek verimlidirler (daha az yemle daha çok protein üretirler).", "D) Sadece laboratuvar ortamında beslenebilirler."],
+    ans: 2,
+    exp: "Böcekler yüksek yem dönüşüm oranına sahiptir: geleneksel çiftlik hayvanlarına kıyasla çok daha az yemle çok daha fazla protein üretirler. Cırcır böceği sığıra göre 12 kat daha verimlidir."
+  },
+  {
+    q: "Böcek tozunun katkı maddesi olarak kullanılabileceği ürünler arasında hangisi sayılmamıştır?",
+    opts: ["A) Bira", "B) Dondurma", "C) Maden suyu", "D) Hamburger"],
+    ans: 2,
+    exp: "Böcek tozu; bira, dondurma, hamburger ve enerji barları gibi pek çok üründe kullanılabilmektedir. Maden suyu ise bu listede yer almaz çünkü yapısı gereği katkı maddesi almaya uygun değildir."
+  },
+  {
+    q: "Tüketici davranışları analizine göre hangi grup böcek tüketimine daha açıktır?",
+    opts: ["A) Yaşlılar", "B) Gençler ve eğitim seviyesi yüksek olanlar", "C) Sadece çocuklar", "D) Geleneksel aşçılar"],
+    ans: 1,
+    exp: "Araştırmalar, gençlerin ve eğitim seviyesi yüksek bireylerin böcek tüketimine daha açık olduğunu göstermektedir. Bu gruplar yeni gıda deneyimlerine ve sürdürülebilirlik argümanlarına daha duyarlıdır."
+  },
+  {
+    q: "Böceklerin biyolojik yapısında bulunan hangi bileşen bağışıklık desteği sağlar?",
+    opts: ["A) Glukoz", "B) Antibakteriyel özellikler", "C) Kolesterol", "D) Nişasta"],
+    ans: 1,
+    exp: "Böceklerin biyolojik yapısında bulunan antibakteriyel bileşikler bağışıklık sistemini destekleyici özellikler taşımaktadır. Bu durum böcekleri besin değeri açısından daha da önemli kılmaktadır."
+  },
+  {
+    q: "Böcek yetiştiriciliği 1 kg protein için tavuktan kaç kat daha az arazi gerektirir?",
+    opts: ["A) 2 kat", "B) 5-10 kat arası", "C) Arazi gerektirmez", "D) Daha fazla arazi gerektirir"],
+    ans: 1,
+    exp: "Böcek yetiştiriciliği, 1 kg protein üretmek için tavuktan 5 ila 10 kat daha az arazi gerektirir. Bu avantaj, arazi baskısının giderek arttığı günümüzde büyük önem taşımaktadır."
+  },
+  {
+    q: "FAO 2023 verilerine göre dünyada yaklaşık kaç milyon insan açlık çekmektedir?",
+    opts: ["A) 100-200 milyon", "B) 300-500 milyon", "C) 735-820 milyon", "D) 1000+ milyon"],
+    ans: 2,
+    exp: "FAO 2023 verilerine göre dünyada 735 ila 820 milyon insan açlık çekmektedir. Bu rakam, alternatif protein kaynaklarının ne denli acil bir ihtiyaç olduğunu somut biçimde ortaya koyar."
+  },
+  {
+    q: "'Asıl Mesele' başlığı altında böcek tüketiminin ne meselesi olduğu vurgulanmıştır?",
+    opts: ["A) Sadece gıda meselesi", "B) Kültür ve algı meselesi", "C) Sadece ekonomi meselesi", "D) Sadece teknoloji meselesi"],
+    ans: 1,
+    exp: "Böcek tüketimi yalnızca bir gıda veya bilim meselesi değil; aynı zamanda bir kültür ve algı meselesidir. Bilimsel kanıtlar avantajları ortaya koysa da değişim için kültürel direncin aşılması gerekmektedir."
+  }
+];
+
+let answered = Array(questions.length).fill(false);
+let score = 0;
+
+function answer(qi, oi) {
+  if (answered[qi]) return;
+  answered[qi] = true;
+  const block = document.querySelectorAll('.q-block')[qi];
+  const opts = block.querySelectorAll('.opt');
+  opts.forEach((o, i) => {
+    if (i === questions[qi].ans) o.classList.add('correct');
+    else o.classList.add(i === oi ? 'wrong' : 'disabled');
+  });
+  block.querySelector('.explanation').style.display = 'block';
+  if (oi === questions[qi].ans) score++;
+  document.getElementById('scorenum').textContent = score;
+  document.getElementById('scorefill').style.width = (answered.filter(Boolean).length / questions.length * 100) + '%';
+}
+
+function buildQuiz() {
+  const c = document.getElementById('quiz-container');
+  questions.forEach((q, qi) => {
+    c.innerHTML += `<div class="q-block">
+      <div class="q-text">${qi+1}. ${q.q}</div>
+      ${q.opts.map((o,oi) => `<div class="opt" onclick="answer(${qi},${oi})">${o}</div>`).join('')}
+      <div class="explanation">💡 ${q.exp}</div>
+    </div>`;
+  });
+}
+buildQuiz();
+</script>
+</body>
+</html>
