@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konu 5 — Ayurveda: Yaşam Bilgisi ve Beslenme Sistemi</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f0; color: #1a1a1a; padding: 2rem 1rem; }
+.container { max-width: 880px; margin: 0 auto; }
+.back { display: inline-block; color: #1a3a6e; text-decoration: none; font-size: 0.9rem; margin-bottom: 1.5rem; }
+.back:hover { text-decoration: underline; }
+h1 { font-size: 1.5rem; font-weight: 700; color: #1a3a6e; }
+.subtitle { color: #555; font-size: 0.9rem; margin: 0.3rem 0 1.5rem; }
+.tabs { display: flex; gap: 8px; margin-bottom: 1.5rem; border-bottom: 2px solid #e0e0d8; padding-bottom: 0; }
+.tab-btn { padding: 0.5rem 1.25rem; border: none; background: none; cursor: pointer; font-size: 0.9rem; color: #666; border-bottom: 2px solid transparent; margin-bottom: -2px; font-weight: 500; }
+.tab-btn.active { color: #1a3a6e; border-bottom-color: #1a3a6e; }
+.section { display: none; }
+.section.active { display: block; }
+
+h2 { font-size: 1.15rem; font-weight: 600; color: #1a3a6e; margin: 1.5rem 0 0.75rem; }
+h3 { font-size: 1rem; font-weight: 600; color: #333; margin: 1rem 0 0.5rem; }
+p { line-height: 1.65; margin-bottom: 0.75rem; color: #333; }
+ul, ol { padding-left: 1.5rem; margin-bottom: 0.75rem; }
+li { line-height: 1.6; margin-bottom: 0.25rem; }
+.card { background: #fff; border: 1px solid #e0e0d8; border-radius: 10px; padding: 1.1rem 1.25rem; margin-bottom: 1rem; }
+.card-title { font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+.blue .card-title { color: #1a3a6e; }
+.teal .card-title { color: #0f766e; }
+.amber .card-title { color: #92400e; }
+.coral .card-title { color: #c2410c; }
+.green .card-title { color: #166534; }
+.purple .card-title { color: #6b21a8; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+.info-box { border-left: 4px solid #3b82f6; background: #eff6ff; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; }
+.success-box { border-left: 4px solid #4caf50; background: #f0fdf4; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; }
+.warning-box { border-left: 4px solid #f59e0b; background: #fffbeb; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; }
+.stat { background: #1a3a6e; color: #fff; border-radius: 10px; padding: 1rem 1.25rem; text-align: center; margin-bottom: 1rem; }
+.stat-num { font-size: 1.6rem; font-weight: 700; }
+.stat-label { font-size: 0.8rem; opacity: 0.85; margin-top: 0.2rem; }
+
+table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; background: #fff; border-radius: 10px; overflow: hidden; border: 1px solid #e0e0d8; font-size: 0.9rem; }
+th, td { padding: 0.6rem 0.8rem; text-align: left; border-bottom: 1px solid #e0e0d8; }
+th { background: #1a3a6e; color: #fff; font-weight: 600; font-size: 0.85rem; }
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) { background: #fafaf5; }
+
+.score-bar { background: #e0e0d8; border-radius: 8px; height: 8px; margin-bottom: 1.5rem; overflow: hidden; }
+#scorefill { height: 100%; background: #1a3a6e; border-radius: 8px; width: 0%; transition: width 0.4s; }
+.score-text { font-size: 0.85rem; color: #555; margin-bottom: 0.5rem; }
+.q-block { background: #fff; border: 1px solid #e0e0d8; border-radius: 10px; padding: 1.1rem 1.25rem; margin-bottom: 1rem; }
+.q-text { font-weight: 500; margin-bottom: 0.75rem; font-size: 0.95rem; }
+.opt { padding: 0.6rem 0.9rem; border: 1px solid #e0e0d8; border-radius: 7px; margin-bottom: 0.4rem; cursor: pointer; font-size: 0.9rem; transition: background 0.1s; }
+.opt:hover:not(.correct):not(.wrong) { background: #f0f0eb; }
+.opt.correct { background: #d1fae5; border-color: #4caf50; color: #065f46; pointer-events: none; }
+.opt.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; pointer-events: none; }
+.opt.disabled { pointer-events: none; color: #aaa; }
+.explanation { margin-top: 0.6rem; font-size: 0.85rem; color: #555; background: #f5f5f0; padding: 0.6rem 0.8rem; border-radius: 6px; display: none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back" href="index.html">← Geri</a>
+  <h1>Ayurveda: Yaşam Bilgisi ve Beslenme Sistemi</h1>
+  <p class="subtitle">Gastronomi ve Yaşam · Konu 5</p>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('lesson', this)">Ders Notu</button>
+    <button class="tab-btn" onclick="switchTab('quiz', this)">Quiz (30 Soru)</button>
+  </div>
+
+  <!-- ═══ DERS NOTU ═══ -->
+  <div id="lesson" class="section active">
+
+    <h2>1. Ayurveda Nedir?</h2>
+
+    <div class="grid3">
+      <div class="stat">
+        <div class="stat-num">3.000–5.000 yıl</div>
+        <div class="stat-label">Tahmini tarihsel geçmiş</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">Hindistan</div>
+        <div class="stat-label">Kökeni</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">Ayus + Veda</div>
+        <div class="stat-label">Yaşam + Bilgi/Bilim</div>
+      </div>
+    </div>
+
+    <p><strong>Ayurveda</strong>, kökeni Hindistan’a dayanan ve yaklaşık <strong>3.000–5.000 yıllık</strong> bir geçmişe sahip geleneksel bir sağlık, yaşam ve beslenme sistemidir. Sanskritçe <strong>“Ayus” (yaşam)</strong> ve <strong>“Veda” (bilgi/bilim)</strong> kelimelerinden türemiştir; "yaşam bilgisi" anlamına gelir.</p>
+
+    <div class="info-box">
+      Ayurveda yalnızca bir tedavi yöntemi değil; <strong>beden, zihin ve ruh arasında denge kurmayı</strong> hedefleyen bütüncül (holistik) bir yaşam felsefesidir. Temel amacı <strong>denge (homeostasis)</strong>'dir.
+    </div>
+
+    <h2>2. Kaynaklar ve Klasik Metinler</h2>
+
+    <h3>Vedik Temel (Kutsal Metinler)</h3>
+    <ul>
+      <li><strong>Atharva Veda</strong> → hastalıklar, şifa, ritüel tedavi pratikleri</li>
+      <li><strong>Rigveda</strong> → doğa, beden ve kozmik düzen anlayışı</li>
+      <li><strong>Yajur Veda</strong> → ritüel pratikler</li>
+      <li><strong>Sama Veda</strong> → ses, titreşim ve denge</li>
+    </ul>
+    <p style="font-size:0.85rem; color:#666;">Vedaların yazarı belli değildir; sözlü gelenekle aktarılan kutsal metinlerdir.</p>
+
+    <h3>Klasik Ayurveda Metinleri</h3>
+    <div class="grid3">
+      <div class="card blue">
+        <div class="card-title">Charaka Samhita</div>
+        <p>İç hastalıkları, beslenme, yaşam tarzı. <strong>Ayurveda’nın teorik temeli</strong> (doşa, denge, metabolizma).</p>
+        <p style="font-size:0.8rem; color:#666;">İlişkilendirilen kişi: Charaka</p>
+      </div>
+      <div class="card teal">
+        <div class="card-title">Sushruta Samhita</div>
+        <p>Cerrahi teknikler, anatomi ve operasyon bilgisi. Dönemine göre <strong>çok ileri düzey</strong>de tıbbi içerik.</p>
+        <p style="font-size:0.8rem; color:#666;">İlişkilendirilen kişi: Sushruta</p>
+      </div>
+      <div class="card amber">
+        <div class="card-title">Ashtanga Hridaya</div>
+        <p>Daha sistematik ve öğretici bir metin. <strong>Günlük yaşam, diyet ve pratik uygulamalar</strong> üzerine rehber.</p>
+        <p style="font-size:0.8rem; color:#666;">Yazarı: Vagbhata</p>
+      </div>
+    </div>
+
+    <h2>3. Beş Element (Pancha Mahabhuta)</h2>
+
+    <p>Ayurveda’ya göre evren ve beden beş temel elementten oluşur. Her element hem doğada hem de bedende belirli bir niteliği temsil eder.</p>
+
+    <div class="grid2">
+      <div class="card green">
+        <div class="card-title">Beş Element</div>
+        <ul>
+          <li><strong>Toprak (Prithvi)</strong> → yoğunluk, yapı, ağırlık</li>
+          <li><strong>Su (Apas)</strong> → akışkanlık, nem, bağlayıcılık</li>
+          <li><strong>Ateş (Agni)</strong> → dönüşüm, sindirim, ısı</li>
+          <li><strong>Hava (Vayu)</strong> → hareket, hafiflik</li>
+          <li><strong>Eter (Akasha)</strong> → boşluk, genişleme</li>
+        </ul>
+      </div>
+      <div class="card coral">
+        <div class="card-title">Element → Besin İlişkisi</div>
+        <ul>
+          <li><strong>Toprak ağırlıklı:</strong> tahıllar, kök sebzeler</li>
+          <li><strong>Su ağırlıklı:</strong> süt ürünleri, sulu meyveler</li>
+          <li><strong>Ateş ağırlıklı:</strong> baharatlar, fermente gıdalar</li>
+          <li><strong>Hava ağırlıklı:</strong> kuru, hafif yiyecekler (kraker, patlamış tahıl)</li>
+          <li><strong>Eter ağırlıklı:</strong> çok hafif, boşluk hissi veren (bazı bitkisel çaylar)</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Besinlerde Element Dağılımı (Tatlar Üzerinden)</h3>
+    <table>
+      <thead>
+        <tr><th>Tat (Rasa)</th><th>Element Kombinasyonu</th><th>Besin Örnekleri</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Tatlı (Sweet)</td><td>Toprak + Su</td><td>süt, pirinç, buğday</td></tr>
+        <tr><td>Ekşi (Sour)</td><td>Toprak + Ateş</td><td>yoğurt, limon</td></tr>
+        <tr><td>Tuzlu (Salty)</td><td>Su + Ateş</td><td>tuz, deniz ürünleri</td></tr>
+        <tr><td>Acı (Pungent)</td><td>Ateş + Hava</td><td>zencefil, biber</td></tr>
+        <tr><td>Bitter (Acımsı)</td><td>Hava + Eter</td><td>yeşil yapraklılar</td></tr>
+        <tr><td>Buruk (Astringent)</td><td>Hava + Toprak</td><td>mercimek, baklagiller</td></tr>
+      </tbody>
+    </table>
+
+    <h2>4. Üç Doşa (Biyolojik Enerjiler)</h2>
+
+    <p>Beş element bedende üç biyolojik enerji şeklinde örgütlenir. Bu enerjiler <strong>doşa</strong> olarak adlandırılır ve her bireyin yapısını, metabolizmasını ve davranışını şekillendirir.</p>
+
+    <div class="grid3">
+      <div class="card blue">
+        <div class="card-title">Vata (Hava + Eter)</div>
+        <ul>
+          <li><strong>Yönetir:</strong> hareket, nefes, sinir iletimi</li>
+          <li><strong>Fiziksel:</strong> zayıf, kuru, hızlı</li>
+          <li><strong>Psikolojik:</strong> yaratıcı, değişken</li>
+          <li><strong>Davranış:</strong> düzensiz yeme, hızlı yaşam</li>
+        </ul>
+      </div>
+      <div class="card coral">
+        <div class="card-title">Pitta (Ateş + Su)</div>
+        <ul>
+          <li><strong>Yönetir:</strong> sindirim, metabolizma, dönüşüm</li>
+          <li><strong>Fiziksel:</strong> orta yapı, sıcak beden</li>
+          <li><strong>Psikolojik:</strong> analitik, rekabetçi</li>
+          <li><strong>Davranış:</strong> planlı, hedef odaklı</li>
+        </ul>
+      </div>
+      <div class="card teal">
+        <div class="card-title">Kapha (Toprak + Su)</div>
+        <ul>
+          <li><strong>Yönetir:</strong> yapı, stabilite, bağışıklık</li>
+          <li><strong>Fiziksel:</strong> güçlü, ağır, dayanıklı</li>
+          <li><strong>Psikolojik:</strong> sakin, stabil</li>
+          <li><strong>Davranış:</strong> alışkanlıkçı, yavaş</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>5. Prakriti ve Vikriti</h2>
+
+    <div class="grid2">
+      <div class="card blue">
+        <div class="card-title">Prakriti — Doğuştan Yapı</div>
+        <p>Bireyin <strong>doğuştan gelen psikofiziksel yapısı</strong>. Üç doşanın özgün kombinasyonuyla belirlenir ve yaşam boyu <strong>büyük ölçüde sabit</strong> kabul edilir.</p>
+        <p style="margin-top:0.5rem;"><em>Herkes aynı değildir; dolayısıyla aynı şekilde beslenmemelidir.</em></p>
+      </div>
+      <div class="card amber">
+        <div class="card-title">Vikriti — Mevcut Denge / Dengesizlik</div>
+        <p>Bireyin <strong>şu anki psikofiziksel dengesi veya dengesizliği</strong>. Değişkendir; çevre, beslenme, stres ve yaşam tarzından etkilenir. Prakriti’den sapmayı gösterir.</p>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr><th>Kavram</th><th>Anlam</th><th>Özellik</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Prakriti</td><td>Doğuştan yapı</td><td>Sabit</td></tr>
+        <tr><td>Vikriti</td><td>Mevcut durum</td><td>Değişken</td></tr>
+      </tbody>
+    </table>
+
+    <div class="warning-box">
+      <strong>Vikriti dengeyi nasıl bozar?</strong> Yanlış beslenme, düzensiz yaşam, stres ve çevresel koşullar dengesizlik yaratır. Sonuçlar hem bedende (sindirim sorunları, enerji düşüklüğü, uyku problemleri) hem zihinde (anksiyete, öfke, motivasyon kaybı) görünür.
+    </div>
+
+    <h2>6. Doşa Tespiti (Tanı Yöntemleri)</h2>
+
+    <div class="grid3">
+      <div class="card blue">
+        <div class="card-title">Gözlem (Darshana)</div>
+        <ul>
+          <li>Vücut yapısı</li>
+          <li>Cilt, saç, göz</li>
+          <li>Hareket biçimi</li>
+        </ul>
+      </div>
+      <div class="card teal">
+        <div class="card-title">Sorgulama (Prashna)</div>
+        <ul>
+          <li>Yeme alışkanlıkları</li>
+          <li>Uyku düzeni</li>
+          <li>Duygusal tepkiler</li>
+        </ul>
+      </div>
+      <div class="card coral">
+        <div class="card-title">Dokunma (Sparsha)</div>
+        <ul>
+          <li>Nabız analizi (Nadi Pariksha)</li>
+          <li>Vücut sıcaklığı</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>Nabız teşhisi (Nadi Pariksha):</strong> Parmaklarla farklı seviyelerde nabız hissedilir. Her doşa farklı bir ritim verir:
+      <ul style="margin-top:0.4rem;">
+        <li><strong>Vata</strong> → hızlı, düzensiz</li>
+        <li><strong>Pitta</strong> → güçlü, keskin</li>
+        <li><strong>Kapha</strong> → yavaş, derin</li>
+      </ul>
+    </div>
+
+    <p style="font-size:0.9rem; color:#555;"><strong>Modern yorum:</strong> Bugün doşa tespiti klinik gözlem, anketler ve davranış analizi ile birlikte değerlendirilmektedir.</p>
+
+    <h2>7. Zihnin Üç Özelliği (Guna)</h2>
+
+    <p>Ayurveda’ya göre zihin de tıpkı beden gibi üç temel niteliğin etkisindedir. Bunlar <strong>Sattva</strong>, <strong>Rajas</strong> ve <strong>Tamas</strong>'tır.</p>
+
+    <div class="grid3">
+      <div class="card green">
+        <div class="card-title">Sattva</div>
+        <p><strong>Saflık · Denge · Berraklık</strong></p>
+        <ul>
+          <li>Sakin ve dingin zihin</li>
+          <li>Farkındalık, sevgi, bilgelik</li>
+          <li>Dengeleyici özellik</li>
+        </ul>
+      </div>
+      <div class="card coral">
+        <div class="card-title">Rajas</div>
+        <p><strong>Hareket · Tutku · Aktivite</strong></p>
+        <ul>
+          <li>Enerji, arzu, hırs</li>
+          <li>Sürekli hareket ve uyarılma</li>
+          <li>Rekabet ve dürtüsellik</li>
+        </ul>
+      </div>
+      <div class="card purple">
+        <div class="card-title">Tamas</div>
+        <p><strong>Ağırlık · Durgunluk · Cehalet</strong></p>
+        <ul>
+          <li>Yavaşlık, ataletsizlik</li>
+          <li>Bilinç bulanıklığı</li>
+          <li>Motivasyon düşüklüğü</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Guna Beslenme İlişkisi</h3>
+    <div class="grid3">
+      <div class="card green">
+        <div class="card-title">Sattvik Besinler</div>
+        <p>Taze, doğal, hafif. Zihni sakinleştirir, bedeni dengeler.</p>
+        <p style="font-size:0.85rem; color:#666;">Örnek: sebzeler, meyveler, süt</p>
+      </div>
+      <div class="card coral">
+        <div class="card-title">Rajasik Besinler</div>
+        <p>Uyarıcı, baharatlı. Zihni aktive eder, hareket artırır.</p>
+        <p style="font-size:0.85rem; color:#666;">Örnek: kahve, acı baharatlar</p>
+      </div>
+      <div class="card purple">
+        <div class="card-title">Tamasik Besinler</div>
+        <p>Bayat, işlenmiş, ağır. Zihni yavaşlatır, bedeni ağırlaştırır.</p>
+        <p style="font-size:0.85rem; color:#666;">Örnek: fast food, aşırı yağlı yiyecekler</p>
+      </div>
+    </div>
+
+    <div class="success-box">
+      Ayurvedik gıdalar yalnızca besin değeriyle değil; <strong>enerjisel etkisi (ısıtıcı/soğutucu)</strong>, <strong>sindirim üzerindeki etkisi</strong> ve <strong>zihinsel sonuçları</strong> ile değerlendirilir.
+    </div>
+
+    <h2>8. Temel Yemek Örneği: Kitchari</h2>
+
+    <div class="card blue">
+      <div class="card-title">Kitchari (Pirinç + Maş Fasulyesi)</div>
+      <ul>
+        <li><strong>Dengeli</strong> — üç doşaya da uygundur</li>
+        <li><strong>Kolay sindirilir</strong> — Agni (sindirim ateşi) yormaz</li>
+        <li><strong>Detoks ve denge</strong> için klasik Ayurvedik yemek</li>
+      </ul>
+    </div>
+
+    <h2>9. Doşa Tipine Göre Günlük Menü</h2>
+
+    <h3>VATA Tipi — Isıtmak + Nemlendirmek + Düzen</h3>
+    <div class="grid2">
+      <div class="card blue">
+        <div class="card-title">Kahvaltı / Öğle</div>
+        <ul>
+          <li><strong>Kahvaltı:</strong> Yulaf lapası (süt + tarçın + hurma), ılık bitki çayı</li>
+          <li><strong>Öğle:</strong> Mercimek çorbası, pirinç pilavı, zeytinyağlı sebze (kabak/havuç)</li>
+        </ul>
+      </div>
+      <div class="card blue">
+        <div class="card-title">Akşam / Ara Öğün</div>
+        <ul>
+          <li><strong>Akşam:</strong> Sebzeli güveç, yoğurt</li>
+          <li><strong>Ara öğün:</strong> Badem, ceviz</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>PİTTA Tipi — Serinletmek + Yatıştırmak</h3>
+    <div class="grid2">
+      <div class="card coral">
+        <div class="card-title">Kahvaltı / Öğle</div>
+        <ul>
+          <li><strong>Kahvaltı:</strong> Yoğurt + meyve, yulaf veya hafif tahıl</li>
+          <li><strong>Öğle:</strong> Zeytinyağlı sebze, pirinç, salata</li>
+        </ul>
+      </div>
+      <div class="card coral">
+        <div class="card-title">Akşam / Ara Öğün</div>
+        <ul>
+          <li><strong>Akşam:</strong> Sebze yemeği, ayran</li>
+          <li><strong>Ara öğün:</strong> Elma, armut</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>KAPHA Tipi — Hafifletmek + Hareketlendirmek</h3>
+    <div class="grid2">
+      <div class="card teal">
+        <div class="card-title">Kahvaltı / Öğle</div>
+        <ul>
+          <li><strong>Kahvaltı:</strong> Ilık su + zencefil, hafif meyve (çok değil)</li>
+          <li><strong>Öğle:</strong> Baharatlı sebze yemeği, mercimek/nohut</li>
+        </ul>
+      </div>
+      <div class="card teal">
+        <div class="card-title">Akşam / Ara Öğün</div>
+        <ul>
+          <li><strong>Akşam:</strong> Çorba veya hafif sebze (az porsiyon)</li>
+          <li><strong>Ara öğün:</strong> Genelde önerilmez / çok az</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>10. Yemek Yeme Kuralları (Ahara Vidhi)</h2>
+
+    <p>Klasik metinlerde geçen <strong>Ahara Vidhi</strong>, "nasıl, ne zaman ve hangi durumda yemek yenmeli" sorusunun cevabını verir.</p>
+
+    <div class="grid2">
+      <div class="card green">
+        <div class="card-title">Yapılması Gerekenler</div>
+        <ul>
+          <li>Açken ye (iştah varken)</li>
+          <li>Düzenli saatlerde ye</li>
+          <li>Sakin ve odaklı ortamda ye</li>
+          <li>Yavaş ve iyi çiğneyerek ye</li>
+          <li>Taze ve sıcak yemek tüket</li>
+          <li>Uyumlu gıdalar tüket (food combining)</li>
+        </ul>
+      </div>
+      <div class="card amber">
+        <div class="card-title">Kaçınılması Gerekenler</div>
+        <ul>
+          <li>Aşırı yeme</li>
+          <li>Televizyon/telefonla bölünmüş yemek</li>
+          <li>Bayat ve soğuk gıda</li>
+          <li>İştahsızken zorla yeme</li>
+          <li>Uyumsuz gıdaları aynı öğünde tüketme</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>11. Asıl Mesele</h2>
+
+    <div class="success-box">
+      Ayurveda yalnızca bir <strong>tedavi sistemi değil</strong>; aynı zamanda <strong>kişiye özel bir yaşam felsefesi</strong>dir. Doğru beslenme, bireyin yapısı (Prakriti) ve içinde bulunduğu duruma (Vikriti) göre şekillenir. Amaç hastalığı tedavi etmek değil; <strong>dengeyi koruyarak hastalığı en başta önlemektir</strong>.
+    </div>
+
+  </div>
+
+  <!-- ═══ QUIZ ═══ -->
+  <div id="quiz" class="section">
+    <p class="score-text">Puan: <span id="scorenum">0</span> / 30</p>
+    <div class="score-bar"><div id="scorefill"></div></div>
+    <div id="quiz-container"></div>
+  </div>
+</div>
+
+<script>
+function switchTab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+const questions = [
+  {
+    q: "Ayurveda kelimesinin kelime anlamı nedir?",
+    opts: ["A) Sağlık sanatı", "B) Yaşam bilgisi", "C) Ruhsal iyileşme", "D) Doğal beslenme"],
+    ans: 1,
+    exp: "Ayurveda; Sanskritçe 'Ayus' (yaşam) ve 'Veda' (bilgi/bilim) kelimelerinden türemiştir. Yani 'yaşam bilgisi' anlamına gelir."
+  },
+  {
+    q: "Ayurveda'nın kökeni hangi ülkeye dayanmaktadır?",
+    opts: ["A) Çin", "B) Tibet", "C) Hindistan", "D) Yunanistan"],
+    ans: 2,
+    exp: "Ayurveda, kökeni Hindistan'a dayanan ve yaklaşık 3.000–5.000 yıllık bir geçmişe sahip geleneksel bir sağlık ve beslenme sistemidir."
+  },
+  {
+    q: "Ayurveda sisteminin temel amacı aşağıdakilerden hangisidir?",
+    opts: ["A) Sadece hastalıkları tedavi etmek", "B) Beden-zihin-ruh dengesini (homeostasis) sağlamak", "C) Daha hızlı zayıflamak", "D) Sadece bitkisel ilaç üretmek"],
+    ans: 1,
+    exp: "Ayurveda bütüncül (holistik) bir sistemdir. Temel amaç; beden, zihin ve ruh arasında dengeyi (homeostasis) korumaktır."
+  },
+  {
+    q: "Ayurveda'da cerrahi teknikler ve operasyon bilgisi hangi klasik metinde yer alır?",
+    opts: ["A) Charaka Samhita", "B) Ashtanga Hridaya", "C) Sushruta Samhita", "D) Rigveda"],
+    ans: 2,
+    exp: "Sushruta Samhita; cerrahi teknikler, anatomi ve operasyon bilgisi içeren, dönemine göre çok ileri düzey bir Ayurveda metnidir."
+  },
+  {
+    q: "İç hastalıkları ve Ayurveda'nın teorik temellerini anlatan en önemli kaynak hangisidir?",
+    opts: ["A) Charaka Samhita", "B) Sama Veda", "C) Yajur Veda", "D) Atharva Veda"],
+    ans: 0,
+    exp: "Charaka Samhita; iç hastalıkları, beslenme ve yaşam tarzına odaklanır. Doşa, denge ve metabolizma gibi Ayurveda'nın teorik temelini kurar."
+  },
+  {
+    q: "'Hareket ve sinir sistemi' ile ilişkilendirilen biyolojik enerji (doşa) hangisidir?",
+    opts: ["A) Pitta", "B) Vata", "C) Kapha", "D) Sattva"],
+    ans: 1,
+    exp: "Vata doşası; hava ve eter elementlerinden oluşur. Nefes, sinir iletimi ve genel olarak hareketten sorumludur."
+  },
+  {
+    q: "Metabolizma ve sindirimi (dönüşümü) yöneten doşa hangisidir?",
+    opts: ["A) Vata", "B) Kapha", "C) Pitta", "D) Guna"],
+    ans: 2,
+    exp: "Pitta doşası; ateş ve su elementlerinden oluşur. Sindirim, metabolizma ve bedendeki dönüşüm süreçlerini yönetir."
+  },
+  {
+    q: "Yapı, dayanıklılık ve bağışıklık sisteminden sorumlu olan doşa hangisidir?",
+    opts: ["A) Vata", "B) Pitta", "C) Kapha", "D) Rajas"],
+    ans: 2,
+    exp: "Kapha doşası; toprak ve su elementlerinden oluşur. Bedensel yapı, stabilite ve bağışıklık sisteminin temelini oluşturur."
+  },
+  {
+    q: "Ayurveda'da 'Ateş' elementinin gıdalardaki ve bedendeki karşılığı olan terim nedir?",
+    opts: ["A) Vayu", "B) Agni", "C) Akasha", "D) Apas"],
+    ans: 1,
+    exp: "Agni; Ayurveda'da ateş elementinin karşılığıdır. Hem bedensel sindirim ateşini hem de gıdalardaki ısıtıcı/dönüştürücü enerjiyi temsil eder."
+  },
+  {
+    q: "Aşağıdakilerden hangisi Ayurveda'daki beş elementten (Pancha Mahabhuta) biri değildir?",
+    opts: ["A) Toprak", "B) Metal", "C) Eter (Boşluk)", "D) Ateş"],
+    ans: 1,
+    exp: "Pancha Mahabhuta beş elementten oluşur: Toprak (Prithvi), Su (Apas), Ateş (Agni), Hava (Vayu) ve Eter (Akasha). Metal Çin sistemine aittir, Ayurveda'da yer almaz."
+  },
+  {
+    q: "Doğuştan gelen ve yaşam boyu sabit kabul edilen psikofiziksel yapıya ne ad verilir?",
+    opts: ["A) Vikriti", "B) Prakriti", "C) Guna", "D) Nadi"],
+    ans: 1,
+    exp: "Prakriti; bireyin doğuştan gelen psikofiziksel yapısıdır. Üç doşanın özgün kombinasyonuyla belirlenir ve yaşam boyu büyük ölçüde sabit kalır."
+  },
+  {
+    q: "Bireyin mevcut durumundaki değişken dengesizliğini ifade eden kavram nedir?",
+    opts: ["A) Prakriti", "B) Sattva", "C) Vikriti", "D) Rasa"],
+    ans: 2,
+    exp: "Vikriti; bireyin mevcut durumdaki psikofiziksel dengesi veya dengesizliğidir. Değişkendir; çevre, beslenme, stres ve yaşam tarzından etkilenir."
+  },
+  {
+    q: "Zihnin 'dengeleyici, saf ve sakin' özelliğine ne ad verilir?",
+    opts: ["A) Rajas", "B) Tamas", "C) Sattva", "D) Agni"],
+    ans: 2,
+    exp: "Sattva; saflık, denge ve berraklık niteliğidir. Sakin zihin, farkındalık, sevgi ve bilgelik ile ilişkilendirilir."
+  },
+  {
+    q: "'Hareket, tutku ve uyarılma' ile ilişkilendirilen zihinsel özellik hangisidir?",
+    opts: ["A) Sattva", "B) Tamas", "C) Rajas", "D) Kapha"],
+    ans: 2,
+    exp: "Rajas; hareket, tutku ve aktivite niteliğidir. Enerji, arzu, hırs, rekabet ve dürtüsellik ile ilişkilendirilir."
+  },
+  {
+    q: "'Ağırlık, durgunluk ve motivasyon düşüklüğü' ile karakterize olan guna hangisidir?",
+    opts: ["A) Sattva", "B) Rajas", "C) Tamas", "D) Pitta"],
+    ans: 2,
+    exp: "Tamas; ağırlık, durgunluk ve cehalet niteliğidir. Bilinç bulanıklığı, ataletsizlik ve motivasyon düşüklüğü ile karakterizedir."
+  },
+  {
+    q: "Kahve ve acı baharatlar hangi kategorideki besinlere örnektir?",
+    opts: ["A) Sattvik", "B) Rajasik", "C) Tamasik", "D) Holistik"],
+    ans: 1,
+    exp: "Rajasik besinler uyarıcı ve baharatlı niteliktedir; zihni aktive eder ve hareketi artırır. Kahve ve acı baharatlar tipik örnekleridir."
+  },
+  {
+    q: "Taze sebze, meyve ve süt gibi 'saf ve zihni sakinleştiren' besinlere ne ad verilir?",
+    opts: ["A) Rajasik", "B) Tamasik", "C) Sattvik", "D) Vikritik"],
+    ans: 2,
+    exp: "Sattvik besinler; taze, doğal ve hafif gıdalardır. Zihni sakinleştirir ve bedeni dengeler; sebze, meyve ve süt başlıca örneklerdir."
+  },
+  {
+    q: "Fast food ve işlenmiş/bayat gıdalar hangi besin grubuyla ilişkilendirilir?",
+    opts: ["A) Sattvik", "B) Rajasik", "C) Tamasik", "D) Prakritik"],
+    ans: 2,
+    exp: "Tamasik besinler; bayat, işlenmiş ve ağır gıdalardır. Zihni yavaşlatır, bedeni ağırlaştırır; fast food ve aşırı yağlı yiyecekler tipik örnekleridir."
+  },
+  {
+    q: "Ayurveda'da 'Tat' (Rasa) üzerinden element dağılımına göre, 'Tatlı' hangi elementlerin birleşimidir?",
+    opts: ["A) Ateş + Hava", "B) Toprak + Su", "C) Su + Ateş", "D) Hava + Eter"],
+    ans: 1,
+    exp: "Tatlı (Sweet) tat; Toprak + Su elementlerinin birleşiminden oluşur. Süt, pirinç ve buğday gibi temel besinler bu kategoridedir."
+  },
+  {
+    q: "'Buruk' (Astringent) tat hangi elementlerden oluşur ve hangi besinde bulunur?",
+    opts: ["A) Hava + Toprak (Mercimek/Baklagiller)", "B) Su + Toprak (Süt)", "C) Ateş + Hava (Biber)", "D) Su + Ateş (Tuz)"],
+    ans: 0,
+    exp: "Buruk (Astringent) tat; Hava + Toprak elementlerinin birleşimidir. Mercimek ve baklagiller bu tadın en belirgin örnekleridir."
+  },
+  {
+    q: "Nabız teşhisi (Nadi Pariksha) yapılırken 'hızlı ve düzensiz' ritim hangi doşayı gösterir?",
+    opts: ["A) Pitta", "B) Kapha", "C) Vata", "D) Sattva"],
+    ans: 2,
+    exp: "Vata doşasının nabız ritmi hızlı ve düzensizdir. Bu durum Vata'nın hareket ve değişkenlik özellikleriyle uyumludur."
+  },
+  {
+    q: "'Güçlü ve keskin' bir nabız ritmi hangi bedensel yapıya işaret eder?",
+    opts: ["A) Vata", "B) Pitta", "C) Kapha", "D) Tamas"],
+    ans: 1,
+    exp: "Pitta doşasının nabız ritmi güçlü ve keskindir. Bu durum Pitta'nın ateşli ve yoğun metabolik enerjisiyle uyumludur."
+  },
+  {
+    q: "Hem bedeni hem zihni dengelemek için kullanılan, pirinç ve maş fasulyesinden yapılan temel yemek nedir?",
+    opts: ["A) Curry", "B) Kitchari", "C) Dal", "D) Raita"],
+    ans: 1,
+    exp: "Kitchari; pirinç ve maş fasulyesinden yapılan klasik Ayurvedik yemektir. Dengeli, kolay sindirilir ve detoks amacıyla kullanılır; üç doşaya da uygundur."
+  },
+  {
+    q: "Pitta tipi bir birey için hazırlanan günlük menünün temel amacı ne olmalıdır?",
+    opts: ["A) Isıtmak ve nemlendirmek", "B) Serinletmek ve yatıştırmak", "C) Hareketlendirmek", "D) Ağırlaştırmak"],
+    ans: 1,
+    exp: "Pitta doşası ateşli ve sıcak yapıdadır. Bu nedenle menüsü serinletici ve yatıştırıcı olmalıdır; yoğurt, salata ve ayran tipik örneklerdir."
+  },
+  {
+    q: "Vata tipi bir birey için kahvaltıda hangisi daha uygundur?",
+    opts: ["A) Soğuk bir smoothie", "B) Ilık yulaf lapası (süt + tarçın + hurma)", "C) Sadece meyve", "D) Buzlu kahve"],
+    ans: 1,
+    exp: "Vata tipi kuru ve soğuk yapıdadır; ısıtıcı, nemlendirici ve düzen verici yemekler ister. Ilık yulaf lapası (süt + tarçın + hurma) ideal bir kahvaltıdır."
+  },
+  {
+    q: "Kapha tipi bir birey için önerilen öğle yemeği tarzı nasıldır?",
+    opts: ["A) Çok yağlı ve ağır yemekler", "B) Baharatlı sebze yemeği ve baklagiller", "C) Soğuk salata", "D) Tatlı hamur işleri"],
+    ans: 1,
+    exp: "Kapha tipi ağır ve yavaş yapıdadır; menü hafifletmeli ve hareketlendirmelidir. Baharatlı sebze yemeği ve mercimek/nohut gibi baklagiller idealdir."
+  },
+  {
+    q: "Aşağıdakilerden hangisi Ayurveda'daki 'Yemek Yeme Kuralları' (Ahara Vidhi) arasında yer almaz?",
+    opts: ["A) Açken yemek", "B) Televizyon izleyerek hızlıca yemek", "C) Taze ve sıcak yemek", "D) Yavaş ve iyi çiğneyerek yemek"],
+    ans: 1,
+    exp: "Ahara Vidhi; yemeğin sakin, odaklı, yavaş ve iyi çiğneyerek yenmesini önerir. Televizyonla bölünmüş, hızlı yemek bu kuralın açıkça karşıtıdır."
+  },
+  {
+    q: "Ayurveda teşhis yöntemlerinden 'Darshana' ne anlama gelir?",
+    opts: ["A) Dokunma", "B) Sorgulama", "C) Gözlem", "D) Nabız ölçümü"],
+    ans: 2,
+    exp: "Darshana; gözlem yöntemidir. Vücut yapısı, cilt, saç, göz rengi ve hareket biçimi gözlemlenerek doşa tespiti yapılır."
+  },
+  {
+    q: "Ayurveda'ya göre yiyecekler sadece besin değerine göre değil, aynı zamanda neye göre değerlendirilir?",
+    opts: ["A) Fiyatına göre", "B) Rengine göre", "C) Enerjisel etkisine (ısıtıcı/soğutucu) göre", "D) Popülerliğine göre"],
+    ans: 2,
+    exp: "Ayurvedik gıdalar; enerjisel etkisi (ısıtıcı/soğutucu), sindirim üzerindeki etkisi ve zihinsel sonuçları ile değerlendirilir. Sadece kalori veya besin değeri yeterli değildir."
+  },
+  {
+    q: "Ayurveda sisteminde homeostasis (denge) bozulduğunda ortaya çıkan fiziksel ve psikolojik sorunlar (anksiyete, sindirim bozukluğu vb.) hangi kavramla ifade edilir?",
+    opts: ["A) Prakriti", "B) Vikriti", "C) Agni", "D) Rasa"],
+    ans: 1,
+    exp: "Vikriti; mevcut durumdaki dengesizlik halidir. Yanlış beslenme, stres ve düzensiz yaşam sonucu bedende (sindirim sorunları) ve zihinde (anksiyete, öfke) belirir."
+  }
+];
+
+let answered = Array(questions.length).fill(false);
+let score = 0;
+
+function answer(qi, oi) {
+  if (answered[qi]) return;
+  answered[qi] = true;
+  const block = document.querySelectorAll('.q-block')[qi];
+  const opts = block.querySelectorAll('.opt');
+  opts.forEach((o, i) => {
+    if (i === questions[qi].ans) o.classList.add('correct');
+    else o.classList.add(i === oi ? 'wrong' : 'disabled');
+  });
+  block.querySelector('.explanation').style.display = 'block';
+  if (oi === questions[qi].ans) score++;
+  document.getElementById('scorenum').textContent = score;
+  document.getElementById('scorefill').style.width = (answered.filter(Boolean).length / questions.length * 100) + '%';
+}
+
+function buildQuiz() {
+  const c = document.getElementById('quiz-container');
+  questions.forEach((q, qi) => {
+    c.innerHTML += `<div class="q-block">
+      <div class="q-text">${qi+1}. ${q.q}</div>
+      ${q.opts.map((o,oi) => `<div class="opt" onclick="answer(${qi},${oi})">${o}</div>`).join('')}
+      <div class="explanation">💡 ${q.exp}</div>
+    </div>`;
+  });
+}
+buildQuiz();
+</script>
+</body>
+</html>
