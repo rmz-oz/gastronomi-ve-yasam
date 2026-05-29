@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konu 6 — Nörogastronomi: Lezzet Beyinde Oluşur</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f0; color: #1a1a1a; padding: 2rem 1rem; }
+.container { max-width: 880px; margin: 0 auto; }
+.back { display: inline-block; color: #1a3a6e; text-decoration: none; font-size: 0.9rem; margin-bottom: 1.5rem; }
+.back:hover { text-decoration: underline; }
+h1 { font-size: 1.5rem; font-weight: 700; color: #1a3a6e; }
+.subtitle { color: #555; font-size: 0.9rem; margin: 0.3rem 0 1.5rem; }
+.tabs { display: flex; gap: 8px; margin-bottom: 1.5rem; border-bottom: 2px solid #e0e0d8; padding-bottom: 0; }
+.tab-btn { padding: 0.5rem 1.25rem; border: none; background: none; cursor: pointer; font-size: 0.9rem; color: #666; border-bottom: 2px solid transparent; margin-bottom: -2px; font-weight: 500; }
+.tab-btn.active { color: #1a3a6e; border-bottom-color: #1a3a6e; }
+.section { display: none; }
+.section.active { display: block; }
+
+h2 { font-size: 1.15rem; font-weight: 600; color: #1a3a6e; margin: 1.5rem 0 0.75rem; }
+h3 { font-size: 1rem; font-weight: 600; color: #333; margin: 1rem 0 0.5rem; }
+p { line-height: 1.65; margin-bottom: 0.75rem; color: #333; }
+ul, ol { padding-left: 1.5rem; margin-bottom: 0.75rem; }
+li { line-height: 1.6; margin-bottom: 0.25rem; }
+.card { background: #fff; border: 1px solid #e0e0d8; border-radius: 10px; padding: 1.1rem 1.25rem; margin-bottom: 1rem; }
+.card-title { font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+.blue .card-title { color: #1a3a6e; }
+.teal .card-title { color: #0f766e; }
+.amber .card-title { color: #92400e; }
+.coral .card-title { color: #c2410c; }
+.green .card-title { color: #166534; }
+.purple .card-title { color: #6b21a8; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+.info-box { border-left: 4px solid #3b82f6; background: #eff6ff; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; }
+.success-box { border-left: 4px solid #4caf50; background: #f0fdf4; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; }
+.warning-box { border-left: 4px solid #f59e0b; background: #fffbeb; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; }
+.stat { background: #1a3a6e; color: #fff; border-radius: 10px; padding: 1rem 1.25rem; text-align: center; margin-bottom: 1rem; }
+.stat-num { font-size: 1.6rem; font-weight: 700; }
+.stat-label { font-size: 0.8rem; opacity: 0.85; margin-top: 0.2rem; }
+
+table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; background: #fff; border-radius: 10px; overflow: hidden; border: 1px solid #e0e0d8; font-size: 0.9rem; }
+th, td { padding: 0.6rem 0.8rem; text-align: left; border-bottom: 1px solid #e0e0d8; }
+th { background: #1a3a6e; color: #fff; font-weight: 600; font-size: 0.85rem; }
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) { background: #fafaf5; }
+
+.score-bar { background: #e0e0d8; border-radius: 8px; height: 8px; margin-bottom: 1.5rem; overflow: hidden; }
+#scorefill { height: 100%; background: #1a3a6e; border-radius: 8px; width: 0%; transition: width 0.4s; }
+.score-text { font-size: 0.85rem; color: #555; margin-bottom: 0.5rem; }
+.q-block { background: #fff; border: 1px solid #e0e0d8; border-radius: 10px; padding: 1.1rem 1.25rem; margin-bottom: 1rem; }
+.q-text { font-weight: 500; margin-bottom: 0.75rem; font-size: 0.95rem; }
+.opt { padding: 0.6rem 0.9rem; border: 1px solid #e0e0d8; border-radius: 7px; margin-bottom: 0.4rem; cursor: pointer; font-size: 0.9rem; transition: background 0.1s; }
+.opt:hover:not(.correct):not(.wrong) { background: #f0f0eb; }
+.opt.correct { background: #d1fae5; border-color: #4caf50; color: #065f46; pointer-events: none; }
+.opt.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; pointer-events: none; }
+.opt.disabled { pointer-events: none; color: #aaa; }
+.explanation { margin-top: 0.6rem; font-size: 0.85rem; color: #555; background: #f5f5f0; padding: 0.6rem 0.8rem; border-radius: 6px; display: none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back" href="index.html">← Geri</a>
+  <h1>Nörogastronomi: Lezzet Beyinde Oluşur</h1>
+  <p class="subtitle">Gastronomi ve Yaşam · Konu 6</p>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('lesson', this)">Ders Notu</button>
+    <button class="tab-btn" onclick="switchTab('quiz', this)">Quiz (50 Soru)</button>
+  </div>
+
+  <!-- ═══ DERS NOTU ═══ -->
+  <div id="lesson" class="section active">
+
+    <h2>1. Nörogastronomi Nedir?</h2>
+
+    <div class="grid3">
+      <div class="stat">
+        <div class="stat-num">2000'ler</div>
+        <div class="stat-label">Kavramın ortaya çıkışı</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">2012</div>
+        <div class="stat-label">Shepherd — "Neurogastronomy" kitabı</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">%70–80</div>
+        <div class="stat-label">Lezzette koku payı</div>
+      </div>
+    </div>
+
+    <p><strong>Nörogastronomi</strong>, tat algısının yalnızca dille ilgili olmadığını; beynin tüm duyulardan gelen verileri birleştirdiği <strong>çok duyulu (multisensory)</strong> bir süreç olduğunu savunur. <strong>Lezzet (flavor) ağızda değil, beyinde oluşur.</strong></p>
+
+    <div class="info-box">
+      <strong>Tanım:</strong> Beyin bilimi (nöroloji) ile gastronominin birleşiminden doğan bir alandır. Yeme deneyimini biyolojik, kültürel ve nörolojik bir süreç olarak ele alır.
+    </div>
+
+    <h2>2. Tarihçe ve Öncü İsim</h2>
+
+    <div class="card blue">
+      <div class="card-title">Gordon M. Shepherd</div>
+      <p>Yale Üniversitesi nörobilimci. 2012'de yayımladığı <strong>"Neurogastronomy: How the Brain Creates Flavor and Why It Matters"</strong> kitabıyla alanın temel ismi sayılır.</p>
+      <p style="margin-top:0.5rem;">Shepherd'a göre beyin lezzeti şu mekanizmayla yaratır: <strong>tahmin → karşılaştırma → karar.</strong> Yani lezzet, beynin aktif bir <strong>yorumudur</strong>; pasif bir duyusal kayıt değildir.</p>
+    </div>
+
+    <h2>3. Tat (Taste) vs. Lezzet (Flavor)</h2>
+
+    <table>
+      <thead>
+        <tr><th>Kavram</th><th>Mekanizma</th><th>Nerede oluşur?</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Tat (Taste)</strong></td><td>Dil reseptörleri — biyolojik</td><td>Ağız (dil yüzeyi)</td></tr>
+        <tr><td><strong>Lezzet (Flavor)</strong></td><td>Çok duyulu entegrasyon — nörolojik</td><td>Beyin</td></tr>
+      </tbody>
+    </table>
+
+    <div class="grid2">
+      <div class="card teal">
+        <div class="card-title">5 Temel Tat</div>
+        <ul>
+          <li>Tatlı (Sweet)</li>
+          <li>Tuzlu (Salty)</li>
+          <li>Ekşi (Sour)</li>
+          <li>Acı (Bitter)</li>
+          <li><strong>Umami</strong> (5. tat, glutamat)</li>
+        </ul>
+        <p style="font-size:0.85rem; color:#666; margin-top:0.5rem;">Not: "Baharatlı (spicy)" bir tat değildir; trigeminal sistem üzerinden algılanan yanma hissidir.</p>
+      </div>
+      <div class="card coral">
+        <div class="card-title">Lezzet Formülü</div>
+        <p style="text-align:center; font-weight:600; font-size:1rem; margin:0.5rem 0;">Tat + Koku + Dokunma + Görme + İşitme</p>
+        <p>Çilek aroması, vanilya kokusu, çıtırlık sesi → hepsi <em>tat</em> değil <em>lezzet</em> bileşenleridir.</p>
+      </div>
+    </div>
+
+    <h2>4. Kokunun Gücü (Olfaksiyon)</h2>
+
+    <div class="success-box">
+      Lezzet algısının <strong>%70–80'i kokudan</strong> gelir. Koku olmadan lezzet ciddi şekilde silikleşir.
+    </div>
+
+    <h3>İki Koku Yolu</h3>
+    <div class="grid2">
+      <div class="card blue">
+        <div class="card-title">Ortonazal Olfaksiyon</div>
+        <p>Dışarıdaki kokunun <strong>burun delikleri</strong> aracılığıyla doğrudan alınması. Yemeği yemeden önceki "kokla–değerlendir" aşamasıdır.</p>
+      </div>
+      <div class="card coral">
+        <div class="card-title">Retronazal Olfaksiyon</div>
+        <p>Yemek yerken <strong>ağız içinden geniz yoluyla</strong> koku reseptörlerine ulaşan hava. <strong>Lezzetin temel mekanizmasıdır.</strong> Nezleyken tat alamamamızın asıl nedeni budur.</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>Aroma çeşitliliği → lezzet derinliği.</strong> Koku reseptörleri beyne olfaktör sistem üzerinden bağlanır. Bu nedenle "tat" değil "flavor" belirleyicidir.
+    </div>
+
+    <h2>5. Koku Hafızası ve Limbik Sistem</h2>
+
+    <div class="card purple">
+      <div class="card-title">Limbik Sistem — Amigdala + Hipokampus</div>
+      <ul>
+        <li>Koku, <strong>doğuştan kısmen + öğrenilmiş kısmen</strong> bir duyudur</li>
+        <li>Deneyim → <strong>koku hafızası</strong> oluşturur</li>
+        <li>Koku reseptörleri limbik sisteme <strong>doğrudan</strong> bağlanır (talamus by-pass)</li>
+        <li>Bu yüzden koku, <strong>en güçlü hatırlatma tetikleyicisidir</strong> (Proust etkisi)</li>
+      </ul>
+    </div>
+
+    <h2>6. Duyuların Lezzetteki Rolü</h2>
+
+    <h3>Görme — "Önce göz yer"</h3>
+    <div class="card blue">
+      <ul>
+        <li>Görme, lezzet beklentisini <strong>ilk belirleyen</strong> duyudur</li>
+        <li>Renk → tat algısını değiştirir (kırmızı tatlılık beklentisi yaratır)</li>
+        <li>Sunum → lezzet değerlendirmesini doğrudan etkiler</li>
+        <li>Aynı tatlı maviye boyandığında daha az iştah açıcı algılanır</li>
+      </ul>
+    </div>
+
+    <h3>İşitme — Çıtırlık ve Ortam</h3>
+    <div class="card teal">
+      <ul>
+        <li><strong>Çıtırlık sesi</strong> = tazelik ve kalite algısı (cipste hışırtı, içecek açılışında "fıss" sesi)</li>
+        <li>Ortam sesi (müzik, gürültü) yemeğin tat değerlendirmesini değiştirir</li>
+        <li>Düşük frekanslı müzikler acılığı, yüksek frekanslı müzikler tatlılığı vurgular</li>
+      </ul>
+    </div>
+
+    <h3>Dokunma — Mouthfeel ve Trigeminal Sistem</h3>
+    <div class="card coral">
+      <p><strong>Mouthfeel</strong> (ağızdaki his), lezzetin <em>dokunsal</em> boyutudur:</p>
+      <ul>
+        <li>Kıvam (crunchy / smooth / chewy / creamy)</li>
+        <li>Sıcaklık</li>
+        <li>Gazlılık (karbonasyon)</li>
+      </ul>
+      <p style="margin-top:0.5rem;"><strong>Trigeminal sistem:</strong> beşinci kraniyal sinir; <strong>acı (biber yanması), serinlik (nane), yanma hissi</strong>nden sorumludur. Tat değil; dokunsal-kimyasal bir uyarıdır.</p>
+    </div>
+
+    <h2>7. Beyin Lezzeti Nasıl Yaratır?</h2>
+
+    <div class="info-box">
+      Shepherd'a göre lezzet üretimi 3 aşamalı bir bilişsel süreçtir:
+      <ol style="margin-top:0.5rem; padding-left:1.5rem;">
+        <li><strong>Tahmin</strong> — duyusal sinyallere göre ne yenildiğini öngör</li>
+        <li><strong>Karşılaştırma</strong> — hafızadaki kalıplarla eşle</li>
+        <li><strong>Karar</strong> — "ne kadar haz / ne kadar tehlike" yargısı</li>
+      </ol>
+    </div>
+
+    <p><strong>Haz + öğrenme = tercih.</strong> Lezzet sadece bir his değil; bir <strong>davranış üreticisidir</strong>. Yiyecekleri yeniden seçip seçmeyeceğimizi belirler.</p>
+
+    <h2>8. Lezzet ve Duygular</h2>
+
+    <div class="card purple">
+      <div class="card-title">Lezzet = Duygusal Deneyim</div>
+      <ul>
+        <li>Yemek limbik sistemi aktive eder → <strong>duygu tetikler</strong></li>
+        <li>Duygu → tercih oluşturur (sevme / tiksinme)</li>
+        <li>Çocuklukta anneanne mutfağının kokusu → güvenlik / mutluluk</li>
+        <li>Aynı yiyecek farklı kültürlerde farklı duygular uyandırır → lezzet <strong>kültüreldir</strong></li>
+      </ul>
+    </div>
+
+    <h2>9. Lezzet ve Obezite</h2>
+
+    <div class="warning-box">
+      <strong>"Hyper-palatable" (aşırı lezzetli) gıdalar:</strong> şeker + tuz + yağ kombinasyonuyla beynin <strong>ödül sistemini aşırı uyarır</strong>. Sonuç: gerçek <em>açlık</em> değil, <em>istek (craving)</em>. Bu mekanizma obezitenin temel davranışsal sürücülerinden biridir.
+    </div>
+
+    <h3>Ödül Sistemi Döngüsü</h3>
+    <ul>
+      <li>Yüksek lezzet → dopamin salınımı</li>
+      <li>Tekrar tüketim → öğrenilmiş istek (cue-conditioned craving)</li>
+      <li>Tolerans artar → aynı haz için daha fazla tüketim</li>
+      <li>Sonuç: aşırı tüketim, kilo alımı, metabolik bozukluk</li>
+    </ul>
+
+    <h2>10. Lezzet Neden Önemlidir?</h2>
+
+    <div class="grid2">
+      <div class="card green">
+        <div class="card-title">Hayatta Kalma Mekanizması</div>
+        <ul>
+          <li>Tatlı → enerji (kalori) işareti</li>
+          <li>Tuzlu → mineral</li>
+          <li>Acı → potansiyel zehir uyarısı</li>
+          <li>Umami → protein işareti</li>
+          <li>Ekşi → bozulma / olgunlaşma sinyali</li>
+        </ul>
+      </div>
+      <div class="card blue">
+        <div class="card-title">Davranışsal Yönlendirici</div>
+        <ul>
+          <li>Besin seçimini şekillendirir</li>
+          <li>Öğrenme ve kültürle gelişir</li>
+          <li>Sağlık ve uzun vadeli davranışı belirler</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>11. Gelecek: Gıda Tasarımı ve Etik</h2>
+
+    <div class="card amber">
+      <div class="card-title">Tasarlanabilir Lezzet</div>
+      <ul>
+        <li><strong>Multisensory gıda tasarımı:</strong> bir tabağın rengi, sesi, kıvamı bilinçli tasarlanarak lezzet algısı yönlendirilir</li>
+        <li><strong>Nudging:</strong> sağlıklı beslenmeyi teşvik eden duyusal yönlendirme (örn. küçük tabak, kırmızı sosla servis)</li>
+        <li>Sağlıklı yiyecekleri "daha lezzetli" hissettirme stratejileri</li>
+      </ul>
+    </div>
+
+    <div class="warning-box">
+      <strong>Etik Soru:</strong> Lezzet algısı tasarlanabiliyorsa, bu güç tüketici manipülasyonuna mı yoksa halk sağlığına mı hizmet eder? Endüstriyel hyper-palatable ürün tasarımı, etik açıdan ciddi bir tartışmadır.
+    </div>
+
+    <h2>12. Genel Özet (Takeaway)</h2>
+
+    <div class="success-box">
+      <ul style="padding-left:1.2rem;">
+        <li><strong>Lezzet ağızda değil, beyinde oluşur.</strong></li>
+        <li>Çok duyulu sistem: <strong>tat + koku + his + görme + işitme</strong>.</li>
+        <li>Lezzet → duygu → davranış zinciri.</li>
+        <li>Yeme = <strong>biyolojik + kültürel + nörolojik</strong> süreç.</li>
+        <li>Gelecek: <strong>tasarım + etik sorumluluk</strong>.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- ═══ QUIZ ═══ -->
+  <div id="quiz" class="section">
+    <p class="score-text">Puan: <span id="scorenum">0</span> / 50</p>
+    <div class="score-bar"><div id="scorefill"></div></div>
+    <div id="quiz-container"></div>
+  </div>
+</div>
+
+<script>
+function switchTab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+const questions = [
+  {
+    q: "Nörogastronominin temel iddiası aşağıdakilerden hangisidir?",
+    opts: ["A) Tat algısı sadece dildeki reseptörlerle sınırlıdır.", "B) Lezzet, beynin tüm duyuları entegre etmesiyle oluşan bir süreçtir.", "C) Yemek pişirmek sadece bir kimya bilimidir.", "D) Sindirim sistemi beyinden bağımsız çalışır."],
+    ans: 1,
+    exp: "Nörogastronomi, lezzetin ağızda değil beyinde oluştuğunu savunur. Beyin tat, koku, görme, dokunma ve işitmeyi entegre ederek lezzet deneyimini üretir."
+  },
+  {
+    q: "Nörogastronomi kavramının öncüsü kabul edilen ve 2012'de bu konuda kitap yazan bilim insanı kimdir?",
+    opts: ["A) Auguste Escoffier", "B) Marie-Antoine Careme", "C) Gordon M. Shepherd", "D) Brillat Savarin"],
+    ans: 2,
+    exp: "Yale nörobilimci Gordon M. Shepherd, 2012'de 'Neurogastronomy: How the Brain Creates Flavor and Why It Matters' kitabıyla alanın temel ismi sayılır."
+  },
+  {
+    q: "Lezzet (flavor) algısının yaklaşık yüzde kaçını koku duyusu oluşturur?",
+    opts: ["A) %10–20", "B) %30–40", "C) %50–60", "D) %70–80"],
+    ans: 3,
+    exp: "Lezzet algısının yaklaşık %70–80'i kokudan gelir. Bu yüzden nezle olduğumuzda veya burnumuzu kapattığımızda lezzet ciddi biçimde silikleşir."
+  },
+  {
+    q: "Yemek yerken ağız içinden genize doğru yükselen ve lezzet algısının temelini oluşturan koku alma yoluna ne denir?",
+    opts: ["A) Ortonazal olfaksiyon", "B) Retronazal olfaksiyon", "C) Trigeminal sistem", "D) Limbik iletim"],
+    ans: 1,
+    exp: "Retronazal olfaksiyon; ağız içinden geniz yoluyla koku reseptörlerine ulaşan hava akışıdır ve lezzet deneyiminin temel mekanizmasıdır."
+  },
+  {
+    q: "Aşağıdakilerden hangisi bir 'tat' (taste) değil, bir 'lezzet' (flavor) bileşenidir?",
+    opts: ["A) Tatlı", "B) Umami", "C) Çilek aroması", "D) Ekşi"],
+    ans: 2,
+    exp: "Tatlı, ekşi ve umami dil reseptörleriyle algılanan biyolojik tatlardır. Çilek aroması ise koku odaklı bir lezzet bileşenidir."
+  },
+  {
+    q: "'Önce göz yer' ifadesi nörogastronomide neyi temsil eder?",
+    opts: ["A) Görmenin tat beklentisini ve algısını belirlemesini", "B) Yemek sunumunun tadı her zaman iyileştirdiğini", "C) Sadece renkli yemeklerin sağlıklı olduğunu", "D) Göz reseptörlerinin dilde de bulunduğunu"],
+    ans: 0,
+    exp: "Görme, lezzet beklentisini ilk belirleyen duyudur. Renk ve sunum, beyinde tat algısının ön kalıbını oluşturur."
+  },
+  {
+    q: "'Trigeminal Sistem' yemek yerken hangi hislerin algılanmasından sorumludur?",
+    opts: ["A) Tatlı ve tuzlu farkı", "B) Renklerin canlılığı", "C) Acı, serinlik (nane gibi) ve yanma hissi", "D) Çıtırlık sesi"],
+    ans: 2,
+    exp: "Trigeminal sistem (5. kraniyal sinir); biber yanması, nane serinliği ve kimyasal yanma gibi dokunsal-kimyasal hisleri taşır. Tat değil ağız hissidir."
+  },
+  {
+    q: "Beynin hangi bölgesi koku hafızası ve duygusal tepkilerle (lezzet deneyimi) doğrudan ilişkilidir?",
+    opts: ["A) Frontal Lob", "B) Limbik Sistem (Amigdala ve Hipokampus)", "C) Serebellum", "D) Oksipital Lob"],
+    ans: 1,
+    exp: "Koku reseptörleri limbik sisteme (amigdala + hipokampus) doğrudan bağlanır. Bu nedenle koku, en güçlü duygu ve hatırlatma tetikleyicisidir."
+  },
+  {
+    q: "Dış dünyadaki kokuların burun delikleri aracılığıyla doğrudan alınmasına ne ad verilir?",
+    opts: ["A) Retronazal olfaksiyon", "B) Ortonazal olfaksiyon", "C) Mouthfeel", "D) Nudging"],
+    ans: 1,
+    exp: "Ortonazal olfaksiyon; havadaki kokunun burun delikleri yoluyla doğrudan alınmasıdır. Yemeği yemeden önce 'koklayıp değerlendirme' aşamasıdır."
+  },
+  {
+    q: "Aşağıdakilerden hangisi 5 temel tattan biri değildir?",
+    opts: ["A) Acı (Bitter)", "B) Umami", "C) Baharatlı (Spicy)", "D) Tuzlu"],
+    ans: 2,
+    exp: "5 temel tat: tatlı, tuzlu, ekşi, acı ve umami. 'Baharatlı' bir tat değil, trigeminal sistem üzerinden algılanan yanma hissidir."
+  },
+  {
+    q: "İşitme duyusunun lezzet algısı üzerindeki etkisine en iyi örnek hangisidir?",
+    opts: ["A) Yemeğin sıcaklığı", "B) Cips yerken çıkan çıtırlık sesi", "C) Tabağın porselen olması", "D) Masadaki çiçeklerin kokusu"],
+    ans: 1,
+    exp: "Çıtırlık sesi, tazelik ve kalite algısını doğrudan etkiler. Sessiz cips daha az lezzetli algılanır."
+  },
+  {
+    q: "Beynin ödül sistemini aşırı uyararak gerçek açlık yerine 'istek' yaratan gıdalara ne ad verilir?",
+    opts: ["A) Sattvik gıdalar", "B) Hyper-palatable gıdalar", "C) Probiyotik gıdalar", "D) Tamasik gıdalar"],
+    ans: 1,
+    exp: "Hyper-palatable (aşırı lezzetli) gıdalar; şeker, yağ ve tuzu yoğunlaştırarak dopamin salınımını tetikler. Gerçek açlık değil, craving (istek) doğurur."
+  },
+  {
+    q: "Nörogastronomiye göre 'Lezzet' nerede oluşur?",
+    opts: ["A) Dilin üzerinde", "B) Midede", "C) Beyinde", "D) Burun reseptörlerinde"],
+    ans: 2,
+    exp: "Lezzet, çok duyulu girdileri entegre eden beyinde oluşur. Dil yalnızca temel tat sinyallerini gönderir."
+  },
+  {
+    q: "Ortamdaki müziğin yemeğin tadı üzerindeki etkisi hangi duyusal etkileşime örnektir?",
+    opts: ["A) Dokunma ve lezzet", "B) İşitme ve lezzet", "C) Görme ve lezzet", "D) Koku ve tat"],
+    ans: 1,
+    exp: "Ortam sesi ve müzik işitsel girdidir. Düşük frekanslı müzikler acılığı, yüksek frekanslı müzikler tatlılığı vurgular."
+  },
+  {
+    q: "'Mouthfeel' (Ağızdaki his) kavramı aşağıdakilerden hangisini kapsamaz?",
+    opts: ["A) Gıdanın kıvamı", "B) Gıdanın sıcaklığı", "C) Gıdanın rengi", "D) Gıdanın gazlılık oranı"],
+    ans: 2,
+    exp: "Mouthfeel dokunsal bir kavramdır: kıvam, sıcaklık ve gazlılık dahildir. Renk ise görme duyusuna aittir."
+  },
+  {
+    q: "Bir kişi nezle olduğunda yediği yemeğin tadını alamamasının temel nörolojik sebebi nedir?",
+    opts: ["A) Dilindeki tat reseptörlerinin ölmesi", "B) Retronazal koku yolunun tıkanması", "C) Gözlerinin iyi görememesi", "D) Trigeminal sistemin bozulması"],
+    ans: 1,
+    exp: "Nezlede genizdeki koku yolu (retronazal) tıkanır. Lezzetin %70–80'i kokudan geldiği için yemek 'tatsız' algılanır."
+  },
+  {
+    q: "Nörogastronomi perspektifinden gıda tasarımı yaparken 'etik' tartışmalar neden önemlidir?",
+    opts: ["A) Yemeklerin daha pahalıya satılması için", "B) Tüketicinin algısının manipüle edilmesi riskine karşı", "C) Sadece organik ürünlerin kullanılması zorunlu olduğu için", "D) Şeflerin daha ünlü olması için"],
+    ans: 1,
+    exp: "Lezzet tasarlanabilir bir sistemdir. Bu güç, hyper-palatable endüstri ürünleri gibi sağlığa zararlı manipülasyona dönüşebileceği için etik kritiktir."
+  },
+  {
+    q: "Koku duyusunun 'en güçlü hatırlatma tetikleyicisi' olmasının sebebi nedir?",
+    opts: ["A) Koku reseptörlerinin dilde bulunması", "B) Burun sinirlerinin limbik sistemle doğrudan bağlantılı olması", "C) Kokunun sadece gündüzleri algılanması", "D) Kokunun biyolojik bir değeri olmaması"],
+    ans: 1,
+    exp: "Koku, talamus by-pass ederek limbik sisteme (amigdala + hipokampus) doğrudan ulaşır. Bu yüzden duygu ve anı tetikleme gücü diğer duyulardan çok yüksektir."
+  },
+  {
+    q: "Aşağıdakilerden hangisi nörogastronominin gelecekteki uygulama alanlarından biridir?",
+    opts: ["A) Sadece geleneksel yemek tariflerini saklamak", "B) Sağlıklı beslenme için duyusal yönlendirme (nudging) tasarlamak", "C) Yemek yeme süresini uzatmak", "D) Baharat kullanımını tamamen yasaklamak"],
+    ans: 1,
+    exp: "Nudging; sağlıklı seçimleri lezzet algısını koruyarak teşvik etme yaklaşımıdır. Küçük tabak, renk kontrastı, ses gibi duyusal ipuçları kullanılır."
+  },
+  {
+    q: "Bir tabaktaki kırmızı rengin iştahı artırması veya tatlılık algısını güçlendirmesi hangi süreçle açıklanır?",
+    opts: ["A) Duyusal entegrasyon (Görme ve Tat)", "B) Trigeminal uyarı", "C) Retronazal koku alma", "D) Mekanik sindirim"],
+    ans: 0,
+    exp: "Beyin görsel girdiyi tat sinyaliyle birleştirir. Kırmızı renk öğrenilmiş bir 'tatlı/olgun' işaretidir; tatlılık algısını güçlendirir."
+  },
+  {
+    q: "Nörogastronomiye göre yeme eylemi hangi süreçlerin birleşimidir?",
+    opts: ["A) Sadece biyolojik", "B) Biyolojik + Kültürel + Nörolojik", "C) Sadece fiziksel", "D) Sadece ekonomik"],
+    ans: 1,
+    exp: "Yeme; biyolojik ihtiyaç, kültürel öğrenme ve nörolojik işlem süreçlerinin birleşimidir. Bu üç katman lezzeti birlikte üretir."
+  },
+  {
+    q: "Tat ve lezzet farkı dikkate alındığında, 'umami' hangisidir?",
+    opts: ["A) Bir aroma", "B) Temel bir tat", "C) Bir ağız hissi", "D) Bir sunum tekniği"],
+    ans: 1,
+    exp: "Umami; glutamatın yarattığı 5. temel tattır. Et, parmesan, mantar ve domateste belirgindir."
+  },
+  {
+    q: "Nörogastronomide 'flavor' (lezzet) formülü aşağıdakilerden hangisidir?",
+    opts: ["A) Tat + Koku + Dokunma + Görme + İşitme", "B) Sadece Tat + Koku", "C) Sadece Kalori + Protein", "D) Pişirme süresi + Malzeme sayısı"],
+    ans: 0,
+    exp: "Lezzet beş duyunun toplamından doğan bir entegrasyondur: tat + koku + dokunma + görme + işitme."
+  },
+  {
+    q: "Gordon Shepherd'ın nörogastronomi tanımına göre beyin lezzeti nasıl yaratır?",
+    opts: ["A) Rastgele verilerle", "B) Tahmin, karşılaştırma ve karar verme mekanizmasıyla", "C) Sadece mideden gelen sinyallere göre", "D) Hiçbir dış veri kullanmadan"],
+    ans: 1,
+    exp: "Shepherd'a göre beyin lezzeti üç adımla üretir: gelen sinyallere göre tahmin, hafızayla karşılaştırma ve haz/tehlike kararı."
+  },
+  {
+    q: "'Aroma' kavramı hangi duyusal yolakla doğrudan ilişkilidir?",
+    opts: ["A) Görme", "B) Dokunma", "C) Koku (Olfaksiyon)", "D) İşitme"],
+    ans: 2,
+    exp: "Aroma; uçucu moleküllerin koku reseptörlerini uyarmasıyla oluşur. Olfaksiyonun ürünüdür."
+  },
+  {
+    q: "Cips paketlerinin hışırtısı veya bir içeceğin açılma sesi neyi etkiler?",
+    opts: ["A) Besin değerini", "B) Tazelik ve kalite algısını", "C) Yemeğin sıcaklığını", "D) Mide asidini"],
+    ans: 1,
+    exp: "Ses, kalite ve tazelik kalıbını tetikler. 'Fıss' sesi karbonatlı içecekte tazelik beklentisi yaratır."
+  },
+  {
+    q: "Yiyeceklerin dokusal özellikleri (crunchy, smooth, chewy) hangi kavram altında incelenir?",
+    opts: ["A) Orthonasal smell", "B) Mouthfeel (Ağızdaki his)", "C) Basic taste", "D) Brain reward"],
+    ans: 1,
+    exp: "Mouthfeel; ağızdaki dokunsal-mekanik deneyimi tanımlar. Crunchy, smooth, chewy, creamy gibi sıfatlar bu kategoridedir."
+  },
+  {
+    q: "Nörogastronomi hangi bilim dallarının birleşiminden oluşur?",
+    opts: ["A) Siyaset ve Gastronomi", "B) Beyin Bilimi (Nöroloji) ve Gastronomi", "C) Arkeoloji ve Gastronomi", "D) Matematik ve Gastronomi"],
+    ans: 1,
+    exp: "Nörogastronomi; nörobilim, duyusal psikoloji ve gastronomiyi birleştiren disiplinler arası bir alandır."
+  },
+  {
+    q: "Bir tatlının rengi maviye boyandığında tadının daha az iştah açıcı gelmesi ne ile ilgilidir?",
+    opts: ["A) Görsel beklentinin tat algısını bozmasıyla", "B) Mavi rengin zehirli olmasıyla", "C) Şeker miktarının azalmasıyla", "D) Dilin maviyi algılayamamasıyla"],
+    ans: 0,
+    exp: "Mavi; doğada gıdada nadir bir renktir, öğrenilmiş bir 'yenmez' kalıbı vardır. Bu beklenti tatlılık algısını baskılar."
+  },
+  {
+    q: "Lezzet deneyiminin 'bireysel ve kültürel' olduğunu gösteren en güçlü kanıt nedir?",
+    opts: ["A) Herkesin aynı dilde konuşması", "B) Aynı yiyeceğin farklı kültürlerde farklı duygular (sevme/tiksinme) uyandırması", "C) Tüm insanların 5 temel tadı algılayabilmesi", "D) Yemeklerin her yerde aynı sıcaklıkta pişirilmesi"],
+    ans: 1,
+    exp: "Aynı gıdaya verilen tepkinin kültürden kültüre değişmesi (örn. balık sosu, natto, böcek), lezzetin biyolojik olduğu kadar öğrenilmiş ve kültürel olduğunun kanıtıdır."
+  },
+  {
+    q: "Tatlı tat biyolojik olarak hangi sinyali taşır?",
+    opts: ["A) Mineral işareti", "B) Enerji / kalori işareti", "C) Zehir uyarısı", "D) Bozulma sinyali"],
+    ans: 1,
+    exp: "Tatlılık; karbonhidrat ve dolayısıyla hızlı enerji kaynağının evrimsel sinyalidir. Bu yüzden bebeklikten itibaren çekicidir."
+  },
+  {
+    q: "Acı tadı evrimsel olarak hangi mesajı taşır?",
+    opts: ["A) Protein kaynağı", "B) Enerji yoğunluğu", "C) Olası toksin / zehir uyarısı", "D) Tazelik"],
+    ans: 2,
+    exp: "Acılık; pek çok bitki toksini ve alkaloidde bulunur. Beyin bu tadı 'dikkat' sinyali olarak öğrenmiştir; çocuklar acıdan kaçar."
+  },
+  {
+    q: "Umami tadı evrimsel olarak hangi besin ögesinin sinyalidir?",
+    opts: ["A) Yağ", "B) Karbonhidrat", "C) Protein (amino asit)", "D) Lif"],
+    ans: 2,
+    exp: "Umami; glutamat ve ribonükleotidler tarafından tetiklenir. Beyne 'protein ve amino asit zengini' sinyali verir."
+  },
+  {
+    q: "Yüksek frekanslı (tiz) müzik bir yemekte hangi tat boyutunu vurgulama eğilimindedir?",
+    opts: ["A) Acılık", "B) Tuzluluk", "C) Tatlılık", "D) Umami"],
+    ans: 2,
+    exp: "Crossmodal araştırmalar tiz seslerin tatlılık algısını, bas seslerin ise acılık algısını güçlendirdiğini gösterir."
+  },
+  {
+    q: "Karbonatlı bir içecekteki 'gazlı' his hangi sistem tarafından algılanır?",
+    opts: ["A) Sadece tat reseptörleri", "B) Trigeminal sistem (CO₂ kimyasal yanma)", "C) Olfaktör sistem", "D) Görme"],
+    ans: 1,
+    exp: "Karbondioksit ağız mukozasında hafif yanma/sızlama yaratır; bu his trigeminal sistem üzerinden gelir. Tat değildir."
+  },
+  {
+    q: "Beyaz tabaktaki tatlı, siyah tabağa konduğunda algı nasıl değişir?",
+    opts: ["A) Daha az tatlı, daha yoğun algılanır", "B) Hiç değişmez", "C) Sadece pahalı görünür", "D) Acı algılanır"],
+    ans: 0,
+    exp: "Charles Spence çalışmaları; tabağın rengi ve şeklinin tat yoğunluğu ve tatlılık algısını değiştirdiğini gösterir. Siyah zemin tatlılığı bastırır."
+  },
+  {
+    q: "Çocukların doğuştan en kolay sevdiği tat hangisidir?",
+    opts: ["A) Acı", "B) Ekşi", "C) Tatlı", "D) Umami"],
+    ans: 2,
+    exp: "Yenidoğanlar tatlıya doğuştan pozitif tepki verir (anne sütü tatlıdır). Acılığa tepki ise reddetmedir."
+  },
+  {
+    q: "Aşağıdaki hislerden hangisi tat değil, ağız hissidir?",
+    opts: ["A) Ekşi", "B) Umami", "C) Yağlılık (creamy)", "D) Tuzlu"],
+    ans: 2,
+    exp: "Yağlılık (creaminess) dil reseptörleriyle değil; dokunsal-mekanik olarak mouthfeel kategorisinde algılanır."
+  },
+  {
+    q: "Lezzet beyinde oluşurken beyin hangi iki kaynaktan veri alır?",
+    opts: ["A) Sadece dış duyular", "B) Sadece hafıza", "C) Dış duyular + hafıza/öğrenme", "D) Sadece mide"],
+    ans: 2,
+    exp: "Beyin anlık duyusal girdiyi geçmiş deneyimle (hafıza, kültür, öğrenme) eşleştirir. Lezzet bu iki kaynağın sentezidir."
+  },
+  {
+    q: "Bir yemeği 'sıcak' yemenin lezzet üzerindeki etkisi öncelikle ne ile ilgilidir?",
+    opts: ["A) Uçucu aroma moleküllerinin daha fazla salınması", "B) Tat reseptörlerinin daha hızlı çoğalması", "C) Tabağın renginin değişmesi", "D) Mide asidinin azalması"],
+    ans: 0,
+    exp: "Sıcaklık uçucu kokuların gaz fazına geçişini artırır. Daha çok aroma → retronazal yolla daha güçlü lezzet algısı."
+  },
+  {
+    q: "Aşağıdakilerden hangisi 'crossmodal' (çapraz duyusal) etki örneğidir?",
+    opts: ["A) Şeker yemenin kan glikozunu artırması", "B) Müziğin şarabın tadını değiştirmesi", "C) Açken iştah hissi", "D) Dilde tatlı reseptörünün uyarılması"],
+    ans: 1,
+    exp: "Crossmodal etki; bir duyunun başka bir duyuyu modüle etmesidir. Müzik (işitme) ile şarap tadı (tat) arasındaki etkileşim klasik örnektir."
+  },
+  {
+    q: "Yemekten önce sunulan aperatifin amacı nörogastronomik açıdan nedir?",
+    opts: ["A) Sadece estetik", "B) Beyinde tat beklentisi ve tükürük refleksini hazırlamak", "C) Mide hacmini doldurmak", "D) Su kaybını önlemek"],
+    ans: 1,
+    exp: "Aperatif; görsel ve aromatik girdilerle beynin 'yemek geliyor' tahminini etkinleştirir. Tükürük artar, sindirim ve algı önceden hazırlanır."
+  },
+  {
+    q: "Hafıza ve lezzet ilişkisi en güçlü olarak hangi duyu yoluyla kurulur?",
+    opts: ["A) Görme", "B) Koku", "C) İşitme", "D) Dokunma"],
+    ans: 1,
+    exp: "Koku, limbik sisteme doğrudan bağlandığı için anılarla en güçlü biçimde bağ kurar. Bu fenomen 'Proust etkisi' olarak bilinir."
+  },
+  {
+    q: "Bir markanın paketleme sesini özenle tasarlaması (cipste 'çıt' sesi) hangi nörogastronomik prensibe dayanır?",
+    opts: ["A) Tat duyusunun manipülasyonu", "B) İşitsel girdinin lezzet ve kalite algısını şekillendirmesi", "C) Mouthfeel'in azaltılması", "D) Limbik sistemin bypass edilmesi"],
+    ans: 1,
+    exp: "Çıtırlık ve paketleme sesi tazelik ve kalite kalıbını tetikler. Endüstri bu işitsel imzayı bilinçli olarak tasarlar."
+  },
+  {
+    q: "Aşağıdakilerden hangisi 'multisensory dining' (çok duyulu yeme deneyimi) örneğidir?",
+    opts: ["A) Sadece menüden seçim yapmak", "B) Sesli, görsel ve aromatik atmosferin tabakla bütünleştirildiği deneyimsel restoran", "C) Sadece tek tabak yemek", "D) Yemeği gözleri kapalı yemek"],
+    ans: 1,
+    exp: "Multisensory dining; ışık, ses, koku ve sunumun bilinçli koreografisiyle lezzet algısının zenginleştirildiği yaklaşımdır (örn. Fat Duck, Heston Blumenthal)."
+  },
+  {
+    q: "'Sonik tatlandırma' (sonic seasoning) kavramı ne anlama gelir?",
+    opts: ["A) Müzikle yemeğin tat algısını değiştirme", "B) Yemeği ses dalgalarıyla pişirme", "C) Yemeği sessiz yeme zorunluluğu", "D) Mikser sesinin lezzetini ölçme"],
+    ans: 0,
+    exp: "Sonic seasoning; belirli müziklerin/seslerin yemeğin tatlılık, acılık veya yoğunluk algısını arttırmak için kullanılmasıdır."
+  },
+  {
+    q: "Hyper-palatable gıdaların genelde içerdiği üçlü kombinasyon nedir?",
+    opts: ["A) Lif + protein + su", "B) Şeker + yağ + tuz", "C) Vitamin + mineral + omega-3", "D) Probiyotik + prebiyotik + lif"],
+    ans: 1,
+    exp: "Şeker + yağ + tuz üçlüsü beyin ödül sistemini maksimum uyaran kombinasyondur. Endüstri 'bliss point' (mutluluk noktası) etrafında ürün tasarlar."
+  },
+  {
+    q: "Bir gıdada dopamin artışı sürdükçe ne olur?",
+    opts: ["A) Tolerans gelişir, aynı haz için daha çok yenir", "B) Tolerans gelişmez", "C) Tat reseptörleri çoğalır", "D) Mide küçülür"],
+    ans: 0,
+    exp: "Tekrar tüketim ödül duyarlılığını azaltır; aynı dopamin tepkisi için daha fazla miktar gerekir. Bu döngü craving ve aşırı tüketime yol açar."
+  },
+  {
+    q: "Nörogastronomi bir gastronom için neden önemlidir?",
+    opts: ["A) Sadece marketing aracı olarak", "B) Lezzeti yalnızca malzemeyle değil duyusal tasarımla da kurgulamayı sağladığı için", "C) Yemek pişirmeyi gereksiz kıldığı için", "D) Tarifleri standartlaştırdığı için"],
+    ans: 1,
+    exp: "Gastronom; tabağı yalnızca malzeme değil, görsel/işitsel/dokunsal bağlamıyla tasarlar. Nörogastronomi bu bütünleşik yaklaşımın bilimsel zeminidir."
+  }
+];
+
+let answered = Array(questions.length).fill(false);
+let score = 0;
+
+function answer(qi, oi) {
+  if (answered[qi]) return;
+  answered[qi] = true;
+  const block = document.querySelectorAll('.q-block')[qi];
+  const opts = block.querySelectorAll('.opt');
+  opts.forEach((o, i) => {
+    if (i === questions[qi].ans) o.classList.add('correct');
+    else o.classList.add(i === oi ? 'wrong' : 'disabled');
+  });
+  block.querySelector('.explanation').style.display = 'block';
+  if (oi === questions[qi].ans) score++;
+  document.getElementById('scorenum').textContent = score;
+  document.getElementById('scorefill').style.width = (answered.filter(Boolean).length / questions.length * 100) + '%';
+}
+
+function buildQuiz() {
+  const c = document.getElementById('quiz-container');
+  questions.forEach((q, qi) => {
+    c.innerHTML += `<div class="q-block">
+      <div class="q-text">${qi+1}. ${q.q}</div>
+      ${q.opts.map((o,oi) => `<div class="opt" onclick="answer(${qi},${oi})">${o}</div>`).join('')}
+      <div class="explanation">💡 ${q.exp}</div>
+    </div>`;
+  });
+}
+buildQuiz();
+</script>
+</body>
+</html>
