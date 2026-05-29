@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konu 9 — Gastronomide Hijyen ve Besin Güvenliği</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f0; color: #1a1a1a; padding: 2rem 1rem; }
+.container { max-width: 880px; margin: 0 auto; }
+.back { display: inline-block; color: #1a3a6e; text-decoration: none; font-size: 0.9rem; margin-bottom: 1.5rem; }
+.back:hover { text-decoration: underline; }
+h1 { font-size: 1.5rem; font-weight: 700; color: #1a3a6e; }
+.subtitle { color: #555; font-size: 0.9rem; margin: 0.3rem 0 1.5rem; }
+.tabs { display: flex; gap: 8px; margin-bottom: 1.5rem; border-bottom: 2px solid #e0e0d8; padding-bottom: 0; }
+.tab-btn { padding: 0.5rem 1.25rem; border: none; background: none; cursor: pointer; font-size: 0.9rem; color: #666; border-bottom: 2px solid transparent; margin-bottom: -2px; font-weight: 500; }
+.tab-btn.active { color: #1a3a6e; border-bottom-color: #1a3a6e; }
+.section { display: none; }
+.section.active { display: block; }
+
+h2 { font-size: 1.15rem; font-weight: 600; color: #1a3a6e; margin: 1.5rem 0 0.75rem; }
+h3 { font-size: 1rem; font-weight: 600; color: #333; margin: 1rem 0 0.5rem; }
+p { line-height: 1.65; margin-bottom: 0.75rem; color: #333; }
+ul, ol { padding-left: 1.5rem; margin-bottom: 0.75rem; }
+li { line-height: 1.6; margin-bottom: 0.25rem; }
+.card { background: #fff; border: 1px solid #e0e0d8; border-radius: 10px; padding: 1.1rem 1.25rem; margin-bottom: 1rem; }
+.card-title { font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+.blue .card-title { color: #1a3a6e; }
+.teal .card-title { color: #0f766e; }
+.amber .card-title { color: #92400e; }
+.coral .card-title { color: #c2410c; }
+.green .card-title { color: #166534; }
+.purple .card-title { color: #6b21a8; }
+.red .card-title { color: #991b1b; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+.info-box { border-left: 4px solid #3b82f6; background: #eff6ff; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; }
+.success-box { border-left: 4px solid #4caf50; background: #f0fdf4; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; }
+.warning-box { border-left: 4px solid #f59e0b; background: #fffbeb; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; }
+.danger-box { border-left: 4px solid #ef4444; background: #fef2f2; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; }
+.stat { background: #1a3a6e; color: #fff; border-radius: 10px; padding: 1rem 1.25rem; text-align: center; margin-bottom: 1rem; }
+.stat-num { font-size: 1.6rem; font-weight: 700; }
+.stat-label { font-size: 0.8rem; opacity: 0.85; margin-top: 0.2rem; }
+
+table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; background: #fff; border-radius: 10px; overflow: hidden; border: 1px solid #e0e0d8; font-size: 0.9rem; }
+th, td { padding: 0.6rem 0.8rem; text-align: left; border-bottom: 1px solid #e0e0d8; }
+th { background: #1a3a6e; color: #fff; font-weight: 600; font-size: 0.85rem; }
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) { background: #fafaf5; }
+
+.color-row { display: flex; align-items: center; gap: 10px; padding: 0.5rem 0.7rem; border: 1px solid #e0e0d8; border-radius: 7px; margin-bottom: 0.4rem; font-size: 0.9rem; background: #fff; }
+.color-chip { width: 32px; height: 32px; border-radius: 6px; flex-shrink: 0; border: 1px solid rgba(0,0,0,0.1); }
+
+.temp-scale { margin: 1rem 0; }
+.temp-bar { display: flex; height: 40px; border-radius: 8px; overflow: hidden; border: 1px solid #e0e0d8; font-size: 0.75rem; color: #fff; font-weight: 600; }
+.temp-bar > div { display: flex; align-items: center; justify-content: center; text-align: center; padding: 0 4px; }
+.tb-frozen { background: #1e3a8a; flex: 1; }
+.tb-cold { background: #3b82f6; flex: 1; }
+.tb-danger { background: #ef4444; flex: 4; }
+.tb-hot { background: #166534; flex: 2; }
+.temp-labels { display: flex; font-size: 0.7rem; color: #555; margin-top: 0.3rem; }
+.temp-labels > div { flex: 1; text-align: center; }
+.temp-labels > div:nth-child(3) { flex: 4; }
+.temp-labels > div:nth-child(4) { flex: 2; }
+
+.score-bar { background: #e0e0d8; border-radius: 8px; height: 8px; margin-bottom: 1.5rem; overflow: hidden; }
+#scorefill { height: 100%; background: #1a3a6e; border-radius: 8px; width: 0%; transition: width 0.4s; }
+.score-text { font-size: 0.85rem; color: #555; margin-bottom: 0.5rem; }
+.q-block { background: #fff; border: 1px solid #e0e0d8; border-radius: 10px; padding: 1.1rem 1.25rem; margin-bottom: 1rem; }
+.q-text { font-weight: 500; margin-bottom: 0.75rem; font-size: 0.95rem; }
+.opt { padding: 0.6rem 0.9rem; border: 1px solid #e0e0d8; border-radius: 7px; margin-bottom: 0.4rem; cursor: pointer; font-size: 0.9rem; transition: background 0.1s; }
+.opt:hover:not(.correct):not(.wrong) { background: #f0f0eb; }
+.opt.correct { background: #d1fae5; border-color: #4caf50; color: #065f46; pointer-events: none; }
+.opt.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; pointer-events: none; }
+.opt.disabled { pointer-events: none; color: #aaa; }
+.explanation { margin-top: 0.6rem; font-size: 0.85rem; color: #555; background: #f5f5f0; padding: 0.6rem 0.8rem; border-radius: 6px; display: none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back" href="index.html">← Geri</a>
+  <h1>Gastronomide Hijyen ve Besin Güvenliği</h1>
+  <p class="subtitle">Gastronomi ve Yaşam · Konu 9</p>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('lesson', this)">Ders Notu</button>
+    <button class="tab-btn" onclick="switchTab('quiz', this)">Quiz (50 Soru)</button>
+  </div>
+
+  <!-- ═══ DERS NOTU ═══ -->
+  <div id="lesson" class="section active">
+
+    <h2>1. Besin Mevzuatı: Temel Kavramlar</h2>
+
+    <p>Besin kontrolü tüm üretim-tüketim zincirini kapsar ve hukuki bir çerçeveye dayanır. Aşağıda Türkiye'de kullanılan temel mevzuat terimleri yer alır:</p>
+
+    <table>
+      <thead>
+        <tr><th>Terim</th><th>Anlam</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Yasa</strong></td><td>Devletin yasama gücü tarafından konulan, herkesin uymak zorunda olduğu kurallar</td></tr>
+        <tr><td><strong>Tüzük</strong></td><td>Yasanın uygulanmasındaki esasları belirten düzenlemeler</td></tr>
+        <tr><td><strong>Yönetmelik</strong></td><td>Bir kuruluşun çalışma biçimini tanımlayan kuralları içeren düzenlemeler</td></tr>
+        <tr><td><strong>Tebliğ</strong></td><td>Bir konu ya da ürün için tanımları ve özellikleri içeren düzenlemeler</td></tr>
+      </tbody>
+    </table>
+
+    <div class="info-box">
+      <strong>Gıda Mevzuatı:</strong> Gıdaların ve gıda ile temas eden maddelerin, gıdaların üretildiği/satıldığı/tüketildiği yerlerin taşıması gereken <strong>asgari kalite ve hijyen kriterlerini</strong> belirleyen yasal düzenlemeler dizisidir.
+    </div>
+
+    <h2>2. Kalite ve Besin Kalitesi</h2>
+
+    <div class="grid2">
+      <div class="card blue">
+        <div class="card-title">Kalite</div>
+        <ul>
+          <li>Mal ve hizmetin <strong>belirli gereksinmelere karşı performansı</strong></li>
+          <li>Tüketiciyi memnun eden niteliklerin bileşimi</li>
+          <li>Mükemmellik derecesinin ifadesi</li>
+        </ul>
+      </div>
+      <div class="card teal">
+        <div class="card-title">Besin Kalitesi</div>
+        <ul>
+          <li>Tüketicinin tercihinde rol oynayan</li>
+          <li><strong>Ölçülüp değerlendirilebilen</strong></li>
+          <li>Bir besini diğerinden <strong>ayırt etmeye yarayan</strong> özellikler bileşimi</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card amber">
+      <div class="card-title">Şartname (Spesifikasyon)</div>
+      <p>Müşteri beklentileri, kalite karakteristiklerine ilişkin tanım ve limitlerdir. <strong>Ürün veya hizmetten beklenen özelliklerin yazılı olduğu belgeye</strong> şartname (spesifikasyon) denir.</p>
+      <p style="margin-top:0.5rem;"><strong>Kalite Kontrolü:</strong> Bir malın tarif ve spesifikasyonlara uygunluğunun kontrolüdür.</p>
+    </div>
+
+    <h2>3. Besinin Kalite Özellikleri (7 Boyut)</h2>
+
+    <div class="grid3">
+      <div class="card blue">
+        <div class="card-title">1. Duyusal</div>
+        <ul>
+          <li>Görünüş (renk, şekil, irilik, sertlik)</li>
+          <li>Aroma (tat, koku)</li>
+          <li><strong>Yapı / viskozite (mouthfeel)</strong></li>
+        </ul>
+      </div>
+      <div class="card teal">
+        <div class="card-title">2. Kimyasal</div>
+        <ul>
+          <li>Su, yağ, protein, KH oranları</li>
+          <li>Vitamin ve mineral içeriği</li>
+        </ul>
+      </div>
+      <div class="card amber">
+        <div class="card-title">3. Fiziksel</div>
+        <ul>
+          <li><strong>pH değeri</strong></li>
+          <li><strong>Yabancı maddeler</strong> (saç, taş, kibrit, sap-kabuk, kemik kırığı, iplik, tüy, sigara külü)</li>
+        </ul>
+      </div>
+      <div class="card coral">
+        <div class="card-title">4. Mikrobiyolojik</div>
+        <ul>
+          <li>Virüsler, küfler, mayalar</li>
+          <li>Bakteriler, protozoa</li>
+        </ul>
+      </div>
+      <div class="card purple">
+        <div class="card-title">5. Hijyenik</div>
+        <ul>
+          <li>Pestisit/veteriner ilaç kalıntıları</li>
+          <li>Anabolizan, radyonüklid</li>
+          <li>Deterjan/dezenfektan kalıntıları</li>
+          <li>Plastik monomerleri, dioksin</li>
+        </ul>
+      </div>
+      <div class="card green">
+        <div class="card-title">6+7. Mevzuat ve Kurum</div>
+        <ul>
+          <li>Yasal düzenlemelere uygunluk</li>
+          <li>Kurum gereksinmelerine uygunluk</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>4. Besin Güvenliği Nedir?</h2>
+
+    <div class="success-box">
+      <strong>Gıda güvenliği</strong>; güvenli ve kusursuz gıda üretimini sağlamak amacıyla gıdaların <strong>üretim, işleme, muhafaza ve dağıtımları</strong> sırasında gerekli kurallara uyulması ve önlemlerin alınmasıdır.
+    </div>
+
+    <p>Güvenilir besinlerle gerçekleştirilen <strong>yeterli ve dengeli beslenme</strong>; sağlığın ve koruyucu sağlık hizmetlerinin temelini oluşturur. Gıda kontrolü <strong>"çiftlikten çatala"</strong> üretim-tüketim zincirinin <strong>her aşamasında</strong> yapılmalıdır.</p>
+
+    <h2>5. Besin Güvenliğini Tehdit Eden 3 Tehlike Grubu</h2>
+
+    <h3>5.1 Fiziksel Tehlikeler</h3>
+    <div class="card amber">
+      <ul>
+        <li><strong>Yetiştirme/hasat:</strong> taş, böcek, ot, diken, tahta</li>
+        <li><strong>İşleme:</strong> lastik, kemik, cam, tel, metal parçası</li>
+        <li><strong>Dağıtım:</strong> böcek, taş, kir</li>
+        <li><strong>Mutfak/insan:</strong> saç, tırnak, iplik, düğme, kibrit, mücevher, sigara külü</li>
+      </ul>
+    </div>
+
+    <h3>5.2 Kimyasal Tehlikeler</h3>
+    <div class="card coral">
+      <ul>
+        <li><strong>Tarım/veteriner:</strong> pestisit, antibiyotik, büyüme hormonu, veteriner ilaç kalıntıları</li>
+        <li><strong>Mevzuat dışı katkı maddeleri</strong></li>
+        <li><strong>Isıl işlem ürünleri:</strong> polisiklik aromatik hidrokarbonlar (PAH), <strong>akrilamid</strong>, heterosiklik aromatik aminler, <strong>nitrozamin</strong>, histamin</li>
+        <li><strong>Çevresel:</strong> dioksin, toksik mineraller, ağır metaller, plastik monomerleri</li>
+        <li><strong>Temizlik:</strong> deterjan ve dezenfektan kalıntıları</li>
+        <li>Anabolizanlar, radyonüklidler</li>
+      </ul>
+    </div>
+
+    <h3>5.3 Biyolojik Tehlikeler</h3>
+    <div class="card green">
+      <p><strong>a) Doğal toksinler:</strong> yeşillenmiş/filizlenmiş patateste <strong>solanin</strong>, bal toksinleri, bazı mantarlar.</p>
+      <p style="margin-top:0.5rem;"><strong>b) Gözle görülenler:</strong> hamam böceği, sinek, tırtıl-kurt, parazit.</p>
+      <p style="margin-top:0.5rem;"><strong>c) Mikrobiyolojik (görünmeyen):</strong> bakteriler, virüsler, küfler, mayalar, protozoalar.</p>
+    </div>
+
+    <h2>6. Bakteri Üremesi İçin Gerekli 5 Koşul</h2>
+
+    <h3>1. Besin (Potansiyel Riskli Besinler)</h3>
+    <div class="card blue">
+      <p>Protein ve nem içeriği yüksek <strong>pişmiş veya çiğ hayvansal besinler</strong>: et ve ürünleri, tavuk, balık, süt ve ürünleri, yumurta. Pişmiş sebze ve nişastalı besinler de riskli kategoridedir.</p>
+    </div>
+
+    <h3>2. Sıcaklık — Tehlikeli Sıcaklık Aralığı</h3>
+    <div class="danger-box">
+      <strong>Tehlikeli sıcaklık aralığı: 5–63°C.</strong> Patojen bakterilerin en hızlı çoğaldığı bölge bu aralıktır.
+    </div>
+
+    <div class="temp-scale">
+      <div class="temp-bar">
+        <div class="tb-frozen">-18°C<br>Donmuş</div>
+        <div class="tb-cold">0–5°C<br>Buzdolabı</div>
+        <div class="tb-danger">5°C — 63°C<br><strong>TEHLİKELİ BÖLGE</strong></div>
+        <div class="tb-hot">≥ 63°C<br>Güvenli sıcak tutma</div>
+      </div>
+    </div>
+
+    <p>Bakteriler soğuğa sıcaktan daha dayanıklıdır. Buzdolabı sıcaklığında <strong>üremeleri durur</strong> fakat çok düşük sıcaklıklarda bile <strong>ölmezler</strong>.</p>
+
+    <h3>3. Su Aktivitesi (a<sub>w</sub>)</h3>
+    <table>
+      <thead><tr><th>a<sub>w</sub> Aralığı</th><th>Seviye</th><th>Örnek</th></tr></thead>
+      <tbody>
+        <tr><td><strong>0.90 – 1.00</strong></td><td>Yüksek (hızlı üreme)</td><td>Taze et, süt</td></tr>
+        <tr><td>0.60 – 0.90</td><td>Orta</td><td>Kuru meyveler (0.60–0.75)</td></tr>
+        <tr><td><strong>&lt; 0.60</strong></td><td>Düşük (üreme durur)</td><td>Kuru sebzeler (0.30–0.40)</td></tr>
+      </tbody>
+    </table>
+
+    <h3>4. Oksijen</h3>
+    <div class="card purple">
+      <p>Besin kaynaklı hastalıklara/zehirlenmelere yol açan bakterilerin çoğu hem <strong>oksijenli</strong> hem de <strong>oksijensiz</strong> ortamda üreyebilir. Bu nedenle <strong>konserve ve vakumlu besinler de risk taşır</strong>.</p>
+    </div>
+
+    <h3>5. Süre</h3>
+    <div class="warning-box">
+      Uygun ortamda bekleme süresi uzadıkça bakteri sayısı <strong>katlanarak artar</strong>. Genel pratik kural: tehlikeli bölgede gıda <strong>2 saatten fazla</strong> bekletilmemelidir.
+    </div>
+
+    <h2>7. Kontaminasyon (Bulaşma) Kaynakları</h2>
+
+    <div class="card coral">
+      <p><strong>Bakterilerin besinlere bulaşabileceği aracılar:</strong></p>
+      <ul>
+        <li><strong>İnsan</strong> — boğaz, burun, el, deri, bağırsak, dışkı (<em>Staphylococcus aureus</em> tipik temsilcisidir)</li>
+        <li>Kesme tahtaları, dilimleyici, karıştırıcı, öğütücü</li>
+        <li>Ortam havası</li>
+        <li>Çöpler</li>
+        <li>Haşereler (sinek, hamam böceği, fare)</li>
+      </ul>
+    </div>
+
+    <h2>8. Mutfakta Güvenli Sıcaklıklar</h2>
+
+    <table>
+      <thead>
+        <tr><th>Gıda</th><th>Minimum İç Pişirme Sıcaklığı</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Tavuk / kümes hayvanları</strong></td><td><strong>74°C</strong></td></tr>
+        <tr><td><strong>Kıyma</strong> (yüzey kontaminasyonu kütleye girmiş)</td><td><strong>68°C</strong></td></tr>
+        <tr><td>Sığır eti (bütün parça)</td><td>62°C</td></tr>
+        <tr><td>Deniz ürünleri</td><td>62°C</td></tr>
+        <tr><td>Yumurta</td><td>62°C</td></tr>
+        <tr><td>Pişmiş yemekleri sıcak tutma</td><td><strong>≥ 60°C</strong></td></tr>
+        <tr><td>Buzdolabı (soğuk muhafaza)</td><td>≤ 5°C</td></tr>
+      </tbody>
+    </table>
+
+    <h2>9. Çapraz Bulaşma ve Kesme Tahtası Renk Standardı</h2>
+
+    <p>Aynı tahta/bıçağın hem çiğ hem pişmiş ürün için kullanılması <strong>çapraz bulaşmaya</strong> yol açar. Önlem olarak <strong>renk kodlu kesme tahtaları</strong> kullanılır:</p>
+
+    <div class="color-row"><div class="color-chip" style="background:#dc2626;"></div><strong>Kırmızı</strong> — Çiğ kırmızı et</div>
+    <div class="color-row"><div class="color-chip" style="background:#facc15;"></div><strong>Sarı</strong> — Çiğ tavuk / kümes hayvanları</div>
+    <div class="color-row"><div class="color-chip" style="background:#2563eb;"></div><strong>Mavi</strong> — Çiğ balık ve deniz ürünleri</div>
+    <div class="color-row"><div class="color-chip" style="background:#16a34a;"></div><strong>Yeşil</strong> — Sebze ve meyve</div>
+    <div class="color-row"><div class="color-chip" style="background:#fff; border:1px solid #ccc;"></div><strong>Beyaz</strong> — Süt ve süt ürünleri</div>
+    <div class="color-row"><div class="color-chip" style="background:#92400e;"></div><strong>Kahverengi</strong> — Pişmiş tüm ürünler</div>
+
+    <div class="warning-box">
+      <strong>Tipik çapraz bulaşma riski:</strong> Çiğ tavuk kesilen tahtada marul doğramak. Önce çiğ tavuğun mikroorganizmaları (örn. <em>Salmonella</em>) marula geçer; marul pişmediği için bakteri tabağa kadar canlı ulaşır.
+    </div>
+
+    <h2>10. Gıdaların Mutfaktaki Yolculuğu</h2>
+
+    <div class="card blue">
+      <p style="font-weight:600; text-align:center;">
+        Satın alma / teslim alma → Depolama → Üretim prosesi → Pişirme → Besin Güvenliği (HACCP) → Servis → Atık Yönetimi
+      </p>
+    </div>
+
+    <h3>Aşamalara Göre Tehlike Kaynakları</h3>
+    <div class="grid2">
+      <div class="card amber">
+        <div class="card-title">Üretim (Tarla)</div>
+        <ul>
+          <li>Tarım ilaçları, gübre</li>
+          <li>Bitki gelişimi düzenleyiciler</li>
+          <li>Anabolizan maddeler</li>
+          <li>Metalik kontaminasyonlar</li>
+          <li>Radyoaktif izotoplar</li>
+        </ul>
+      </div>
+      <div class="card coral">
+        <div class="card-title">İşleme</div>
+        <ul>
+          <li>Hatalı kullanılan katkı maddeleri</li>
+          <li>Deterjan/dezenfektan kalıntıları</li>
+          <li>Metalik kontaminasyonlar</li>
+        </ul>
+      </div>
+      <div class="card teal">
+        <div class="card-title">Depolama</div>
+        <ul>
+          <li>Mikroorganizmalar ve toksinleri</li>
+          <li>Soğuk zinciri kırılması</li>
+        </ul>
+      </div>
+      <div class="card purple">
+        <div class="card-title">Ambalajlama</div>
+        <ul>
+          <li>Plastik monomerleri</li>
+          <li>Diğer katkı maddeleri, metaller</li>
+        </ul>
+      </div>
+      <div class="card green">
+        <div class="card-title">Hazırlama / Pişirme / Servis</div>
+        <ul>
+          <li>Mikroorganizmalar ve parazitler</li>
+          <li>Çapraz bulaşma</li>
+          <li>Yanlış sıcaklıkta bekletme</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>11. Gıda Kontrolünün Amaçları</h2>
+
+    <div class="success-box">
+      <ul style="padding-left:1.2rem;">
+        <li>Tüketicinin <strong>sağlığının</strong> korunması</li>
+        <li>Tüketicinin <strong>ekonomik çıkarlarının</strong> korunması</li>
+        <li>Besin sanayinin gelişmesine katkı</li>
+        <li>Toplumun beslenme durumunun iyileştirilmesi</li>
+        <li>Uluslararası pazarda güven sağlama</li>
+        <li>Turizm gelirlerinin artması</li>
+        <li>Ülke ekonomisinin gelişmesine katkı</li>
+      </ul>
+    </div>
+
+    <h2>12. Gıda Güvencesi vs. Gıda Güvenliği</h2>
+
+    <div class="grid2">
+      <div class="card blue">
+        <div class="card-title">Gıda Güvencesi (Food Security)</div>
+        <p>Yeterli, erişilebilir ve sürdürülebilir gıdaya <strong>her zaman ulaşılabilmesi</strong>. Daha çok miktar ve erişim odaklıdır.</p>
+      </div>
+      <div class="card coral">
+        <div class="card-title">Gıda Güvenliği (Food Safety)</div>
+        <p>Gıdanın <strong>tüketildiğinde zarar vermeyeceği</strong> güvencesi. Hijyen, kontaminasyon ve sağlık riski odaklıdır.</p>
+      </div>
+    </div>
+
+    <h2>13. Pratik Çıkarımlar</h2>
+
+    <ul>
+      <li><strong>Çiftlikten çatala</strong> her aşamada kontrol gereklidir.</li>
+      <li>Tehlikeli bölge <strong>5–63°C</strong>; üst sınır 63°C, alt sınır 5°C.</li>
+      <li>Pişmiş yemek <strong>≥ 60°C</strong>, buzdolabı <strong>≤ 5°C</strong>.</li>
+      <li>Tavuk 74 / kıyma 68 / sığır-balık-yumurta 62 — bu üç sayıyı ezberleyin.</li>
+      <li>Renkli tahta = çapraz bulaşmanın görsel sigortasıdır.</li>
+      <li>İnsan en büyük kontaminasyon kaynağıdır → el hijyeni, maske, eldiven, bone.</li>
+    </ul>
+
+  </div>
+
+  <!-- ═══ QUIZ ═══ -->
+  <div id="quiz" class="section">
+    <p class="score-text">Puan: <span id="scorenum">0</span> / 50</p>
+    <div class="score-bar"><div id="scorefill"></div></div>
+    <div id="quiz-container"></div>
+  </div>
+</div>
+
+<script>
+function switchTab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+const questions = [
+  {
+    q: "'Bir kuruluşun çalışma biçimini tanımlayan kuralları içeren düzenlemelere' ne ad verilir?",
+    opts: ["A) Tüzük", "B) Yönetmelik", "C) Tebliğ", "D) Yasa"],
+    ans: 1,
+    exp: "Yönetmelik; bir kuruluşun çalışma biçimini tanımlayan kuralları içeren düzenlemedir. Yasanın altında, tüzüğün ise türev seviyesinde uygulama belgesidir."
+  },
+  {
+    q: "Aşağıdakilerden hangisi gıda mevzuatının temel amacını en iyi açıklar?",
+    opts: ["A) Sadece yemek tariflerini korumak", "B) Asgari kalite ve hijyen kriterlerini belirleyen kuralları düzenlemek", "C) Restoranların fiyatlarını belirlemek", "D) Sadece ithal ürünleri denetlemek"],
+    ans: 1,
+    exp: "Gıda mevzuatı; gıda ve gıdayla temas eden maddelerin taşıması gereken asgari kalite ve hijyen kriterlerini belirleyen yasal düzenlemeler dizisidir."
+  },
+  {
+    q: "Ürün veya hizmetten beklenen özelliklerin yazılı olduğu belgeye ne denir?",
+    opts: ["A) Şartname (Spesifikasyon)", "B) Bilanço", "C) Lisans", "D) Envanter"],
+    ans: 0,
+    exp: "Şartname (Spesifikasyon); müşteri beklentilerinin, kalite karakteristiklerine ilişkin tanım ve limitlerinin yazılı olduğu belgedir. Kalite kontrolü bu belgeye uygunluğu denetler."
+  },
+  {
+    q: "Besinin pH değeri ve içerdiği yabancı maddeler hangi kalite özelliği kapsamına girer?",
+    opts: ["A) Duyusal özellikler", "B) Kimyasal özellikler", "C) Fiziksel özellikler", "D) Mikrobiyolojik özellikler"],
+    ans: 2,
+    exp: "pH değeri ve yabancı maddeler (saç, taş, kibrit, kemik kırığı vb.) fiziksel kalite özellikleri kapsamındadır."
+  },
+  {
+    q: "Bir yemeğin içinden çıkan 'kemik kırığı veya saç' hangi tehlike türüne örnektir?",
+    opts: ["A) Kimyasal tehlike", "B) Fiziksel tehlike", "C) Biyolojik tehlike", "D) Mikrobiyolojik tehlike"],
+    ans: 1,
+    exp: "Saç, kemik kırığı, taş, cam parçası gibi mekanik yabancı maddeler fiziksel tehlikedir."
+  },
+  {
+    q: "Aşağıdakilerden hangisi 'kimyasal tehlike' kategorisinde yer alır?",
+    opts: ["A) Hamam böceği", "B) Taş", "C) Deterjan ve dezenfektan kalıntıları", "D) Küf"],
+    ans: 2,
+    exp: "Deterjan ve dezenfektan kalıntıları kimyasal tehlikedir. Hamam böceği biyolojik, taş fiziksel, küf mikrobiyolojik tehlikedir."
+  },
+  {
+    q: "Bakterilerin en hızlı çoğalabildiği 'Tehlikeli Sıcaklık Aralığı' hangisidir?",
+    opts: ["A) -18°C - 0°C", "B) 0°C - 4°C", "C) 5°C - 63°C", "D) 70°C - 100°C"],
+    ans: 2,
+    exp: "Tehlikeli sıcaklık aralığı 5–63°C'dir. Bu bölgede patojen bakteriler en hızlı çoğalır."
+  },
+  {
+    q: "Bakterilerin gelişimi için su aktivitesi (aw) değeri genellikle hangi sınırın altında olmalıdır?",
+    opts: ["A) 0.95 aw", "B) 0.80 aw", "C) 0.60 aw", "D) 1.00 aw"],
+    ans: 2,
+    exp: "Bakteriler 0.60 aw altında genellikle gelişmez. Bu yüzden kuru meyve/sebze gibi düşük nemli gıdalar uzun ömürlüdür."
+  },
+  {
+    q: "İnsan vücudunda özellikle boğaz, burun ve ellerde bulunan ve gıdalara bulaşabilen bakteri türü hangisidir?",
+    opts: ["A) Salmonella", "B) Staphylococcus aureus", "C) E. coli", "D) Listeria"],
+    ans: 1,
+    exp: "Staphylococcus aureus; insan deri, burun, boğaz ve ellerinde sık bulunur ve gıdaya en yaygın insan kaynaklı bulaşan bakteridir."
+  },
+  {
+    q: "'Çiftlikten çatala' gıda kontrolü hangi aşamalarda yapılmalıdır?",
+    opts: ["A) Sadece pişirme aşamasında", "B) Sadece satın alma sırasında", "C) Üretim-tüketim zincirinin her aşamasında", "D) Sadece servis sırasında"],
+    ans: 2,
+    exp: "Gıda kontrolü 'çiftlikten çatala' üretim-tüketim zincirinin her aşamasında yapılmalıdır."
+  },
+  {
+    q: "Pişmiş bir yemeğin servis edilene kadar sıcak tutulması gereken minimum sıcaklık kaçtır?",
+    opts: ["A) 40°C", "B) 50°C", "C) 60°C", "D) 75°C"],
+    ans: 2,
+    exp: "Pişmiş yemekler 60°C ve üzerinde tutulmalıdır. Daha düşük sıcaklık tehlikeli bölgeye girer."
+  },
+  {
+    q: "Tavuk eti için önerilen minimum iç pişirme sıcaklığı kaçtır?",
+    opts: ["A) 62°C", "B) 68°C", "C) 74°C", "D) 100°C"],
+    ans: 2,
+    exp: "Tavuk için minimum iç pişirme sıcaklığı 74°C'dir. Salmonella ve Campylobacter riski nedeniyle yüksek tutulur."
+  },
+  {
+    q: "Mutfakta kullanılan mavi renkli kesme tahtası hangi ürün grubu içindir?",
+    opts: ["A) Çiğ Kırmızı Et", "B) Çiğ Balık", "C) Sebze ve Meyve", "D) Süt Ürünleri"],
+    ans: 1,
+    exp: "Mavi tahta çiğ balık ve deniz ürünleri içindir. Renk standardı çapraz bulaşmayı görsel olarak engeller."
+  },
+  {
+    q: "Kahverengi kesme tahtası standartlara göre hangi amaçla kullanılır?",
+    opts: ["A) Çiğ Tavuk", "B) Pişmiş Tüm Ürünler", "C) Kuru Baklagiller", "D) Ekmek"],
+    ans: 1,
+    exp: "Kahverengi tahta pişmiş tüm ürünler içindir. Pişmiş gıda hiçbir koşulda çiğ gıdayla aynı yüzeyde işlem görmemelidir."
+  },
+  {
+    q: "Aşağıdakilerden hangisi bir 'mikrobiyolojik zararlı' (görünmeyen biyolojik tehlike) değildir?",
+    opts: ["A) Virüsler", "B) Protozoalar", "C) Sinekler", "D) Mayalar"],
+    ans: 2,
+    exp: "Mikrobiyolojik zararlılar gözle görülmez: virüs, bakteri, küf, maya, protozoa. Sinek gözle görülen biyolojik zararlıdır."
+  },
+  {
+    q: "Bakterilerin soğuğa ve sıcağa dayanıklılığı hakkında hangisi doğrudur?",
+    opts: ["A) Bakteriler sıcağa soğuktan daha dayanıklıdır.", "B) Bakteriler dondurulduğunda hemen ölürler.", "C) Bakteriler soğuğa sıcağından daha dayanıklıdır; dondurucuda üremeleri durur ama ölmezler.", "D) Bakteriler 5 derecenin altında hızla ürer."],
+    ans: 2,
+    exp: "Bakteriler soğuğa sıcaktan daha dayanıklıdır. Buzdolabı sıcaklığında üreme durur ancak çok düşük sıcaklıklarda dahi ölmezler."
+  },
+  {
+    q: "Ambalajlama aşamasında gıdaya bulaşabilecek tehlike hangisidir?",
+    opts: ["A) Tarım ilaçları", "B) Plastik monomerleri", "C) Veteriner ilaçları", "D) Gübreler"],
+    ans: 1,
+    exp: "Ambalajlama aşamasında plastik monomerleri, diğer katkı maddeleri ve metaller gıdaya geçebilir."
+  },
+  {
+    q: "Hijyenik özellikleri bozan 'anabolizanlar ve radyonüklidler' hangi kategorideki gıda tehlikeleridir?",
+    opts: ["A) Fiziksel", "B) Kimyasal", "C) Görünür Biyolojik", "D) Duyusal"],
+    ans: 1,
+    exp: "Anabolizanlar ve radyonüklidler kimyasal tehlikedir. Gıda hijyenik özelliklerini bozarlar."
+  },
+  {
+    q: "'Mouthfeel' (Ağızdaki his) duyusal kalite özelliklerinden hangisiyle ilişkilidir?",
+    opts: ["A) Görünüş", "B) Aroma", "C) Yapı (viskozite)", "D) Renk"],
+    ans: 2,
+    exp: "Mouthfeel; yapı/viskozite ile ilişkilidir. Kıvam, sıcaklık ve gazlılık bu boyutta değerlendirilir."
+  },
+  {
+    q: "Patateste doğal olarak bulunan zehirli madde (solanin) hangi tehlike sınıfına girer?",
+    opts: ["A) Fiziksel Tehlike", "B) Kimyasal Tehlike (Mevzuat dışı katkı)", "C) Biyolojik Tehlike (Doğal zehirli madde)", "D) Mikrobiyolojik Tehlike"],
+    ans: 2,
+    exp: "Solanin yeşillenmiş ve filizlenmiş patateste doğal olarak bulunan bir alkaloittir. Besinin bileşiminde doğal olarak bulunan zehirli maddeler biyolojik tehlike kategorisindedir."
+  },
+  {
+    q: "Bakterilerin çoğu oksijenli ve oksijensiz ortamda üreyebildiği için hangi ürünlerde risk devam eder?",
+    opts: ["A) Konserveler", "B) Vakumlu besinler", "C) Taze sebzeler", "D) Hem A hem B"],
+    ans: 3,
+    exp: "Patojen bakterilerin çoğu hem oksijenli hem oksijensiz ortamda üreyebilir; bu yüzden konserve ve vakumlu besinlerde de risk vardır (örn. Clostridium botulinum)."
+  },
+  {
+    q: "Gıda güvenliğinin temel tanımı aşağıdakilerden hangisidir?",
+    opts: ["A) Sadece yemeğin lezzetli olmasıdır.", "B) Güvenli gıda üretimini sağlamak için kurallara uyulması ve önlemlerin alınmasıdır.", "C) Gıdaların en ucuz maliyetle üretilmesidir.", "D) Gıdaların sadece fabrikada paketlenmesidir."],
+    ans: 1,
+    exp: "Gıda güvenliği; güvenli ve kusursuz gıda üretimini sağlamak için üretim-işleme-muhafaza-dağıtım süreçlerinde gerekli kurallara uyulması ve önlemlerin alınmasıdır."
+  },
+  {
+    q: "Staphylococcus aureus bakterisinin besinlere en yaygın bulaşma yolu nedir?",
+    opts: ["A) Toprak yoluyla", "B) İnsanların burun ve boğaz salgıları veya elleriyle", "C) Arıtılmamış sularla", "D) Pişirme ısısıyla"],
+    ans: 1,
+    exp: "S. aureus; insan boğaz, burun, deri ve eli üzerinde sık bulunur. Hijyensiz personel besinin en büyük kontaminasyon kaynağıdır."
+  },
+  {
+    q: "Gıda kontrolünün amaçları arasında aşağıdakilerden hangisi yoktur?",
+    opts: ["A) Tüketici sağlığının korunması", "B) Ülke ekonomisine katkı", "C) Yemeklerin porsiyonlarını büyütmek", "D) Uluslararası pazarda güven sağlamak"],
+    ans: 2,
+    exp: "Gıda kontrolünün amaçları arasında porsiyon büyütmek yer almaz. Tüketici sağlığı, ekonomi, sanayi gelişimi ve uluslararası güven temel amaçlardır."
+  },
+  {
+    q: "'Sıvı nitrojenle dondurma' işlemi mutfaktaki hangi gelişmeye örnektir?",
+    opts: ["A) Geleneksel koruma", "B) Teknolojik ve bilimsel gelişmeler", "C) Sadece görsel sanat", "D) Hijyenik temizlik"],
+    ans: 1,
+    exp: "Sıvı nitrojen ile dondurma; modern moleküler gastronomi ve teknolojik gelişmelerin bir örneğidir."
+  },
+  {
+    q: "Kıyma için önerilen minimum iç pişirme sıcaklığı kaçtır?",
+    opts: ["A) 62°C", "B) 68°C", "C) 74°C", "D) 85°C"],
+    ans: 1,
+    exp: "Kıyma için minimum iç pişirme sıcaklığı 68°C'dir. Yüzey kontaminasyonu kıyma işlemiyle kütle içine dağıldığı için bütün etten daha yüksek sıcaklık gerekir."
+  },
+  {
+    q: "Aşağıdaki durumlardan hangisi 'çapraz bulaşma' riskini artırır?",
+    opts: ["A) Çiğ tavuk kesilen tahtada marul doğramak", "B) Sebze ve meyveleri akan suda yıkamak", "C) Yemekleri 60 derecenin üzerinde saklamak", "D) Kuru depoda nem kontrolü yapmak"],
+    ans: 0,
+    exp: "Çiğ tavuktaki Salmonella vb. patojenler tahtaya bulaşır; pişmeyecek marulun üzerine geçer ve tabağa kadar canlı ulaşır. Klasik çapraz bulaşma örneğidir."
+  },
+  {
+    q: "Bakterilerin üremesi için 'süre' faktörü düşünüldüğünde, gıdalar tehlikeli bölgede en fazla ne kadar bekletilebilir? (Genel kural)",
+    opts: ["A) 2 saatten fazla bekletilmemelidir.", "B) 10 saat bekletilebilir.", "C) Bir gün boyunca bekletilebilir.", "D) Bekleme süresinin önemi yoktur."],
+    ans: 0,
+    exp: "Genel pratik kural; gıda 5–63°C tehlikeli bölgede 2 saatten fazla bekletilmemelidir. 2 saatin üzerinde bakteri sayısı kritik eşiği aşar."
+  },
+  {
+    q: "Isıl işlem sırasında (yüksek ısıda pişirme) meydana gelebilen 'akrilamid veya nitrozamin' hangi tehlike grubuna girer?",
+    opts: ["A) Mikrobiyolojik Tehlike", "B) Kimyasal Tehlike", "C) Fiziksel Tehlike", "D) Biyolojik Zararlı"],
+    ans: 1,
+    exp: "Akrilamid, nitrozamin ve polisiklik aromatik hidrokarbonlar yüksek ısıda oluşan kimyasal tehlikelerdir. Karsinojenik potansiyelleri vardır."
+  },
+  {
+    q: "Gıdaların buzdolabı sıcaklığında saklanması bakteriler üzerinde nasıl bir etki yaratır?",
+    opts: ["A) Tüm bakterileri öldürür.", "B) Bakterilerin çoğalmasını durdurur veya yavaşlatır.", "C) Bakterilerin sayısını artırır.", "D) Bakterilerin rengini değiştirir."],
+    ans: 1,
+    exp: "Buzdolabı sıcaklığı (0–5°C) bakteri üremesini durdurur veya yavaşlatır. Mevcut bakterileri öldürmez."
+  },
+  {
+    q: "Yasa kavramının doğru tanımı hangisidir?",
+    opts: ["A) Bir restoranın iç menü kuralları", "B) Devletin yasama gücü tarafından konulan ve herkesin uymak zorunda olduğu kurallar", "C) Yalnızca yerel yönetim kararları", "D) Tedarikçi şartnameleri"],
+    ans: 1,
+    exp: "Yasa; devletin yasama gücü tarafından konulan ve herkesin uymak zorunda olduğu kurallardır. Mevzuat hiyerarşisinin tepesindedir."
+  },
+  {
+    q: "Tüzük ile yönetmelik arasındaki temel fark nedir?",
+    opts: ["A) Tüzük yasanın uygulama esaslarını belirtir; yönetmelik bir kuruluşun çalışma biçimini tanımlar", "B) Tüzük yerel, yönetmelik genel düzenlemedir", "C) Tüzük gönüllü, yönetmelik zorunludur", "D) Aralarında fark yoktur"],
+    ans: 0,
+    exp: "Tüzük; yasanın uygulanmasındaki esasları belirten düzenlemedir. Yönetmelik ise bir kuruluşun çalışma biçimini tanımlar."
+  },
+  {
+    q: "Aşağıdakilerden hangisi 'potansiyel riskli besin' grubunda en üst sıradadır?",
+    opts: ["A) Kuru baharat", "B) Kuru meyve", "C) Et, süt, yumurta, balık (protein+nem yüksek)", "D) Tuz"],
+    ans: 2,
+    exp: "Et, süt, yumurta ve balık; protein ve nem içeriği yüksek olduğu için potansiyel riskli besinler grubundadır."
+  },
+  {
+    q: "Kuru meyvelerin su aktivitesi (aw) tipik aralığı hangisidir?",
+    opts: ["A) 0.95 – 1.00", "B) 0.60 – 0.75", "C) 0.30 – 0.40", "D) 1.20 – 1.50"],
+    ans: 1,
+    exp: "Kuru meyvelerin aw'si genellikle 0.60–0.75 aralığındadır. Kuru sebzeler daha düşük (0.30–0.40) seviyededir."
+  },
+  {
+    q: "Buzdolabı için önerilen üst sıcaklık sınırı kaçtır?",
+    opts: ["A) ≤ 5°C", "B) ≤ 15°C", "C) ≤ 25°C", "D) Önemli değildir"],
+    ans: 0,
+    exp: "Buzdolabı sıcaklığı ≤ 5°C olmalıdır. Bu üst sınır tehlikeli bölgenin (5–63°C) alt eşiğidir."
+  },
+  {
+    q: "Aşağıdakilerden hangisi 'Gıda Güvencesi (food security)' kavramına uyar?",
+    opts: ["A) Gıdanın tüketildiğinde zarar vermemesi", "B) Yeterli, erişilebilir ve sürdürülebilir gıdaya her zaman ulaşılabilmesi", "C) Gıdanın hijyenik olması", "D) Gıdanın etiketlenmesi"],
+    ans: 1,
+    exp: "Gıda güvencesi (food security); yeterli, erişilebilir, sürdürülebilir gıdaya her zaman ulaşabilme halidir. Miktar/erişim odaklıdır."
+  },
+  {
+    q: "HACCP kısaltması neyi ifade eder?",
+    opts: ["A) Healthy Animal Cooking Control Plan", "B) Hazard Analysis and Critical Control Points (Tehlike Analizi ve Kritik Kontrol Noktaları)", "C) High Altitude Cooking Process", "D) Hotel and Catering Cleaning Procedure"],
+    ans: 1,
+    exp: "HACCP; Hazard Analysis and Critical Control Points — Tehlike Analizi ve Kritik Kontrol Noktaları yöntemidir. Gıda güvenliği yönetiminin uluslararası standardıdır."
+  },
+  {
+    q: "Pişmiş bir yemeği soğutmaya alırken hangi yaklaşım daha güvenlidir?",
+    opts: ["A) Doğrudan büyük tencerede saatlerce oda ısısında bekletmek", "B) Sığ kaplara bölüp hızla soğutarak buzdolabına almak", "C) Sıcakken paketleyip dolaba koymak", "D) Yarım gün açıkta bırakıp sonra dolaba koymak"],
+    ans: 1,
+    exp: "Hızlı soğutma; tehlikeli bölgede (5–63°C) geçirilen süreyi minimize eder. Sığ kaplar ısının daha hızlı atılmasını sağlar."
+  },
+  {
+    q: "Doğru el yıkama hijyeni için önerilen minimum süre kaç saniyedir?",
+    opts: ["A) 5 saniye", "B) 10 saniye", "C) En az 20 saniye sabunlu ovalama", "D) 1 saniye"],
+    ans: 2,
+    exp: "Sağlık otoriteleri ellerin sabunla en az 20 saniye ovalanmasını önerir. Personel hijyeni mutfak kontaminasyonunu en aza indirmenin temel önlemidir."
+  },
+  {
+    q: "Aşağıdakilerden hangisi 'soğuk zincirin kırılması' ile en doğrudan ilişkilidir?",
+    opts: ["A) Donmuş ürünün çözülüp yeniden dondurulması", "B) Sebzenin yıkanması", "C) Pişmiş yemeğin baharatlanması", "D) Ekmeğin dilimlenmesi"],
+    ans: 0,
+    exp: "Soğuk zincir; ürünün üretici-tüketici arasındaki taşıma/depolama boyunca belirlenen düşük sıcaklıkta tutulmasıdır. Çözünüp yeniden dondurma soğuk zinciri kırar ve bakteri üremesini hızlandırır."
+  },
+  {
+    q: "Aşağıdaki bakterilerden hangisi özellikle çiğ tavukla ilişkilendirilen ve yetersiz pişirmede gıda zehirlenmesine yol açabilen bir patojendir?",
+    opts: ["A) Lactobacillus", "B) Salmonella", "C) Bifidobacterium", "D) Saccharomyces"],
+    ans: 1,
+    exp: "Salmonella; çiğ tavuk ve yumurta kabuğunda sık bulunur. 74°C iç sıcaklık zorunluluğunun temel nedenlerinden biridir."
+  },
+  {
+    q: "Konservelerde rastlanabilen, oksijensiz ortamda nörotoksin üreten patojen hangisidir?",
+    opts: ["A) Clostridium botulinum", "B) E. coli O157:H7", "C) Listeria monocytogenes", "D) Streptococcus pneumoniae"],
+    ans: 0,
+    exp: "Clostridium botulinum; anaerob (oksijensiz) ortamda gelişir, ısıya dayanıklı sporlar üretir ve botulinum toksini salgılar. Şişmiş, bombe yapmış konserveler tüketilmemelidir."
+  },
+  {
+    q: "Aşağıdakilerden hangisi 'gıda kalite kontrolünün' tanımıdır?",
+    opts: ["A) Yemeğin rengini değiştirmek", "B) Besinlerin ham madde, işleme tekniği ve son ürün açısından standart ve sanitasyon kurallarına uygunluğunun kontrolü", "C) Fiyat ayarlama süreci", "D) Sadece personel eğitimi"],
+    ans: 1,
+    exp: "Besin kalite kontrolü; ham madde, işleme tekniği ve son ürün açısından var olan standartlara ve sanitasyon kurallarına uygunluğun denetlenmesidir."
+  },
+  {
+    q: "Aşağıdakilerden hangisi 'kalite' tanımına uyar?",
+    opts: ["A) En pahalı malın özelliği", "B) Mal ve hizmetlerin belirli gereksinmeler karşısındaki performansı; tüketiciyi memnun eden niteliklerin bileşimi", "C) Yalnızca renk ve şekil", "D) Sadece ambalaj görünümü"],
+    ans: 1,
+    exp: "Kalite; mal ve hizmetlerin belirli gereksinmeler karşısındaki performansı, tüketiciyi memnun eden nitelikleri oluşturan faktörlerin bileşimi ve mükemmellik derecesinin ifadesidir."
+  },
+  {
+    q: "Yumurta ve sığır eti (bütün parça) için minimum iç pişirme sıcaklığı kaçtır?",
+    opts: ["A) 50°C", "B) 62°C", "C) 74°C", "D) 95°C"],
+    ans: 1,
+    exp: "Yumurta, sığır eti ve deniz ürünleri için minimum iç pişirme sıcaklığı 62°C'dir. Kıyma 68, tavuk 74 olarak ayrılır."
+  },
+  {
+    q: "Mutfakta personel hijyeni için aşağıdakilerden hangisi temel kurallardan değildir?",
+    opts: ["A) Saç bonesi takmak", "B) Eldiven değiştirmek", "C) Yüzük, kolye, saat takarak çalışmak", "D) Düzenli el yıkama"],
+    ans: 2,
+    exp: "Yüzük, kolye, saat gibi takılar hem yabancı madde kaynağıdır hem de altında bakteri birikimi yaratır. Mutfakta çıkarılmalıdır."
+  },
+  {
+    q: "Aşağıdakilerden hangisi 'fiziksel tehlike' kategorisinde DEĞİLDİR?",
+    opts: ["A) Tırnak parçası", "B) Sigara külü", "C) İplik / düğme", "D) Pestisit kalıntısı"],
+    ans: 3,
+    exp: "Pestisit kalıntısı kimyasal tehlikedir. Tırnak, sigara külü, iplik ve düğme fiziksel tehlikedir."
+  },
+  {
+    q: "Mutfakta atık yönetiminin gıda güvenliği açısından temel önemi nedir?",
+    opts: ["A) Sadece estetik amaç", "B) Haşere/bakteri üreme kaynağı olabileceği için ayrı ve hızlı uzaklaştırılması gerekir", "C) Yalnızca koku kontrolü", "D) Yalnızca ekonomik amaç"],
+    ans: 1,
+    exp: "Çöp ve atıklar bakteri ve haşerelerin üreme kaynağıdır. Kapalı kovalarda toplanmalı, düzenli ve hızlı şekilde mutfaktan uzaklaştırılmalıdır."
+  },
+  {
+    q: "Aşağıdakilerden hangisi 'gıda kontrolünün amaçları' arasında YER ALIR?",
+    opts: ["A) Turizm gelirlerinin artması ve ülke ekonomisinin gelişmesine katkı", "B) Şeflerin maaşını belirlemek", "C) Restoran reklamı yapmak", "D) Müşteri sadakat programları oluşturmak"],
+    ans: 0,
+    exp: "Gıda kontrolünün amaçları; tüketici sağlığı, tüketici ekonomik çıkarları, besin sanayinin gelişmesi, beslenme durumunun iyileştirilmesi, uluslararası pazarda güven, turizm gelirleri ve ülke ekonomisine katkıdır."
+  }
+];
+
+let answered = Array(questions.length).fill(false);
+let score = 0;
+
+function answer(qi, oi) {
+  if (answered[qi]) return;
+  answered[qi] = true;
+  const block = document.querySelectorAll('.q-block')[qi];
+  const opts = block.querySelectorAll('.opt');
+  opts.forEach((o, i) => {
+    if (i === questions[qi].ans) o.classList.add('correct');
+    else o.classList.add(i === oi ? 'wrong' : 'disabled');
+  });
+  block.querySelector('.explanation').style.display = 'block';
+  if (oi === questions[qi].ans) score++;
+  document.getElementById('scorenum').textContent = score;
+  document.getElementById('scorefill').style.width = (answered.filter(Boolean).length / questions.length * 100) + '%';
+}
+
+function buildQuiz() {
+  const c = document.getElementById('quiz-container');
+  questions.forEach((q, qi) => {
+    c.innerHTML += `<div class="q-block">
+      <div class="q-text">${qi+1}. ${q.q}</div>
+      ${q.opts.map((o,oi) => `<div class="opt" onclick="answer(${qi},${oi})">${o}</div>`).join('')}
+      <div class="explanation">💡 ${q.exp}</div>
+    </div>`;
+  });
+}
+buildQuiz();
+</script>
+</body>
+</html>
