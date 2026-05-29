@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konu 8 — İnsanlar ve Besinler</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f0; color: #1a1a1a; padding: 2rem 1rem; }
+.container { max-width: 880px; margin: 0 auto; }
+.back { display: inline-block; color: #1a3a6e; text-decoration: none; font-size: 0.9rem; margin-bottom: 1.5rem; }
+.back:hover { text-decoration: underline; }
+h1 { font-size: 1.5rem; font-weight: 700; color: #1a3a6e; }
+.subtitle { color: #555; font-size: 0.9rem; margin: 0.3rem 0 1.5rem; }
+.tabs { display: flex; gap: 8px; margin-bottom: 1.5rem; border-bottom: 2px solid #e0e0d8; padding-bottom: 0; }
+.tab-btn { padding: 0.5rem 1.25rem; border: none; background: none; cursor: pointer; font-size: 0.9rem; color: #666; border-bottom: 2px solid transparent; margin-bottom: -2px; font-weight: 500; }
+.tab-btn.active { color: #1a3a6e; border-bottom-color: #1a3a6e; }
+.section { display: none; }
+.section.active { display: block; }
+
+h2 { font-size: 1.15rem; font-weight: 600; color: #1a3a6e; margin: 1.5rem 0 0.75rem; }
+h3 { font-size: 1rem; font-weight: 600; color: #333; margin: 1rem 0 0.5rem; }
+p { line-height: 1.65; margin-bottom: 0.75rem; color: #333; }
+ul, ol { padding-left: 1.5rem; margin-bottom: 0.75rem; }
+li { line-height: 1.6; margin-bottom: 0.25rem; }
+.card { background: #fff; border: 1px solid #e0e0d8; border-radius: 10px; padding: 1.1rem 1.25rem; margin-bottom: 1rem; }
+.card-title { font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+.blue .card-title { color: #1a3a6e; }
+.teal .card-title { color: #0f766e; }
+.amber .card-title { color: #92400e; }
+.coral .card-title { color: #c2410c; }
+.green .card-title { color: #166534; }
+.purple .card-title { color: #6b21a8; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+.info-box { border-left: 4px solid #3b82f6; background: #eff6ff; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; }
+.success-box { border-left: 4px solid #4caf50; background: #f0fdf4; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; }
+.warning-box { border-left: 4px solid #f59e0b; background: #fffbeb; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; }
+.stat { background: #1a3a6e; color: #fff; border-radius: 10px; padding: 1rem 1.25rem; text-align: center; margin-bottom: 1rem; }
+.stat-num { font-size: 1.6rem; font-weight: 700; }
+.stat-label { font-size: 0.8rem; opacity: 0.85; margin-top: 0.2rem; }
+
+table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; background: #fff; border-radius: 10px; overflow: hidden; border: 1px solid #e0e0d8; font-size: 0.9rem; }
+th, td { padding: 0.6rem 0.8rem; text-align: left; border-bottom: 1px solid #e0e0d8; }
+th { background: #1a3a6e; color: #fff; font-weight: 600; font-size: 0.85rem; }
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) { background: #fafaf5; }
+
+.score-bar { background: #e0e0d8; border-radius: 8px; height: 8px; margin-bottom: 1.5rem; overflow: hidden; }
+#scorefill { height: 100%; background: #1a3a6e; border-radius: 8px; width: 0%; transition: width 0.4s; }
+.score-text { font-size: 0.85rem; color: #555; margin-bottom: 0.5rem; }
+.q-block { background: #fff; border: 1px solid #e0e0d8; border-radius: 10px; padding: 1.1rem 1.25rem; margin-bottom: 1rem; }
+.q-text { font-weight: 500; margin-bottom: 0.75rem; font-size: 0.95rem; }
+.opt { padding: 0.6rem 0.9rem; border: 1px solid #e0e0d8; border-radius: 7px; margin-bottom: 0.4rem; cursor: pointer; font-size: 0.9rem; transition: background 0.1s; }
+.opt:hover:not(.correct):not(.wrong) { background: #f0f0eb; }
+.opt.correct { background: #d1fae5; border-color: #4caf50; color: #065f46; pointer-events: none; }
+.opt.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; pointer-events: none; }
+.opt.disabled { pointer-events: none; color: #aaa; }
+.explanation { margin-top: 0.6rem; font-size: 0.85rem; color: #555; background: #f5f5f0; padding: 0.6rem 0.8rem; border-radius: 6px; display: none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back" href="index.html">← Geri</a>
+  <h1>İnsanlar ve Besinler</h1>
+  <p class="subtitle">Gastronomi ve Yaşam · Konu 8</p>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('lesson', this)">Ders Notu</button>
+    <button class="tab-btn" onclick="switchTab('quiz', this)">Quiz (50 Soru)</button>
+  </div>
+
+  <!-- ═══ DERS NOTU ═══ -->
+  <div id="lesson" class="section active">
+
+    <h2>1. Beslenme ve Gastronomi: Tanımlar</h2>
+
+    <p><strong>Beslenme</strong> yalnızca karın doyurmak değildir. İnsanın <strong>büyümesi, gelişmesi ve sağlıklı yaşaması</strong> için gerekli besin ögelerinin alınıp vücudunda kullanılmasıdır. Fizyolojik, psikolojik, ekonomik ve kültürel süreçlerin kesiştiği çok katmanlı bir alandır.</p>
+
+    <div class="info-box">
+      <strong>Gastronomi:</strong> Yeme-içmenin bilimsel ve sanatsal açıdan incelenmesidir. Yunanca <strong>"Gastros" (mide)</strong> ve <strong>"Nomos" (yasa / kural)</strong> kelimelerinden gelir; "midenin yasası" anlamındadır.
+    </div>
+
+    <div class="grid2">
+      <div class="card blue">
+        <div class="card-title">Beslenme</div>
+        <p>Biyolojik bir ihtiyaç; aynı zamanda kültürel ve psikolojik bir davranış. Sindirim → emilim → kullanım zinciri üzerinden işleyen <strong>fizyolojik süreç</strong>.</p>
+      </div>
+      <div class="card amber">
+        <div class="card-title">Gastronomi</div>
+        <p>Bilim + sanat + kültür. Tarımdan tabağa kadar olan yolculuğu, tat ve sunum estetiğini, kültürel bağlamı ele alan <strong>çok disiplinli alan</strong>.</p>
+      </div>
+    </div>
+
+    <h2>2. Tarihsel Köken: İlk Aşçı, Brillat-Savarin</h2>
+
+    <p>Tarihte <strong>"ilk aşçı"</strong> sayılan ilkel insanın keşfi; <strong>etin ateşte ısındığında daha kolay çiğnenebilir ve sindirilebilir</strong> hale geldiğini fark etmesidir. Bu, gastronominin başlangıcı kabul edilir.</p>
+
+    <div class="card purple">
+      <div class="card-title">Jean Anthelme Brillat-Savarin (1755–1826)</div>
+      <p>Fransız hukukçu ve gastronomi yazarı; <em>Physiologie du Goût</em> (Tadın Fizyolojisi, 1825) kitabıyla modern gastronomi yazınının kurucusu sayılır.</p>
+      <p style="margin-top:0.5rem; font-style:italic;">"Bana ne yediğini söyle, sana kim olduğunu söyleyeyim."</p>
+    </div>
+
+    <h2>3. Besin ve Besin Ögeleri</h2>
+
+    <table>
+      <thead>
+        <tr><th>Kavram</th><th>Tanım</th><th>Örnek</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Besin</strong></td><td>Su, organik ve inorganik ögelerden oluşan; yenilebilen bitki ve hayvan dokuları</td><td>Yumurta, elma, tahıl</td></tr>
+        <tr><td><strong>Makro Besin Ögesi</strong></td><td>Vücut ağırlığının <strong>%0.005'inden fazlası</strong></td><td>Protein, yağ, karbonhidrat, su</td></tr>
+        <tr><td><strong>Mikro Besin Ögesi</strong></td><td>Vücut ağırlığının <strong>%0.005'inden azı</strong></td><td>Vitaminler, eser mineraller (Fe, Zn, I)</td></tr>
+      </tbody>
+    </table>
+
+    <h2>4. Enerji Değerleri</h2>
+
+    <div class="grid2">
+      <div class="card amber">
+        <div class="card-title">Kalori İçerenler</div>
+        <ul>
+          <li><strong>Yağ:</strong> 1 g = <strong>9 kcal</strong></li>
+          <li><strong>Protein:</strong> 1 g = <strong>4 kcal</strong></li>
+          <li><strong>Karbonhidrat:</strong> 1 g = <strong>4 kcal</strong></li>
+        </ul>
+      </div>
+      <div class="card teal">
+        <div class="card-title">Kalori İçermeyenler</div>
+        <ul>
+          <li>Vitaminler</li>
+          <li>Mineraller</li>
+          <li>Su</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>5. Yeterli ve Dengeli Beslenme</h2>
+
+    <div class="success-box">
+      Vücudun ihtiyacı olan <strong>enerji ve besin ögelerinin her birinin yeterli miktarda alınması ve uygun kullanılması</strong>; sağlığın temelidir. "Optimal beslenme durumu" = <strong>alım ile gereksinme arasındaki denge</strong>.
+    </div>
+
+    <h3>Yetersiz Beslenmeden En Çok Etkilenen Gruplar</h3>
+    <ul>
+      <li>Bebek ve çocuklar</li>
+      <li>Gençler</li>
+      <li>Doğurganlık çağındaki kadınlar</li>
+      <li>Gebe ve emzikli anneler</li>
+      <li>Yaşlılar</li>
+      <li>Ağır işte çalışan işçiler</li>
+    </ul>
+
+    <h2>6. Besin Grupları (Hızlı Tekrar)</h2>
+
+    <div class="grid2">
+      <div class="card blue">
+        <div class="card-title">Süt Grubu</div>
+        <ul>
+          <li>Protein, <strong>kalsiyum, fosfor, B1</strong></li>
+          <li>Önerilen: <strong>3–4 porsiyon/gün</strong></li>
+        </ul>
+      </div>
+      <div class="card coral">
+        <div class="card-title">Et Grubu</div>
+        <ul>
+          <li>Kaliteli protein, <strong>demir, çinko, B12</strong></li>
+          <li>Yumurta = en kaliteli protein örneklerinden</li>
+        </ul>
+      </div>
+      <div class="card green">
+        <div class="card-title">Sebze & Meyve</div>
+        <ul>
+          <li>Lif (posa), <strong>A, C, E, K</strong> vitaminleri</li>
+          <li>Meyveler ek olarak <strong>früktoz</strong> içerir</li>
+        </ul>
+      </div>
+      <div class="card purple">
+        <div class="card-title">Tahıl Grubu</div>
+        <ul>
+          <li>Temel karbonhidrat kaynağı</li>
+          <li><strong>B12 hariç</strong> tüm B grubu vitaminleri</li>
+          <li>Kuru baklagiller bu grupta</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>7. İntegratif Beslenme Tabağı (Integrative Plate)</h2>
+
+    <p>USDA'nın <strong>MyPlate</strong> beslenme yönergelerinden uyarlanan <strong>İntegratif Beslenme Tabağı</strong>; dengeli bir öğünün <strong>organik ve yerel ürünler, tam tahıllar, yüksek kaliteli proteinler, bitkisel yağlar ve su</strong> üzerinden kurgulanmasını önerir.</p>
+
+    <div class="info-box">
+      <strong>İntegratif yaklaşımın farkı:</strong> Sadece besin grupları değil; <strong>kaynak (yerel/organik), işlem düzeyi (az işlenmiş), bitkisel yağ tercihi ve su</strong> tabağın ayrılmaz parçalarıdır.
+    </div>
+
+    <h2>8. Restoran Sektöründe Yeni Eğilimler (Klasik 5 Eğilim)</h2>
+
+    <p><strong>Ulusal Restoranlar Birliği</strong>'nin 2009 yılında <strong>1800 şefin</strong> katılımıyla gerçekleştirdiği araştırma; restoran sektörünün dönüşümünü 5 ana başlıkta özetler:</p>
+
+    <h3>1. Sürdürülebilirlik</h3>
+    <div class="card green">
+      <p>Et ve deniz ürünleri üretiminde <strong>yerel kaynakların</strong> ve çevre dostu uygulamaların kullanılması.</p>
+      <p style="margin-top:0.5rem;"><strong>3 ana neden:</strong></p>
+      <ul>
+        <li>Tazelik arzusu</li>
+        <li>Ürün nakliyesindeki artan maliyetler</li>
+        <li>Yerel topluluk ve işletmeleri desteklemek</li>
+      </ul>
+    </div>
+
+    <h3>2. Beslenme Odaklı Menüler</h3>
+    <div class="card blue">
+      <ul>
+        <li>Çocuk menüleri</li>
+        <li>Sağlığa yararlı besinler</li>
+        <li>Yarım porsiyonlar</li>
+        <li>Glutensiz ürünler</li>
+        <li>Alerjiye neden olmayacak besinler</li>
+      </ul>
+    </div>
+
+    <h3>3. Sadelik ve Küçük Porsiyonlar</h3>
+    <div class="card amber">
+      <ul>
+        <li>Düşük fiyat – iyi kaliteli besin</li>
+        <li>Basit yemekler – küçük porsiyon</li>
+      </ul>
+    </div>
+
+    <h3>4. Yöresel Üretilmiş İçecekler</h3>
+    <div class="card coral">
+      <p>Yerel şarap, butik bira, geleneksel fermente içecekler — sürdürülebilirlik ve "terroir" kavramının uzantısı.</p>
+    </div>
+
+    <h3>5. Yeni Pişirme Teknolojileri</h3>
+    <div class="card purple">
+      <ul>
+        <li><strong>Sıvı Nitrojen</strong> ile dondurma/soğutma</li>
+        <li><strong>Konfit (Confit):</strong> uzun süre, düşük sıcaklıkta yağda/şekerli suda pişirme (koruma yöntemi)</li>
+        <li><strong>Sous-vide</strong> (vakumlu, düşük ısı su banyosu)</li>
+        <li>Tütsüleme</li>
+        <li>Yağda poşeleme — kısık ateş, az suda pişirme</li>
+      </ul>
+    </div>
+
+    <h2>9. Restoran Endüstrisi 2025 Raporu</h2>
+
+    <div class="grid3">
+      <div class="stat">
+        <div class="stat-num">1,5 trilyon $</div>
+        <div class="stat-label">2025 öngörülen sektör satışı</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">15,9 milyon</div>
+        <div class="stat-label">İstihdam (kişi)</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">AI + Robotik</div>
+        <div class="stat-label">Yükselen teknoloji</div>
+      </div>
+    </div>
+
+    <ul>
+      <li><strong>Tüketici davranışı:</strong> Dışarıda yemek ve paket servise daha çok harcama</li>
+      <li><strong>Teknoloji:</strong> Yapay zekâ destekli menü planlama, mobil sipariş, robotik mutfak ekipmanları</li>
+      <li><strong>İşgücü:</strong> İşe alım ve personel tutma hâlâ en büyük sorun</li>
+      <li><strong>Sürdürülebilirlik:</strong> Gıda israfını azaltma ve çevre dostu paketleme öncelikli gündem</li>
+    </ul>
+
+    <h2>10. What's Hot 2025 Culinary Forecast</h2>
+
+    <div class="grid2">
+      <div class="card green">
+        <div class="card-title">Trend Olan</div>
+        <ul>
+          <li><strong>Bitki bazlı</strong> ve <strong>clean label</strong> ürünler</li>
+          <li>Küresel mutfak <strong>füzyonları</strong> (Orta Doğu, Asya etkileri)</li>
+          <li><strong>Fermente gıdalar</strong>, fonksiyonel içecekler (kombucha)</li>
+          <li><strong>Yüksek proteinli kahvaltı</strong> menüleri</li>
+          <li>Yerel üretici iş birliği, sürdürülebilir tedarik zinciri</li>
+        </ul>
+      </div>
+      <div class="card teal">
+        <div class="card-title">Türkiye Avantajı</div>
+        <ul>
+          <li>Zeytinyağlılar, bakliyat, otlar = doğal bitkisel taban</li>
+          <li>Geleneksel fermente: yoğurt, kefir, turşu, tarhana</li>
+          <li>Modern sunum + bilinçli içerik etiketi = büyük avantaj</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>11. Beslenme & Diyetetik Açısından Öne Çıkan Trendler</h2>
+
+    <div class="grid2">
+      <div class="card blue">
+        <div class="card-title">Ruh Sağlığı için Beslenme</div>
+        <p>"Mental wellness nutrition" temasının yükselişi. Öne çıkan besin ögeleri:</p>
+        <ul>
+          <li><strong>Magnezyum</strong></li>
+          <li><strong>Omega-3</strong></li>
+          <li><strong>B vitaminleri</strong></li>
+          <li><strong>Polifenoller</strong></li>
+        </ul>
+      </div>
+      <div class="card teal">
+        <div class="card-title">Fonksiyonel Besinler</div>
+        <p>Bağırsak sağlığı, bağışıklık, enerji ve ruh hali dengesi:</p>
+        <ul>
+          <li>Kombucha, kefir, fermente sebzeler</li>
+          <li><strong>Adaptogen bitkiler:</strong> reishi, ashwagandha</li>
+        </ul>
+      </div>
+      <div class="card amber">
+        <div class="card-title">Clean Label + Bitki Bazlı</div>
+        <p>Tüketici içerik listesinde <strong>tanıdığı kelimeler</strong> görmek istiyor: yapay katkısız, az işlenmiş, bitki odaklı menüler.</p>
+      </div>
+      <div class="card coral">
+        <div class="card-title">Kişiselleştirilmiş Beslenme</div>
+        <p>AI ve veri analitiğiyle <strong>kişiye özel menüler</strong>; restoranlarda akıllı sipariş sistemleri; danışana özel restoran rehberleri.</p>
+      </div>
+    </div>
+
+    <h2>12. Alternatif Protein: Yenilebilir Böcekler</h2>
+
+    <div class="warning-box">
+      Sürdürülebilirlik baskısı altında <strong>alternatif protein kaynakları</strong> giderek önem kazanıyor. <strong>Yenilebilir böcekler</strong>; düşük sera gazı salınımı, yüksek yem dönüşüm oranı ve protein zenginliğiyle öne çıkıyor. (Detay için bkz. <a href="topic4.html" style="color:#1a3a6e;">Konu 4 — Yenilebilir Böcekler</a>.)
+    </div>
+
+    <h2>13. Toplu Beslenme Sistemleri (TBS)</h2>
+
+    <p>Okul, hastane, fabrika, asker, otel gibi <strong>toplu üretim mutfaklarında</strong> menü kalitesi 8 temel ölçütle değerlendirilir:</p>
+
+    <div class="card blue">
+      <ul>
+        <li>Menülerde <strong>yeterliliğin</strong> sağlanması</li>
+        <li>Menülerde <strong>çeşitliliğin</strong> sağlanması</li>
+        <li>Öğün sayısı ve öğünlerde dağılımda <strong>denge</strong></li>
+        <li>Yüksek <strong>sübjektif kalite</strong> (görsel/tat memnuniyeti)</li>
+        <li>Yüksek <strong>besin değeri korunumu</strong></li>
+        <li>Yüksek <strong>servis kalitesi</strong> ve uygun fiziksel çevre</li>
+        <li>Yüksek <strong>hijyenik kalite</strong></li>
+        <li><strong>Ekonomik ve etkin</strong> üretim</li>
+      </ul>
+    </div>
+
+    <h2>14. Gastronomi Turizmi</h2>
+
+    <div class="success-box">
+      Gastronomi turizmi; bir bölgenin <strong>yiyecek-içecek üretim ve tüketim hareketliliğini</strong> ekonomik aktivite haline getirir. Sadece tarif yaymaz; istihdam, tarım, lojistik ve kültürel marka üzerinden ülke ekonomisini doğrudan etkiler.
+    </div>
+
+    <h2>15. Genel Çıkarımlar</h2>
+
+    <ul>
+      <li>Beslenme; biyolojik, kültürel, psikolojik ve ekonomik <strong>çok katmanlı</strong> bir süreçtir.</li>
+      <li>Gastronomi <strong>mide + yasa</strong> = bilimsel kurallar üzerine kurulu bir sanattır.</li>
+      <li>2025 gündemi: <strong>sürdürülebilirlik, AI, clean label, bitki bazlı, kişiselleştirme</strong>.</li>
+      <li>Türkiye'nin geleneksel mutfak tabanı (zeytinyağlı, bakliyat, fermente) modern trendlerle <strong>doğal uyum</strong> içindedir.</li>
+      <li>Toplu beslenme sistemlerinde kalite = <strong>yeterlilik + çeşitlilik + hijyen + ekonomik üretim</strong>.</li>
+    </ul>
+
+  </div>
+
+  <!-- ═══ QUIZ ═══ -->
+  <div id="quiz" class="section">
+    <p class="score-text">Puan: <span id="scorenum">0</span> / 50</p>
+    <div class="score-bar"><div id="scorefill"></div></div>
+    <div id="quiz-container"></div>
+  </div>
+</div>
+
+<script>
+function switchTab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+const questions = [
+  {
+    q: "'Gastronomi' kelimesinin kökeni olan 'Nomos' ne anlama gelir?",
+    opts: ["A) Mide", "B) Sanat", "C) Yasa / Kural", "D) Lezzet"],
+    ans: 2,
+    exp: "Gastronomi; Yunanca 'Gastros' (mide) ve 'Nomos' (yasa/kural) kelimelerinden gelir. Yani 'midenin yasası' anlamına gelir."
+  },
+  {
+    q: "Beslenme tanımı aşağıdakilerden hangisini kapsamaz?",
+    opts: ["A) Büyüme ve gelişme", "B) Sadece açlık hissinin bastırılması", "C) Sağlığın korunması", "D) Besin ögelerinin vücutta kullanılması"],
+    ans: 1,
+    exp: "Beslenme yalnızca açlığı bastırmak değil; büyüme, gelişme, sağlığın korunması ve besin ögelerinin vücutta kullanılması sürecidir."
+  },
+  {
+    q: "Besinlerin besin değerleriyle ilgilenen bilim dalına ne ad verilir?",
+    opts: ["A) Gastronomi", "B) Diyetetik", "C) Arkeoloji", "D) Sosyoloji"],
+    ans: 1,
+    exp: "Diyetetik; besinlerin besin değerlerini ve sağlık üzerindeki etkilerini inceleyen bilim dalıdır."
+  },
+  {
+    q: "Vücut ağırlığının %0.005'inden fazla bulunan besin ögelerine ne denir?",
+    opts: ["A) Mikro besin ögesi", "B) Fonksiyonel besin", "C) Makro besin ögesi", "D) Takviye edici gıda"],
+    ans: 2,
+    exp: "Makro besin ögesi; vücut ağırlığının %0.005'inden fazlasını oluşturur. Protein, yağ, karbonhidrat ve su bu gruptadır."
+  },
+  {
+    q: "Aşağıdakilerden hangisi bir 'makro besin ögesi' değildir?",
+    opts: ["A) Protein", "B) Yağ", "C) Vitamin", "D) Karbonhidrat"],
+    ans: 2,
+    exp: "Vitaminler mikro besin ögesidir; vücutta çok küçük miktarlarda bulunur fakat metabolik açıdan kritik rol oynar."
+  },
+  {
+    q: "1 gram yağ vücuda kaç kalori enerji sağlar?",
+    opts: ["A) 4 kcal", "B) 7 kcal", "C) 9 kcal", "D) 12 kcal"],
+    ans: 2,
+    exp: "1 gram yağ 9 kcal enerji sağlar. Gram başına en yoğun enerji kaynağıdır."
+  },
+  {
+    q: "Protein ve karbonhidratların 1 gramı kaçar kalori enerji verir?",
+    opts: ["A) 4 kcal", "B) 9 kcal", "C) 5 kcal", "D) Enerji vermezler"],
+    ans: 0,
+    exp: "Protein ve karbonhidratların her bir gramı 4 kcal enerji sağlar. Yağın yarısı kadar yoğundurlar."
+  },
+  {
+    q: "Aşağıdaki besinlerden hangisi 'kalori içermeyen' gruptadır?",
+    opts: ["A) Zeytinyağı", "B) Ekmek", "C) Su", "D) Balık"],
+    ans: 2,
+    exp: "Su; yaşam için temel makro besindir fakat enerji (kalori) içermez. Vitamin ve mineraller de kalori sağlamaz."
+  },
+  {
+    q: "'Yeterli ve Dengeli Beslenme'nin temel ölçütü nedir?",
+    opts: ["A) Sadece en pahalı ürünleri tüketmek", "B) Enerji ve besin ögelerinin her birini yeterli miktarda almak", "C) Günde tek öğün beslenmek", "D) Sadece bitkisel kaynaklı beslenmek"],
+    ans: 1,
+    exp: "Yeterli ve dengeli beslenme; enerji ve besin ögelerinin her birinin yeterli miktarda alınması ve uygun şekilde kullanılmasıdır."
+  },
+  {
+    q: "Yetersiz beslenmeden en çok etkilenen 'hassas gruplar' arasında hangisi yoktur?",
+    opts: ["A) Bebek ve çocuklar", "B) Gebe ve emzikli anneler", "C) Yaşlılar", "D) Sağlıklı yetişkin erkekler"],
+    ans: 3,
+    exp: "Hassas gruplar; bebek-çocuk, gençler, doğurganlık çağındaki kadınlar, gebe-emzikli anneler, yaşlılar ve ağır işçilerdir. Sağlıklı yetişkin erkekler bu sınıflamada hassas grup değildir."
+  },
+  {
+    q: "Süt grubu besinler en çok hangi mineralin temel kaynağıdır?",
+    opts: ["A) Demir", "B) Çinko", "C) Kalsiyum", "D) İyot"],
+    ans: 2,
+    exp: "Süt grubu kalsiyum ve fosfor açısından çok zengindir. Kemik sağlığında temel besin grubudur."
+  },
+  {
+    q: "Günlük kalsiyum gereksinmesi için süt grubundan kaç porsiyon tüketilmesi önerilir?",
+    opts: ["A) 1 porsiyon", "B) 3-4 porsiyon", "C) 10 porsiyon", "D) Hiç tüketilmemelidir"],
+    ans: 1,
+    exp: "Süt grubundan günlük 3-4 porsiyon; özellikle kalsiyum gereksinimini karşılamak için önerilir."
+  },
+  {
+    q: "'Et Grubu' besinlerde yoğun olarak bulunan ve sinir sistemi için kritik olan vitamin hangisidir?",
+    opts: ["A) C Vitamini", "B) B12 Vitamini", "C) A Vitamini", "D) E Vitamini"],
+    ans: 1,
+    exp: "B12 vitamini; sinir sistemi sağlığı ve eritrosit yapımı için kritiktir ve doğal olarak yalnızca hayvansal kaynaklarda bulunur."
+  },
+  {
+    q: "Tahıl grubu besinlerde bulunmayan tek B grubu vitamini hangisidir?",
+    opts: ["A) B1", "B) B2", "C) B6", "D) B12"],
+    ans: 3,
+    exp: "Tahıllar B12 hariç tüm B grubu vitaminlerini içerir. B12 sadece hayvansal kaynaklardan alınır."
+  },
+  {
+    q: "Meyvelerin sebzelerden temel farkı aşağıdakilerden hangisidir?",
+    opts: ["A) Daha fazla protein içermeleri", "B) Früktoz (meyve şekeri) içermeleri ve yüksek enerji vermeleri", "C) Sadece pişirilerek yenmeleri", "D) Vitamin içermemeleri"],
+    ans: 1,
+    exp: "Meyveler früktoz içerir; bu yüzden enerji içerikleri sebzelere göre yüksektir."
+  },
+  {
+    q: "Beslenme biliminin ilgilendiği konular arasında aşağıdakilerden hangisi yer alır?",
+    opts: ["A) Besinlerin vücuttaki işlevi", "B) Üretimden tüketime uygulanan işlemlerin besin kalitesine etkisi", "C) Özel gruplar için uygun beslenme planı hazırlanması", "D) Hepsi"],
+    ans: 3,
+    exp: "Beslenme bilimi; besinin türü, miktarı, vücuttaki işlevi, üretim-tüketim sürecindeki kalite değişimi ve özel grup planlarıyla ilgilenir."
+  },
+  {
+    q: "'Optimal beslenme durumu' neyi ifade eder?",
+    opts: ["A) Çok fazla yemek yemeği", "B) Besin ögesi alımı ve gereksinme arasındaki dengeyi", "C) Sadece protein barlarıyla beslenmeyi", "D) Hızlı yemek yemeyi"],
+    ans: 1,
+    exp: "Optimal beslenme; bireyin besin ögesi alımı ile gereksinmesi arasında kurulmuş dengedir."
+  },
+  {
+    q: "Aşağıdaki besinlerden hangisi 'Tahıl Grubu' içinde değerlendirilir?",
+    opts: ["A) Süt", "B) Kuru baklagiller (nohut, mercimek vb.)", "C) Elma", "D) Tavuk"],
+    ans: 1,
+    exp: "Kuru baklagiller; karbonhidrat ve bitkisel protein içerikleri nedeniyle tahıl grubu altında değerlendirilir."
+  },
+  {
+    q: "Sebzelerin sindirim sistemine en büyük katkısı hangi içerikleri sayesindedir?",
+    opts: ["A) Yağlar", "B) Lif (Posa)", "C) Şeker", "D) Protein"],
+    ans: 1,
+    exp: "Sebzelerdeki lif (posa); bağırsak hareketlerini düzenler, tokluk hissi verir ve mikrobiyotayı destekler."
+  },
+  {
+    q: "Gastronominin temel prensibi aşağıdakilerden hangisine dayanır?",
+    opts: ["A) Politikaya", "B) Bilime", "C) Sadece reklama", "D) Şansa"],
+    ans: 1,
+    exp: "Gastronomi 'mide + yasa' kökeniyle bilimsel kurallar üzerine kurulmuş bir sanat dalıdır."
+  },
+  {
+    q: "Tarihteki 'ilk aşçı' kabul edilen ilkel insanın keşfi nedir?",
+    opts: ["A) Baharat kullanımı", "B) Etin ateşte ısındığında daha çiğnenebilir olması", "C) Tarım yapmaya başlaması", "D) Çatal-bıçak kullanımı"],
+    ans: 1,
+    exp: "Etin ateşte ısındığında daha kolay çiğnenebilir ve sindirilebilir olmasının fark edilmesi gastronominin başlangıcı sayılır."
+  },
+  {
+    q: "'Bana ne yediğini söyle, sana kim olduğunu söyleyeyim' sözüyle tanınan gastronomi yazarı kimdir?",
+    opts: ["A) Auguste Escoffier", "B) Marie-Antoine Careme", "C) Brillat Savarin", "D) Fernand Point"],
+    ans: 2,
+    exp: "Jean Anthelme Brillat-Savarin (1755–1826); 'Physiologie du Goût' (1825) kitabıyla modern gastronomi yazınının kurucusu sayılır."
+  },
+  {
+    q: "'Tabak Modeli'nde dengeli bir öğün için tabağın ana bölümleri nelerden oluşmalıdır?",
+    opts: ["A) Sadece et ve ekmek", "B) Tahıllar, sebzeler, meyveler, süt ürünleri ve proteinler", "C) Sadece meyve ve su", "D) Tatlılar ve içecekler"],
+    ans: 1,
+    exp: "Dengeli tabak; tahıllar, sebzeler, meyveler, süt ürünleri ve protein kaynaklarından oluşur. Sebze-meyve tabağın yarısını kapsar."
+  },
+  {
+    q: "2025 yılı restoran endüstrisi raporuna göre hangi eğilim yükseliştedir?",
+    opts: ["A) Yapay zekâ destekli menü planlama", "B) Daha büyük porsiyonlar", "C) Sadece donmuş gıda kullanımı", "D) Yerel üreticilerle iş birliğinin azaltılması"],
+    ans: 0,
+    exp: "2025 raporunda AI destekli menü planlama, mobil sipariş ve robotik mutfak ekipmanları öne çıkan eğilimlerdir."
+  },
+  {
+    q: "'Clean Label' (Temiz Etiket) kavramı neyi ifade eder?",
+    opts: ["A) Etiketin çok renkli olması", "B) Tanınabilir, az işlenmiş ve yapay katkısız içerikleri", "C) Sadece yabancı dilde yazılmış etiketleri", "D) En ucuz ürünleri"],
+    ans: 1,
+    exp: "Clean label; tüketicinin içerik listesinde tanıdığı kelimeler görmek istemesinden doğan akımdır. Az işlenmiş, yapay katkısız ürünleri temsil eder."
+  },
+  {
+    q: "Sürdürülebilir gıda sistemlerinde alternatif protein kaynağı olarak öne çıkan canlı grubu hangisidir?",
+    opts: ["A) Büyükbaş hayvanlar", "B) Yenilebilir böcekler", "C) Sadece egzotik meyveler", "D) Kümes hayvanları"],
+    ans: 1,
+    exp: "Yenilebilir böcekler; yüksek yem dönüşüm oranı, düşük sera gazı salınımı ve zengin protein içeriğiyle alternatif protein kaynağı olarak öne çıkar."
+  },
+  {
+    q: "Gastronomi turizminin ülke ekonomisine en büyük katkısı nedir?",
+    opts: ["A) Sadece yemek tariflerinin yayılması", "B) Yiyecek-içecek üretim ve tüketim hareketliliğinin ekonomik yapıyı etkilemesi", "C) Daha fazla fast-food restoranı açılması", "D) Mutfak ekipmanlarının pahalılaşması"],
+    ans: 1,
+    exp: "Gastronomi turizmi istihdam, tarım, lojistik ve kültürel marka üzerinden ülke ekonomisine doğrudan katkı sağlar."
+  },
+  {
+    q: "Aşağıdaki besinlerden hangisi 'kaliteli protein' ve 'B12' kaynağı olarak et grubunda yer alır?",
+    opts: ["A) Patates", "B) Yumurta", "C) Makarna", "D) Yoğurt (Süt grubundadır)"],
+    ans: 1,
+    exp: "Yumurta; tüm temel amino asitleri içerir, B12 zengindir ve et grubunda sayılır."
+  },
+  {
+    q: "İnsan vücudunun %0.005'inden az miktarında bulunan demir ve çinko hangi kategoriye girer?",
+    opts: ["A) Makro besin ögesi", "B) Mikro besin ögesi (Mineraller)", "C) Enerji verenler", "D) Karbonhidratlar"],
+    ans: 1,
+    exp: "Demir ve çinko; vücutta çok küçük miktarlarda bulunan eser mineraller olduğu için mikro besin ögesidir."
+  },
+  {
+    q: "Beslenmenin 'fizyolojik, psikolojik, ekonomik ve kültürel' süreçlerin kesiştiği bir nokta olması aşağıdakilerden hangisini açıklar?",
+    opts: ["A) Beslenmenin sadece biyolojik bir ihtiyaç olduğunu", "B) Gastronominin çok disiplinli bir alan olduğunu", "C) Yemek yemenin sadece karın doyurmak olduğunu", "D) Teknolojinin beslenmede gereksiz olduğunu"],
+    ans: 1,
+    exp: "Beslenme; biyolojik, psikolojik, ekonomik ve kültürel katmanların kesiştiği bir süreçtir. Bu da gastronominin çok disiplinli yapısını yansıtır."
+  },
+  {
+    q: "Ulusal Restoranlar Birliği'nin 2009'da 1800 şef ile gerçekleştirdiği araştırmada belirlenen 5 ana eğilimden hangisi YOKTUR?",
+    opts: ["A) Sürdürülebilirlik", "B) Beslenme odaklı menüler", "C) Sadelik ve küçük porsiyonlar", "D) Hazır donmuş gıdaya geçiş"],
+    ans: 3,
+    exp: "Belirlenen 5 eğilim; sürdürülebilirlik, beslenme, sadelik/küçük porsiyon, yöresel içecekler ve yeni pişirme teknolojileridir. Donmuş gıdaya geçiş yer almaz."
+  },
+  {
+    q: "Restoranlarda yerel kaynak kullanımının üç ana nedeni arasında YER ALMAYAN nedir?",
+    opts: ["A) Tazelik arzusu", "B) Ürün nakliyesindeki artan maliyetler", "C) Yerel topluluk ve işletmeleri desteklemek", "D) Daha ucuz ithal ürünlere ulaşmak"],
+    ans: 3,
+    exp: "Yerel kaynak kullanımının üç nedeni; tazelik, artan nakliye maliyetleri ve yerel topluluğu desteklemektir. İthal ürün arayışı bu mantığa aykırıdır."
+  },
+  {
+    q: "'Konfit (Confit)' bir pişirme terimi olarak neyi tanımlar?",
+    opts: ["A) Yiyeceğin yüksek ısıda ve kısa sürede kızartılmasını", "B) Yiyeceğin yağda, yağda veya şekerli suda düşük sıcaklıkta uzun süre pişirilmesini", "C) Buhar altında 100°C üzeri pişirmeyi", "D) Çiğ servisi"],
+    ans: 1,
+    exp: "Konfit; bir koruma yöntemi olarak yiyeceğin yağda, yağda veya şekerli suda düşük sıcaklıkta uzun süre yavaşça pişirilmesidir. Derin kızartmanın aksine düşük ısıda yapılır."
+  },
+  {
+    q: "Vakum poşeti içinde, kontrollü sıcaklıkta su banyosunda pişirme tekniği aşağıdakilerden hangisidir?",
+    opts: ["A) Sous-vide", "B) Tütsüleme", "C) Sıvı nitrojen ile dondurma", "D) Yağda poşeleme"],
+    ans: 0,
+    exp: "Sous-vide; vakumlanmış poşette, hassas sıcaklık kontrollü su banyosunda uzun süre pişirme tekniğidir."
+  },
+  {
+    q: "İntegratif Beslenme Tabağı (Integrative Plate), aşağıdaki yönergelerden hangisinin uyarlamasıdır?",
+    opts: ["A) WHO – Healthy Diet Plate", "B) USDA – MyPlate", "C) UK – Eatwell Guide", "D) TÜBER – Türkiye Beslenme Rehberi"],
+    ans: 1,
+    exp: "İntegratif Beslenme Tabağı; USDA'nın MyPlate yönergelerinden uyarlanmıştır. Organik/yerel ürün, tam tahıl, kaliteli protein, bitkisel yağ ve suyu vurgular."
+  },
+  {
+    q: "İntegratif Beslenme Tabağı'nın özellikle vurguladığı unsurlar arasında YER ALMAYAN hangisidir?",
+    opts: ["A) Organik ve yerel ürünler", "B) Tam tahıllar", "C) Bitkisel yağlar", "D) İşlenmiş şekerli içecekler"],
+    ans: 3,
+    exp: "İntegratif Beslenme Tabağı; organik/yerel ürün, tam tahıl, kaliteli protein, bitkisel yağ ve suyu vurgular. İşlenmiş şekerli içecekler bu kapsamda yer almaz."
+  },
+  {
+    q: "2025 Beslenme & Diyetetik Trendleri'nde 'ruh sağlığı için beslenme' temasında öne çıkan besin ögeleri hangileridir?",
+    opts: ["A) Magnezyum, Omega-3, B vitaminleri, polifenoller", "B) Sadece basit şekerler", "C) Trans yağlar ve sodyum", "D) Sadece D vitamini"],
+    ans: 0,
+    exp: "Mental wellness nutrition; magnezyum, omega-3, B vitaminleri ve polifenoller üzerine kuruludur. Bu öğeler nörotransmitter dengesi, anti-inflamasyon ve enerji metabolizmasıyla ilişkilidir."
+  },
+  {
+    q: "Aşağıdakilerden hangisi bir 'fonksiyonel / fermente içecek' örneğidir?",
+    opts: ["A) Şekerli kola", "B) Kombucha", "C) Enerji içeceği (kafein bombası)", "D) Aromalı maden suyu"],
+    ans: 1,
+    exp: "Kombucha; fermente bir çay içeceğidir, probiyotik ve organik asitler içerir. 2025 trendlerinde fonksiyonel içecek kategorisinde öne çıkar."
+  },
+  {
+    q: "'Adaptogen bitkiler' arasında genellikle hangisi sayılır?",
+    opts: ["A) Reishi mantarı, Ashwagandha", "B) Marul, ıspanak", "C) Mısır, pirinç", "D) Domates, salatalık"],
+    ans: 0,
+    exp: "Adaptogenler; vücudun strese uyum sağlamasına destek olduğu öne sürülen bitkilerdir. Reishi ve ashwagandha klasik örnekleridir."
+  },
+  {
+    q: "Toplu Beslenme Sistemleri'nde (TBS) menü kalitesinin değerlendirilmesinde aşağıdakilerden hangisi temel ölçütlerden biri DEĞİLDİR?",
+    opts: ["A) Menülerde yeterlilik ve çeşitlilik", "B) Yüksek hijyenik kalite", "C) Ekonomik ve etkin üretim", "D) Menülerin sadece et ağırlıklı olması"],
+    ans: 3,
+    exp: "TBS kalite ölçütleri; yeterlilik, çeşitlilik, öğün dengesi, sübjektif kalite, besin değeri korunumu, servis kalitesi, hijyen ve ekonomik üretimdir. Tek besin grubu ağırlıklı menü kalite ölçütü değildir."
+  },
+  {
+    q: "Toplu beslenme sistemlerine olan tercihin artma nedenleri arasında EN OLASILA YER ALMAYAN hangisidir?",
+    opts: ["A) Şehirleşme ve çalışan nüfusun artması", "B) Zaman kısıtı ve ekonomik üretim ihtiyacı", "C) Hijyen ve standartlaşma talebi", "D) Bireysel mutfak imkânlarının yaygınlaşması"],
+    ans: 3,
+    exp: "TBS'ye tercihin artması; şehirleşme, çalışan nüfus, zaman kısıtı, standartlaşma talebi ve ekonomik üretimle ilişkilidir. Bireysel mutfak imkânlarının yaygınlaşması tercihi azaltır, artırmaz."
+  },
+  {
+    q: "What's Hot 2025 raporunda öne çıkan trendler arasında YER ALMAYAN hangisidir?",
+    opts: ["A) Bitki bazlı ve clean label", "B) Fermente gıdalar ve fonksiyonel içecekler", "C) Yüksek proteinli kahvaltı menüleri", "D) Tek mutfak kültürüne dönüş"],
+    ans: 3,
+    exp: "2025 trendleri; bitki bazlı, clean label, küresel mutfak füzyonu, fermente gıdalar, fonksiyonel içecekler ve yüksek proteinli kahvaltıdır. Tek mutfak kültürüne dönüş aksine küreselleşme eğilimine karşıdır."
+  },
+  {
+    q: "Türkiye mutfağının 2025 trendleriyle güçlü uyumunu açıklayan örnek hangisidir?",
+    opts: ["A) Zeytinyağlılar, bakliyatlar ve otların doğal bitkisel taban oluşturması", "B) Yalnızca tatlıların ön planda olması", "C) Sadece kırmızı et ağırlıklı menüler", "D) Donuk fast-food kültürü"],
+    ans: 0,
+    exp: "Türkiye mutfağı zaten güçlü bir vejetaryen/bitki tabanlı tabana sahiptir: zeytinyağlılar, bakliyatlar ve otlar 2025 trendleriyle doğal uyum sağlar."
+  },
+  {
+    q: "Kişiselleştirilmiş beslenmenin (personalized nutrition) restoranlardaki en olası uygulama biçimi hangisidir?",
+    opts: ["A) Tüm menüyü tek tip yapma", "B) AI destekli, danışan profiline göre menü önerisi", "C) Sadece sabit fiyatlı menü", "D) Müşteri tercihini görmezden gelme"],
+    ans: 1,
+    exp: "Kişiselleştirilmiş beslenme; AI ve veri analitiğiyle kişiye özel menü önerileri sunar. 'Bugün hafif beslenmek istiyorum' diyene uygun menü öneren sistemler bu yaklaşımın örneğidir."
+  },
+  {
+    q: "Restoran sektöründe 2025'te en büyük işgücü problemi olarak öne çıkan başlık hangisidir?",
+    opts: ["A) İşe alım ve personel tutma zorlukları", "B) Şef sayısının fazlalığı", "C) Otomasyonun azalması", "D) Tüm sorunların çözülmüş olması"],
+    ans: 0,
+    exp: "2025 raporu; işe alım ve personel tutmanın hâlâ en büyük sorun olduğunu vurgular. Çözüm önerileri arasında esnek çalışma ve eğitim yer alır."
+  },
+  {
+    q: "Aşağıdakilerden hangisi yeni nesil pişirme tekniklerinden değildir?",
+    opts: ["A) Sıvı nitrojen ile dondurma", "B) Sous-vide", "C) Konfit (düşük ısı yağda pişirme)", "D) Açık ateşte yüksek ısıda kömürleştirme"],
+    ans: 3,
+    exp: "Yüksek ısıda kömürleştirme klasik bir teknik olup yeni nesil 'düşük ısı + uzun süre + kontrol' yaklaşımının karşıtıdır. Sıvı nitrojen, sous-vide ve konfit yeni nesil tekniklerdir."
+  },
+  {
+    q: "Aşağıdakilerden hangisi 'sürdürülebilir tedarik zinciri' kavramı ile en doğrudan ilişkilidir?",
+    opts: ["A) Yerel üreticiyle iş birliği ve kısa nakliye", "B) Uluslararası uçak kargosu artışı", "C) Tek tedarikçiye bağımlılık", "D) Aşırı paketleme"],
+    ans: 0,
+    exp: "Sürdürülebilir tedarik zinciri; yerel üreticiyle iş birliği, kısa mesafeli nakliye ve düşük karbon ayak izini içerir."
+  },
+  {
+    q: "Aşağıdakilerden hangisi 'gıda israfını azaltma' stratejisine en uygun örnektir?",
+    opts: ["A) Aşırı menü çeşidi ve bekleyen stok", "B) Veriye dayalı menü planlama ve porsiyon kontrolü", "C) Çevre dostu olmayan paketleme", "D) Müşteri talebinin yok sayılması"],
+    ans: 1,
+    exp: "Gıda israfını azaltmanın temel yolu; veriye dayalı menü planlama, porsiyon kontrolü ve çevre dostu paketleme uygulamalarıdır."
+  },
+  {
+    q: "Beslenme bilimi ile gastronomi arasındaki ilişki için en doğru ifade hangisidir?",
+    opts: ["A) Birbirinden tamamen ayrı alanlardır", "B) Birbirini tamamlayan, çok disiplinli bir bütünün parçalarıdır", "C) Sadece beslenme bilimi geçerlidir, gastronomi gereksizdir", "D) Sadece gastronomi geçerlidir, beslenme bilimi gereksizdir"],
+    ans: 1,
+    exp: "Beslenme bilimi besinin sağlığa etkisini, gastronomi ise besinin kültürel/sanatsal değerini ele alır. İkisi birbirini tamamlayan çok disiplinli bir bütünün parçalarıdır."
+  }
+];
+
+let answered = Array(questions.length).fill(false);
+let score = 0;
+
+function answer(qi, oi) {
+  if (answered[qi]) return;
+  answered[qi] = true;
+  const block = document.querySelectorAll('.q-block')[qi];
+  const opts = block.querySelectorAll('.opt');
+  opts.forEach((o, i) => {
+    if (i === questions[qi].ans) o.classList.add('correct');
+    else o.classList.add(i === oi ? 'wrong' : 'disabled');
+  });
+  block.querySelector('.explanation').style.display = 'block';
+  if (oi === questions[qi].ans) score++;
+  document.getElementById('scorenum').textContent = score;
+  document.getElementById('scorefill').style.width = (answered.filter(Boolean).length / questions.length * 100) + '%';
+}
+
+function buildQuiz() {
+  const c = document.getElementById('quiz-container');
+  questions.forEach((q, qi) => {
+    c.innerHTML += `<div class="q-block">
+      <div class="q-text">${qi+1}. ${q.q}</div>
+      ${q.opts.map((o,oi) => `<div class="opt" onclick="answer(${qi},${oi})">${o}</div>`).join('')}
+      <div class="explanation">💡 ${q.exp}</div>
+    </div>`;
+  });
+}
+buildQuiz();
+</script>
+</body>
+</html>
