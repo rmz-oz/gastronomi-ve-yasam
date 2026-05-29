@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Konu 7 — Sağlıklı Beslenme ve Tabak Modeli</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f0; color: #1a1a1a; padding: 2rem 1rem; }
+.container { max-width: 880px; margin: 0 auto; }
+.back { display: inline-block; color: #1a3a6e; text-decoration: none; font-size: 0.9rem; margin-bottom: 1.5rem; }
+.back:hover { text-decoration: underline; }
+h1 { font-size: 1.5rem; font-weight: 700; color: #1a3a6e; }
+.subtitle { color: #555; font-size: 0.9rem; margin: 0.3rem 0 1.5rem; }
+.tabs { display: flex; gap: 8px; margin-bottom: 1.5rem; border-bottom: 2px solid #e0e0d8; padding-bottom: 0; }
+.tab-btn { padding: 0.5rem 1.25rem; border: none; background: none; cursor: pointer; font-size: 0.9rem; color: #666; border-bottom: 2px solid transparent; margin-bottom: -2px; font-weight: 500; }
+.tab-btn.active { color: #1a3a6e; border-bottom-color: #1a3a6e; }
+.section { display: none; }
+.section.active { display: block; }
+
+h2 { font-size: 1.15rem; font-weight: 600; color: #1a3a6e; margin: 1.5rem 0 0.75rem; }
+h3 { font-size: 1rem; font-weight: 600; color: #333; margin: 1rem 0 0.5rem; }
+p { line-height: 1.65; margin-bottom: 0.75rem; color: #333; }
+ul, ol { padding-left: 1.5rem; margin-bottom: 0.75rem; }
+li { line-height: 1.6; margin-bottom: 0.25rem; }
+.card { background: #fff; border: 1px solid #e0e0d8; border-radius: 10px; padding: 1.1rem 1.25rem; margin-bottom: 1rem; }
+.card-title { font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+.blue .card-title { color: #1a3a6e; }
+.teal .card-title { color: #0f766e; }
+.amber .card-title { color: #92400e; }
+.coral .card-title { color: #c2410c; }
+.green .card-title { color: #166534; }
+.purple .card-title { color: #6b21a8; }
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+.info-box { border-left: 4px solid #3b82f6; background: #eff6ff; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; }
+.success-box { border-left: 4px solid #4caf50; background: #f0fdf4; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; }
+.warning-box { border-left: 4px solid #f59e0b; background: #fffbeb; padding: 0.85rem 1rem; border-radius: 0 8px 8px 0; margin-bottom: 1rem; }
+.stat { background: #1a3a6e; color: #fff; border-radius: 10px; padding: 1rem 1.25rem; text-align: center; margin-bottom: 1rem; }
+.stat-num { font-size: 1.6rem; font-weight: 700; }
+.stat-label { font-size: 0.8rem; opacity: 0.85; margin-top: 0.2rem; }
+
+table { width: 100%; border-collapse: collapse; margin-bottom: 1rem; background: #fff; border-radius: 10px; overflow: hidden; border: 1px solid #e0e0d8; font-size: 0.9rem; }
+th, td { padding: 0.6rem 0.8rem; text-align: left; border-bottom: 1px solid #e0e0d8; }
+th { background: #1a3a6e; color: #fff; font-weight: 600; font-size: 0.85rem; }
+tr:last-child td { border-bottom: none; }
+tr:nth-child(even) { background: #fafaf5; }
+
+.plate { width: 280px; height: 280px; border-radius: 50%; margin: 1rem auto; position: relative; background: conic-gradient(#166534 0deg 108deg, #c2410c 108deg 198deg, #92400e 198deg 288deg, #1a3a6e 288deg 360deg); border: 6px solid #fff; box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.plate-legend { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; max-width: 360px; margin: 0 auto 1rem; font-size: 0.85rem; }
+.plate-legend > div { display: flex; align-items: center; gap: 6px; }
+.plate-legend span.dot { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+
+.score-bar { background: #e0e0d8; border-radius: 8px; height: 8px; margin-bottom: 1.5rem; overflow: hidden; }
+#scorefill { height: 100%; background: #1a3a6e; border-radius: 8px; width: 0%; transition: width 0.4s; }
+.score-text { font-size: 0.85rem; color: #555; margin-bottom: 0.5rem; }
+.q-block { background: #fff; border: 1px solid #e0e0d8; border-radius: 10px; padding: 1.1rem 1.25rem; margin-bottom: 1rem; }
+.q-text { font-weight: 500; margin-bottom: 0.75rem; font-size: 0.95rem; }
+.opt { padding: 0.6rem 0.9rem; border: 1px solid #e0e0d8; border-radius: 7px; margin-bottom: 0.4rem; cursor: pointer; font-size: 0.9rem; transition: background 0.1s; }
+.opt:hover:not(.correct):not(.wrong) { background: #f0f0eb; }
+.opt.correct { background: #d1fae5; border-color: #4caf50; color: #065f46; pointer-events: none; }
+.opt.wrong { background: #fee2e2; border-color: #ef4444; color: #991b1b; pointer-events: none; }
+.opt.disabled { pointer-events: none; color: #aaa; }
+.explanation { margin-top: 0.6rem; font-size: 0.85rem; color: #555; background: #f5f5f0; padding: 0.6rem 0.8rem; border-radius: 6px; display: none; }
+</style>
+</head>
+<body>
+<div class="container">
+  <a class="back" href="index.html">← Geri</a>
+  <h1>Sağlıklı Beslenme ve Tabak Modeli</h1>
+  <p class="subtitle">Gastronomi ve Yaşam · Konu 7</p>
+
+  <div class="tabs">
+    <button class="tab-btn active" onclick="switchTab('lesson', this)">Ders Notu</button>
+    <button class="tab-btn" onclick="switchTab('quiz', this)">Quiz (50 Soru)</button>
+  </div>
+
+  <!-- ═══ DERS NOTU ═══ -->
+  <div id="lesson" class="section active">
+
+    <h2>1. Sağlık Nedir?</h2>
+
+    <div class="info-box">
+      <strong>WHO Tanımı:</strong> Sağlık, yalnızca hastalık veya sakatlık durumunun olmayışı değil; kişinin <strong>bedenen, ruhen ve sosyal yönden tam bir iyilik halidir</strong>.
+    </div>
+
+    <h3>Sağlığı Etkileyen Faktörler</h3>
+    <div class="grid2">
+      <div class="card blue">
+        <div class="card-title">İçsel Faktörler</div>
+        <ul>
+          <li><strong>Beslenme</strong> (en güçlü değiştirilebilir faktör)</li>
+          <li>Kalıtım (genetik)</li>
+        </ul>
+      </div>
+      <div class="card teal">
+        <div class="card-title">Dışsal Faktörler</div>
+        <ul>
+          <li>İklim koşulları</li>
+          <li>Çevre koşulları</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>2. Beslenme Nedir?</h2>
+
+    <p><strong>Beslenme</strong>; ağız yoluyla alınan besinlerin <strong>gastrointestinal sistemde sindirilmesi</strong>, ardından besin öğelerinin <strong>emilerek vücut tarafından kullanılması</strong>dır.</p>
+
+    <p>İnsanın büyüme, gelişme, sağlıklı ve üretken biçimde uzun süre yaşaması için gerekli olan besin öğelerinin <strong>alınması ve vücutta kullanılması</strong> sürecidir.</p>
+
+    <h3>Beslenmeye Genel Bakış</h3>
+    <div class="card amber">
+      <p style="font-weight:600; text-align:center; font-size:0.95rem;">
+        Besin Kaynağı → Sindirim → Metabolizma → <span style="color:#166534;">Kullanım</span> / <span style="color:#1a3a6e;">Depo</span> / <span style="color:#c2410c;">Boşaltım</span>
+      </p>
+    </div>
+
+    <h2>3. Beslenme Bilimi Ne ile İlgilenir?</h2>
+
+    <div class="card blue">
+      <ul>
+        <li>Besin öğesi türü</li>
+        <li>Besinlerin miktarı, fiziksel ve kimyasal özellikleri</li>
+        <li>Besinlerin <strong>vücuttaki işlevi</strong></li>
+        <li>Besinlerin bileşimi</li>
+        <li>Üretimden tüketime kadar uygulanan işlemlerin besin kalitelerine etkileri</li>
+        <li>Değişik yaş, cinsiyet, çalışma ve özel durumda olan birey/gruplar için <strong>beslenme planı</strong></li>
+      </ul>
+    </div>
+
+    <h2>4. Diyetetik Nedir?</h2>
+
+    <div class="info-box">
+      <strong>Diyetetik:</strong> Besinlerin <strong>besin değerleriyle</strong> ilgilenen bilim dalıdır. Beslenme ve diyetetik; psikoloji, tıp, ekonomi, ziraat, mikrobiyoloji, fizyoloji, biyokimya, epidemiyoloji ve istatistik gibi pek çok disiplinle iç içe çalışır.
+    </div>
+
+    <h2>5. Dengesiz Beslenme</h2>
+
+    <p>Dengesiz beslenme; obezite, kronik hastalıklar ve metabolik sendromun temel sürücüsüdür. Yaş ilerlemesi ve genetik ile birlikte hareketsizlik ve dengesiz beslenme şişmanlığı tetikleyen ana faktörlerdir.</p>
+
+    <div class="warning-box">
+      <strong>Dengesiz beslenmenin tipik göstergeleri:</strong>
+      <ul style="margin-top:0.4rem;">
+        <li>Aşırı <strong>enerji alımı</strong></li>
+        <li>Yüksek <strong>glisemik indeks</strong> ile beslenme</li>
+        <li>Aşırı <strong>tuz alımı</strong></li>
+        <li>Hatalı <strong>yağ türü</strong> kullanımı (trans yağ, doymuş yağ baskınlığı)</li>
+      </ul>
+    </div>
+
+    <h2>6. Yeterli ve Dengeli Beslenme</h2>
+
+    <div class="success-box">
+      Vücudun büyümesi, yenilenmesi ve çalışması için gerekli olan <strong>enerji ve besin öğelerinin her birinin yeterli miktarda alınması ve vücutta uygun şekilde kullanılması</strong> durumu "Yeterli ve Dengeli Beslenme" olarak tanımlanır.
+    </div>
+
+    <h3>Yetersiz Beslenmeden En Çok Etkilenen Hassas Gruplar</h3>
+    <div class="grid3">
+      <div class="card coral">
+        <ul>
+          <li>Bebek ve çocuklar</li>
+          <li>Gençler</li>
+        </ul>
+      </div>
+      <div class="card coral">
+        <ul>
+          <li>Doğurganlık çağındaki kadınlar</li>
+          <li>Gebe ve emzikli anneler</li>
+        </ul>
+      </div>
+      <div class="card coral">
+        <ul>
+          <li>Yaşlılar</li>
+          <li>Ağır işlerde çalışan işçiler</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>7. Besin ve Besin Öğesi</h2>
+
+    <div class="grid2">
+      <div class="card blue">
+        <div class="card-title">Besin</div>
+        <p>Su, organik ve inorganik öğelerden oluşmuş; <strong>yenilebilen bitki ve hayvan dokuları</strong>. "Yiyecek maddesi" veya "gıda maddesi" de denir.</p>
+      </div>
+      <div class="card teal">
+        <div class="card-title">Besin Öğesi</div>
+        <p>Besinlerin bileşiminde bulunan ve vücutta <strong>özel görevleri olan organik/inorganik maddeler</strong>. "Besin elementi" olarak da geçer.</p>
+      </div>
+    </div>
+
+    <h3>Makro ve Mikro Ayrımı</h3>
+    <table>
+      <thead>
+        <tr><th>Sınıf</th><th>Tanım</th><th>Örnekler</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Makro besin öğesi</strong></td><td>Vücut ağırlığının <strong>%0.005'inden fazlası</strong> kadar bulunur</td><td>Protein, yağ, karbonhidrat, su, bazı mineraller (Ca, P)</td></tr>
+        <tr><td><strong>Mikro besin öğesi</strong></td><td>Vücut ağırlığının <strong>%0.005'inden azı</strong> kadar bulunur</td><td>Vitaminler, eser mineraller (Fe, Zn, I, Se)</td></tr>
+      </tbody>
+    </table>
+
+    <h2>8. Altı Besin Öğesi ve Enerji Değerleri</h2>
+
+    <div class="grid2">
+      <div class="card amber">
+        <div class="card-title">Kalori İçerenler (Makro)</div>
+        <ul>
+          <li><strong>Yağlar</strong> — 1 g = <strong>9 kalori</strong></li>
+          <li><strong>Proteinler</strong> — 1 g = <strong>4 kalori</strong></li>
+          <li><strong>Karbonhidratlar</strong> — 1 g = <strong>4 kalori</strong></li>
+        </ul>
+      </div>
+      <div class="card teal">
+        <div class="card-title">Kalori İçermeyenler</div>
+        <ul>
+          <li><strong>Vitaminler</strong></li>
+          <li><strong>Mineraller</strong></li>
+          <li><strong>Su</strong> — yaşam için temel</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <strong>Pratik hatırlatma:</strong> Yağ, gram başına en yoğun enerji kaynağıdır (9 kcal/g). Bu yüzden yağdan zengin gıdalar kaloriyi hızla yükseltir; protein ve karbonhidrat (4 kcal/g) yarısı kadar yoğundur.
+    </div>
+
+    <h2>9. Besin Grupları</h2>
+
+    <h3>Süt Grubu</h3>
+    <div class="card blue">
+      <div class="card-title">Süt · Ayran · Yoğurt · Kefir · Peynir</div>
+      <ul>
+        <li><strong>Protein</strong> kaynağıdır</li>
+        <li><strong>Kalsiyum ve fosfor</strong>dan zengindir</li>
+        <li><strong>Çok iyi B1 vitamini</strong> kaynağı</li>
+        <li>Folik asit, D vitamini ve diğer B grubu vitaminlerini içerir</li>
+      </ul>
+      <p style="margin-top:0.5rem;"><strong>Günlük öneri:</strong> 3–4 porsiyon (özellikle kalsiyum gereksinimi için)</p>
+    </div>
+
+    <h3>Et Grubu</h3>
+    <div class="card coral">
+      <div class="card-title">Kırmızı et · Tavuk · Hindi · Balık · Peynir · Yumurta</div>
+      <ul>
+        <li><strong>Kaliteli protein</strong> (tüm temel amino asitleri içerir)</li>
+        <li><strong>Demir, çinko, D vitamini</strong> zengini</li>
+        <li>B grubu vitaminleri (<strong>B1, B2, B6, B12</strong>) — B12 yalnızca hayvansal kaynaklarda</li>
+      </ul>
+      <p style="margin-top:0.5rem;"><strong>Günlük öneri:</strong> Tokluk hissi sağladığı için ana öğünlerde bulunmalı; alım miktarı bireysel gereksinime göre değişir.</p>
+    </div>
+
+    <h3>Sebze ve Meyveler</h3>
+    <div class="grid2">
+      <div class="card green">
+        <div class="card-title">Sebzeler</div>
+        <ul>
+          <li>A, E, D, K vitaminleri</li>
+          <li><strong>Lif (posa)</strong></li>
+          <li>Demir, magnezyum, kalsiyum</li>
+          <li>Kalorileri çok düşük</li>
+        </ul>
+      </div>
+      <div class="card amber">
+        <div class="card-title">Meyveler</div>
+        <ul>
+          <li><strong>Lif (posa)</strong></li>
+          <li>E ve B grubu vitaminleri</li>
+          <li><strong>C vitamini</strong> kaynağı</li>
+          <li><strong>Früktoz</strong> (meyve şekeri) → enerji içeriği yüksek</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Tahıl Grubu</h3>
+    <div class="card purple">
+      <div class="card-title">Ekmek · Çorba · Makarna · Bulgur · Pirinç · Kuru baklagiller · Patates</div>
+      <ul>
+        <li><strong>Karbonhidrat</strong>tan zengindirler (temel enerji kaynağı)</li>
+        <li><strong>B12 hariç tüm B grubu</strong> vitaminlerini içerirler</li>
+        <li>Kuru baklagiller (nohut, mercimek, kuru fasulye, soya, barbunya) bitkisel protein ve karbonhidrat içeriğiyle bu grupta sayılır</li>
+      </ul>
+      <p style="margin-top:0.5rem;"><strong>Günlük öneri:</strong> Bireye özgü değişir; <strong>rafine edilmemiş</strong> (tam buğday, tam tahıl) tercih edilmelidir. Beyaz ekmek yerine tam buğday ekmeği önerilir.</p>
+    </div>
+
+    <h2>10. Tabak Modeli</h2>
+
+    <p>Dengeli bir öğün için tabağın <strong>tahıllar, sebzeler, meyveler, süt ürünleri ve et/baklagil proteinleri</strong>nden oluşacak şekilde bölümlenmesini esas alan görsel bir kılavuzdur.</p>
+
+    <div class="plate"></div>
+    <div class="plate-legend">
+      <div><span class="dot" style="background:#166534;"></span> Sebzeler (≈ %30)</div>
+      <div><span class="dot" style="background:#c2410c;"></span> Tahıllar (≈ %25)</div>
+      <div><span class="dot" style="background:#92400e;"></span> Protein / Et (≈ %25)</div>
+      <div><span class="dot" style="background:#1a3a6e;"></span> Meyve + Süt (≈ %20)</div>
+    </div>
+
+    <div class="success-box">
+      <strong>Tabak modeli pratiği:</strong>
+      <ul style="padding-left:1.2rem; margin-top:0.4rem;">
+        <li>Tabağın <strong>yarısı</strong> sebze ve meyveden oluşmalı</li>
+        <li><strong>Çeyreği</strong> tam tahıllı bir karbonhidrattan</li>
+        <li><strong>Çeyreği</strong> kaliteli proteinden (et, balık, yumurta, baklagil)</li>
+        <li>Yanında <strong>süt/yoğurt/ayran</strong> ile süt grubu tamamlanır</li>
+        <li>Su her öğünde temel içecek olmalıdır</li>
+      </ul>
+    </div>
+
+    <h2>11. Pratik Çıkarımlar</h2>
+
+    <div class="info-box">
+      <ul style="padding-left:1.2rem;">
+        <li>Sağlık, sadece hastalık yokluğu değil; <strong>bütüncül iyi olma halidir</strong>.</li>
+        <li>Beslenme bilimi her bireye <strong>özel plan</strong> ile ilgilenir; tek tip diyet yoktur.</li>
+        <li>Enerji yoğunluğu en yüksek besin <strong>yağ</strong>dır (9 kcal/g).</li>
+        <li>Tahıllar tam, sebze-meyveler bol, et kaliteli, süt yeterli olmalı.</li>
+        <li>Tabak modeli; sayım yapmak yerine <strong>görsel oran</strong>la dengeyi kurmaya yarar.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <!-- ═══ QUIZ ═══ -->
+  <div id="quiz" class="section">
+    <p class="score-text">Puan: <span id="scorenum">0</span> / 50</p>
+    <div class="score-bar"><div id="scorefill"></div></div>
+    <div id="quiz-container"></div>
+  </div>
+</div>
+
+<script>
+function switchTab(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+const questions = [
+  {
+    q: "Dünya Sağlık Örgütü'ne (WHO) göre sağlık nedir?",
+    opts: ["A) Sadece mikrop taşımama halidir.", "B) Sadece fiziksel olarak güçlü olmaktır.", "C) Fiziki, ruhi ve sosyal açıdan tam bir iyi olma halidir.", "D) Sadece hastaneye gitmeme durumudur."],
+    ans: 2,
+    exp: "WHO sağlığı; hastalık veya sakatlığın olmayışı değil, bedenen, ruhen ve sosyal yönden tam bir iyilik hali olarak tanımlar."
+  },
+  {
+    q: "Aşağıdakilerden hangisi sağlığı etkileyen faktörlerden biri değildir?",
+    opts: ["A) Beslenme", "B) Kalıtım", "C) Çevre koşulları", "D) Hobiler"],
+    ans: 3,
+    exp: "Sağlığı etkileyen ana faktörler beslenme, kalıtım, iklim ve çevre koşullarıdır. Hobiler doğrudan bu listede yer almaz."
+  },
+  {
+    q: "Besinlerin besin değerleriyle ilgilenen bilim dalına ne ad verilir?",
+    opts: ["A) Gastronomi", "B) Diyetetik", "C) Biyoloji", "D) İstatistik"],
+    ans: 1,
+    exp: "Diyetetik; besinlerin besin değerlerini, sağlık üzerindeki etkilerini ve diyet planlamasını inceleyen bilim dalıdır."
+  },
+  {
+    q: "Beslenme tanımı için aşağıdakilerden hangisi doğrudur?",
+    opts: ["A) Sadece karnın doyurulmasıdır.", "B) Besinlerin sindirilip emilerek vücut tarafından kullanılmasıdır.", "C) En pahalı besinlerin tüketilmesidir.", "D) Sadece zayıflamak için yapılan diyettir."],
+    ans: 1,
+    exp: "Beslenme; ağız yoluyla alınan besinlerin gastrointestinal sistemde sindirilmesi ve emilen besin öğelerinin vücut tarafından kullanılması sürecidir."
+  },
+  {
+    q: "Vücutta ağırlığın %0.005'inden fazla bulunan besin öğelerine ne ad verilir?",
+    opts: ["A) Mikro besin öğesi", "B) Proteinler", "C) Makro besin öğesi", "D) Karbonhidratlar"],
+    ans: 2,
+    exp: "Makro besin öğesi; vücut ağırlığının %0.005'inden fazlasını oluşturur. Protein, yağ, karbonhidrat ve su bu sınıfta yer alır."
+  },
+  {
+    q: "Bir gram 'Yağ' vücuda kaç kalori enerji sağlar?",
+    opts: ["A) 4 kalori", "B) 7 kalori", "C) 9 kalori", "D) 12 kalori"],
+    ans: 2,
+    exp: "Yağ; gram başına 9 kalori enerji verir. Bu nedenle en yoğun enerji kaynağıdır."
+  },
+  {
+    q: "Protein ve karbonhidratların bir gramı kaçar kalori enerji verir?",
+    opts: ["A) 4 kalori", "B) 9 kalori", "C) 5 kalori", "D) Enerji vermezler"],
+    ans: 0,
+    exp: "Protein ve karbonhidratların her birinin 1 gramı 4 kalori enerji sağlar. Yağın yarısı kadar yoğundurlar."
+  },
+  {
+    q: "Aşağıdaki besin öğelerinden hangisi enerji (kalori) içermez?",
+    opts: ["A) Proteinler", "B) Yağlar", "C) Vitaminler", "D) Karbonhidratlar"],
+    ans: 2,
+    exp: "Vitaminler, mineraller ve su enerji içermez. Sadece protein, yağ ve karbonhidrat kalori sağlar."
+  },
+  {
+    q: "'Yeterli ve Dengeli Beslenme' neyi ifade eder?",
+    opts: ["A) Sadece protein ağırlıklı beslenmeyi.", "B) Her gün aynı saatte yemek yemeyi.", "C) Enerji ve besin öğelerinin her birinin yeterli miktarda alınıp kullanılması durumunu.", "D) Çok fazla meyve tüketmeyi."],
+    ans: 2,
+    exp: "Yeterli ve dengeli beslenme; vücudun ihtiyacı olan enerji ve besin öğelerinin yeterli miktarda alınması ve uygun şekilde kullanılmasıdır."
+  },
+  {
+    q: "Aşağıdakilerden hangisi 'Süt Grubu' besinleri arasında yer almaz?",
+    opts: ["A) Ayran", "B) Yoğurt", "C) Kefir", "D) Yumurta"],
+    ans: 3,
+    exp: "Süt grubu; süt, ayran, yoğurt, kefir ve peyniri kapsar. Yumurta et grubunda yer alır."
+  },
+  {
+    q: "Süt grubu besinler en çok hangi mineral açısından zengindir?",
+    opts: ["A) Demir", "B) Kalsiyum", "C) Sodyum", "D) İyot"],
+    ans: 1,
+    exp: "Süt grubu kalsiyum ve fosfor açısından çok zengindir. Bu yüzden kemik sağlığında temel besin grubudur."
+  },
+  {
+    q: "Günlük kalsiyum ihtiyacını karşılamak için süt grubundan kaç porsiyon tüketilmesi önerilir?",
+    opts: ["A) 1 porsiyon", "B) 3-4 porsiyon", "C) 7-8 porsiyon", "D) Tüketilmesi önerilmez"],
+    ans: 1,
+    exp: "Süt grubundan günlük 3-4 porsiyon tüketilmesi, özellikle kalsiyum gereksinimini karşılamak için önerilir."
+  },
+  {
+    q: "'Et Grubu' besinler hangi vitamin açısından özellikle zengindir?",
+    opts: ["A) C Vitamini", "B) B12 Vitamini", "C) K Vitamini", "D) E Vitamini"],
+    ans: 1,
+    exp: "Et grubu B12 başta olmak üzere B grubu vitaminlerinden (B1, B2, B6, B12) zengindir. B12 yalnızca hayvansal kaynaklarda bulunur."
+  },
+  {
+    q: "Kaliteli protein kaynağı olan ve et grubu içerisinde sayılan 'en temel' besinlerden biri hangisidir?",
+    opts: ["A) Elma", "B) Yumurta", "C) Makarna", "D) Patates"],
+    ans: 1,
+    exp: "Yumurta; tüm temel amino asitleri içeren ve protein kalitesi en yüksek besinlerden biridir. Et grubu içinde sayılır."
+  },
+  {
+    q: "Aşağıdakilerden hangisi 'Tahıl Grubu' içerisinde yer almaz?",
+    opts: ["A) Bulgur pilavı", "B) Çorba", "C) Balık eti", "D) Ekmek"],
+    ans: 2,
+    exp: "Tahıl grubu; ekmek, makarna, çorba, bulgur, pirinç, baklagiller ve patatesi kapsar. Balık et grubundadır."
+  },
+  {
+    q: "Tahıl grubu besinler hangi makro besin öğesi açısından zengindir?",
+    opts: ["A) Yağ", "B) Protein", "C) Karbonhidrat", "D) Vitamin"],
+    ans: 2,
+    exp: "Tahıllar karbonhidrattan zengindir ve temel enerji kaynağıdırlar."
+  },
+  {
+    q: "Tahıl grubu besinlerde bulunmayan tek B grubu vitamini hangisidir?",
+    opts: ["A) B1", "B) B2", "C) B6", "D) B12"],
+    ans: 3,
+    exp: "Tahıl grubu B12 hariç tüm B grubu vitaminlerini içerir. B12 yalnızca hayvansal kaynaklarda bulunur."
+  },
+  {
+    q: "Sağlıklı bir beslenme planında beyaz ekmek yerine ne tür ekmekler tercih edilmelidir?",
+    opts: ["A) Mısır ekmeği", "B) Rafine edilmemiş (tam buğday vb.) ekmekler", "C) Yağlı ekmekler", "D) Tatlı çörekler"],
+    ans: 1,
+    exp: "Rafine edilmemiş tam buğday ve tam tahıl ekmekler; lif, B vitaminleri ve mineralleri korur. Beyaz ekmeğe tercih edilmelidir."
+  },
+  {
+    q: "Meyvelerin sebzelerden en temel farkı nedir?",
+    opts: ["A) Daha fazla su içermeleri", "B) Fruktoz içermeleri ve enerji içeriklerinin yüksek olması", "C) Sadece kışın yetişmeleri", "D) Vitamin içermemeleri"],
+    ans: 1,
+    exp: "Meyveler früktoz (meyve şekeri) içerir; bu yüzden enerji içerikleri sebzelere göre yüksektir."
+  },
+  {
+    q: "Sebzeler hangi içerikleri sayesinde sindirim sistemine yardımcı olurlar?",
+    opts: ["A) Şeker (Fruktoz)", "B) Lif (Posa)", "C) Protein", "D) Yağ"],
+    ans: 1,
+    exp: "Sebzelerdeki lif (posa) bağırsak hareketlerini düzenler, tokluk hissi sağlar ve mikrobiyotayı destekler."
+  },
+  {
+    q: "'Dengesiz Beslenme'ye sebep olan faktörler arasında hangisi sayılmamıştır?",
+    opts: ["A) Yüksek glisemik indeksli beslenme", "B) Aşırı tuz alımı", "C) Su tüketimi", "D) Hatalı yağ türü kullanımı"],
+    ans: 2,
+    exp: "Dengesiz beslenmenin nedenleri arasında aşırı enerji alımı, yüksek glisemik indeks, aşırı tuz ve hatalı yağ kullanımı sayılır. Su tüketimi tersine sağlığa katkıdır."
+  },
+  {
+    q: "Yetersiz beslenmeden en çok etkilenen hassas grup hangisidir?",
+    opts: ["A) Sağlıklı yetişkin erkekler", "B) Bebek ve çocuklar", "C) Sporcular", "D) Ofis çalışanları"],
+    ans: 1,
+    exp: "Bebek ve çocuklar; büyüme ve gelişme dönemlerinde besin yetersizliğinden en hızlı etkilenen gruptur."
+  },
+  {
+    q: "Gebe ve emzikli annelerin beslenme durumu neden kritiktir?",
+    opts: ["A) Sadece kendi kilolarını korumak için.", "B) Yetersiz beslenmeden en çok etkilenen gruplardan biri oldukları için.", "C) Sadece meyve yemeleri gerektiği için.", "D) Beslenmenin bu dönemde etkisi olmadığı için."],
+    ans: 1,
+    exp: "Gebe ve emzikli anneler; hem kendi hem bebek/gelişen organizmanın ihtiyaçlarını karşıladığı için yetersiz beslenmeden en çok etkilenen gruplardandır."
+  },
+  {
+    q: "'Besin Öğesi' teriminin karşılığı aşağıdakilerden hangisidir?",
+    opts: ["A) Pazardan alınan her şey.", "B) Besinlerin bileşimindeki özel görevli organik/inorganik maddeler.", "C) Sadece paketli gıdalar.", "D) Yemeğin tadını veren baharatlar."],
+    ans: 1,
+    exp: "Besin öğesi; besinlerin bileşiminde bulunan ve vücutta özel görevleri olan organik ve inorganik maddelerdir. Protein, yağ, karbonhidrat, vitamin, mineral ve su bu sınıfa girer."
+  },
+  {
+    q: "'Tabak Modeli'nde tabağın ana bölümlerinden biri hangisidir?",
+    opts: ["A) Sadece tatlılar", "B) Sadece içecekler", "C) Sebzeler ve meyveler", "D) Soslar"],
+    ans: 2,
+    exp: "Tabak modeli; tahıllar, sebzeler, meyveler, süt ürünleri ve et/baklagil proteininden oluşan beş ana bölümlüdür. Sebze ve meyveler tabağın yarısını kaplar."
+  },
+  {
+    q: "Demir ve çinko minerali hangi gıda grubunda daha yoğun bulunur?",
+    opts: ["A) Tahıl grubu", "B) Süt grubu", "C) Et grubu", "D) Şeker grubu"],
+    ans: 2,
+    exp: "Et grubu; demir ve çinko açısından en zengin grupturlar. Bu mineraller bağışıklık ve enerji metabolizmasında kritik rol oynar."
+  },
+  {
+    q: "Vitaminler genel olarak hangi besin grubunda bolca bulunur?",
+    opts: ["A) Tahıllar", "B) Sebze ve Meyveler", "C) Saf yağlar", "D) Şekerli gıdalar"],
+    ans: 1,
+    exp: "Sebze ve meyveler; A, C, E, K vitaminleri ve B grubunun pek çoğu açısından temel kaynaklardır."
+  },
+  {
+    q: "Aşağıdakilerden hangisi bir 'Besin Kaynağı'nın vücuttaki yolculuğunu doğru sıralar?",
+    opts: ["A) Depo -> Boşaltım -> Sindirim", "B) Sindirim -> Metabolizma -> Kullanım (veya Depo/Boşaltım)", "C) Boşaltım -> Sindirim -> Metabolizma", "D) Kullanım -> Sindirim -> Depo"],
+    ans: 1,
+    exp: "Besin yolculuğu: besin kaynağı → sindirim → metabolizma → kullanım, depolama veya boşaltım şeklinde ilerler."
+  },
+  {
+    q: "Beslenme biliminin ilgi alanları arasında hangisi yoktur?",
+    opts: ["A) Besinlerin vücuttaki işlevi", "B) Besinlerin kimyasal özellikleri", "C) Besinlerin satış fiyatlarını belirlemek", "D) Özel gruplar için beslenme planı hazırlamak"],
+    ans: 2,
+    exp: "Beslenme bilimi; besinlerin türü, miktarı, vücuttaki işlevi, kimyasal özellikleri ve beslenme planlarıyla ilgilenir. Fiyat belirleme ekonominin konusudur."
+  },
+  {
+    q: "Kuru baklagiller (nohut, mercimek vb.) besin grupları sınıflandırmasında genellikle hangi grupta değerlendirilir?",
+    opts: ["A) Süt grubu", "B) Sebze grubu", "C) Tahıl grubu (içeriğindeki karbonhidrat ve bitkisel protein nedeniyle)", "D) Yağ grubu"],
+    ans: 2,
+    exp: "Kuru baklagiller; karbonhidrat ve bitkisel protein içerikleri nedeniyle tahıl grubu altında değerlendirilir."
+  },
+  {
+    q: "1 g yağ 9 kcal, 1 g karbonhidrat 4 kcal verirse; 10 g yağ ile 10 g karbonhidrat arasındaki enerji farkı kaç kcal'dir?",
+    opts: ["A) 30 kcal", "B) 50 kcal", "C) 90 kcal", "D) 130 kcal"],
+    ans: 1,
+    exp: "10 g yağ = 90 kcal, 10 g karbonhidrat = 40 kcal. Fark 50 kcal'dir."
+  },
+  {
+    q: "Suyun beslenmedeki rolü için aşağıdakilerden hangisi yanlıştır?",
+    opts: ["A) Vücudun temel bileşenidir", "B) Sindirim ve emilime aracılık eder", "C) Enerji (kalori) sağlar", "D) Metabolik atıkların taşınmasında rol oynar"],
+    ans: 2,
+    exp: "Su enerji (kalori) sağlamaz; ancak yaşam için temel makro besindir ve vücut işleyişinde merkezi roldedir."
+  },
+  {
+    q: "B12 vitamini doğal olarak en güvenilir şekilde hangi besin grubundan alınır?",
+    opts: ["A) Tahıl grubu", "B) Sebze grubu", "C) Et grubu (hayvansal kaynaklar)", "D) Saf bitkisel yağlar"],
+    ans: 2,
+    exp: "B12; sadece hayvansal kaynaklarda doğal olarak bulunur. Bu yüzden et grubu (et, balık, yumurta, süt) güvenilir B12 kaynağıdır."
+  },
+  {
+    q: "Glisemik indeks (GI) ne ölçer?",
+    opts: ["A) Bir besinin kan şekerini ne kadar hızlı yükselttiğini", "B) Bir besinin yağ miktarını", "C) Bir besinin tuz oranını", "D) Bir besinin vitamin sayısını"],
+    ans: 0,
+    exp: "Glisemik indeks; bir karbonhidratlı besinin kan glikozunu ne hızla ve ne kadar yükselttiğini gösteren skaladır. Düşük GI'lı besinler tercih edilir."
+  },
+  {
+    q: "Aşırı tuz tüketiminin başlıca sağlık riski nedir?",
+    opts: ["A) Saç dökülmesi", "B) Hipertansiyon (yüksek tansiyon) ve kardiyovasküler hastalık", "C) Görme bozukluğu", "D) Diş çürüğü"],
+    ans: 1,
+    exp: "Yüksek sodyum alımı; kan basıncını yükselterek hipertansiyon ve kardiyovasküler hastalık riskini artırır."
+  },
+  {
+    q: "Tabak modeline göre tabağın yarısı hangi gıdalardan oluşmalıdır?",
+    opts: ["A) Et ve süt ürünleri", "B) Sebze ve meyveler", "C) Tahıl ve şekerli yiyecekler", "D) Sadece yağlar"],
+    ans: 1,
+    exp: "Tabak modelinde tabağın yarısı sebze ve meyvelerden oluşur. Çeyreği tam tahıl, çeyreği kaliteli proteindir."
+  },
+  {
+    q: "Lif (posa) için aşağıdakilerden hangisi doğrudur?",
+    opts: ["A) Sindirilerek emilir ve enerji verir", "B) Sindirilemez; bağırsak hareketlerini düzenler ve tokluk hissi sağlar", "C) Sadece et ürünlerinde bulunur", "D) Vücutta hiçbir görev üstlenmez"],
+    ans: 1,
+    exp: "Lif; insan sindirim enzimleriyle parçalanamaz. Bağırsak hareketlerini düzenler, tokluk hissi sağlar ve mikrobiyotayı besler."
+  },
+  {
+    q: "Aşağıdaki yağ türlerinden hangisi sağlık açısından en olumsuzdur?",
+    opts: ["A) Tekli doymamış yağlar (zeytinyağı)", "B) Çoklu doymamış yağlar (omega-3)", "C) Trans yağlar", "D) Orta zincirli yağ asitleri"],
+    ans: 2,
+    exp: "Trans yağlar; LDL kolesterolü yükseltir, HDL'yi düşürür ve kardiyovasküler riski artırır. WHO endüstriyel trans yağların azaltılmasını önerir."
+  },
+  {
+    q: "Omega-3 yağ asitlerinin en iyi doğal kaynağı hangisidir?",
+    opts: ["A) Tereyağı", "B) Yağlı balıklar (somon, uskumru, sardalye)", "C) Beyaz şeker", "D) Tavuk derisi"],
+    ans: 1,
+    exp: "Yağlı balıklar EPA ve DHA tipi omega-3 yağ asitleri açısından en zengin doğal kaynaklardır."
+  },
+  {
+    q: "Demir emilimini en çok artıran vitamin hangisidir?",
+    opts: ["A) D vitamini", "B) C vitamini", "C) K vitamini", "D) B1 vitamini"],
+    ans: 1,
+    exp: "C vitamini; özellikle bitkisel kaynaklı demir (non-heme) emilimini önemli ölçüde artırır. Demirli besinle birlikte limon/biber tüketimi önerilir."
+  },
+  {
+    q: "Yağda eriyen vitaminler hangileridir?",
+    opts: ["A) A, D, E, K", "B) B kompleks ve C", "C) C ve B12", "D) Sadece D"],
+    ans: 0,
+    exp: "A, D, E ve K vitaminleri yağda erir; emilimleri için yağ alımı gerekir. B grubu ve C suda erir."
+  },
+  {
+    q: "Günlük su ihtiyacı için genel pratik öneri hangisidir?",
+    opts: ["A) 0,5 litre", "B) 2–2,5 litre (ortalama yetişkin için)", "C) 6 litreden fazla", "D) Sadece susayınca içmek yeterli"],
+    ans: 1,
+    exp: "Yetişkinler için günde ortalama 2–2,5 litre su önerilir. İhtiyaç vücut ağırlığı, aktivite ve iklimle değişir."
+  },
+  {
+    q: "Aşağıdakilerden hangisi 'boş kalori' (empty calorie) kavramına en iyi örnektir?",
+    opts: ["A) Yumurta", "B) Mercimek çorbası", "C) Şekerli gazlı içecek", "D) Tam buğday ekmeği"],
+    ans: 2,
+    exp: "Boş kalori; besin değeri çok düşük ama kalori yoğunluğu yüksek gıdadır. Şekerli gazlı içecekler tipik örnektir."
+  },
+  {
+    q: "Kahvaltıyı atlamamanın metabolik açıdan önemi nedir?",
+    opts: ["A) Kilo almayı garanti eder", "B) Gün içi enerji dengelemesi ve kan şekeri stabilitesini destekler", "C) Kalori ihtiyacını sıfırlar", "D) Sadece çocuklar için önemlidir"],
+    ans: 1,
+    exp: "Dengeli bir kahvaltı; kan şekerini stabilize eder, gün içi açlık kontrolünü kolaylaştırır ve odaklanmayı destekler."
+  },
+  {
+    q: "BKI (Beden Kitle İndeksi) hangi formülle hesaplanır?",
+    opts: ["A) Boy / Kilo", "B) Kilo (kg) / Boy² (m²)", "C) Kilo × Boy", "D) Yaş / Kilo"],
+    ans: 1,
+    exp: "BKI = Kilo(kg) / Boy²(m²). 18,5–24,9 normal, 25–29,9 fazla kilolu, ≥30 obez kabul edilir."
+  },
+  {
+    q: "Aşağıdakilerden hangisi kompleks karbonhidrat kaynağıdır?",
+    opts: ["A) Beyaz şeker", "B) Tam tahıllı ekmek", "C) Şekerli kola", "D) Bal"],
+    ans: 1,
+    exp: "Tam tahıllı ekmek kompleks karbonhidrat ve lif içerir; kan şekerini yavaş yükseltir. Bal ve beyaz şeker basit karbonhidrattır."
+  },
+  {
+    q: "Kemik sağlığında D vitamininin rolü nedir?",
+    opts: ["A) Demir emilimini engeller", "B) Kalsiyumun bağırsaktan emilimini ve kemiğe yerleşmesini sağlar", "C) Protein üretir", "D) Bağırsak florasını öldürür"],
+    ans: 1,
+    exp: "D vitamini; kalsiyumun bağırsaktan emilimini ve kemik mineralizasyonunu sağlar. Eksikliği osteomalazi ve raşitizm ile ilişkilidir."
+  },
+  {
+    q: "Sebze ve meyveleri pişirme açısından en doğru yaklaşım hangisidir?",
+    opts: ["A) Uzun süre ve yüksek ısıda haşlamak", "B) Kısa süre, az suda buharda veya çiğ tüketmek", "C) Sadece kızartmak", "D) Hiç pişirmemek tek doğru yöntemdir"],
+    ans: 1,
+    exp: "Uzun süreli haşlama; C vitamini ve folat gibi suda eriyen vitaminleri büyük oranda yok eder. Buharda az süreli pişirme veya çiğ tüketim besin kaybını minimize eder."
+  },
+  {
+    q: "Et grubunda 'kaliteli protein' ifadesi en doğru ne anlama gelir?",
+    opts: ["A) Pahalı et anlamına gelir", "B) Tüm temel (esansiyel) amino asitleri yeterli oranda içeren protein", "C) Sadece kırmızı etten gelen protein", "D) Pişirildiğinde sertleşen protein"],
+    ans: 1,
+    exp: "Kaliteli protein; insanın sentezleyemediği tüm temel amino asitleri yeterli ve dengeli oranda içeren proteindir. Yumurta, et, balık, süt tipik örnekleridir."
+  },
+  {
+    q: "Aşağıdakilerden hangisi dengesiz beslenmenin kronik etkilerinden değildir?",
+    opts: ["A) Obezite", "B) Tip 2 diyabet riski", "C) Kardiyovasküler hastalık riski", "D) Görme keskinliğinin anında artması"],
+    ans: 3,
+    exp: "Dengesiz beslenme uzun vadede obezite, tip 2 diyabet, hipertansiyon ve kardiyovasküler hastalık riskini artırır. Görme keskinliğinin anında artması böyle bir etki değildir."
+  }
+];
+
+let answered = Array(questions.length).fill(false);
+let score = 0;
+
+function answer(qi, oi) {
+  if (answered[qi]) return;
+  answered[qi] = true;
+  const block = document.querySelectorAll('.q-block')[qi];
+  const opts = block.querySelectorAll('.opt');
+  opts.forEach((o, i) => {
+    if (i === questions[qi].ans) o.classList.add('correct');
+    else o.classList.add(i === oi ? 'wrong' : 'disabled');
+  });
+  block.querySelector('.explanation').style.display = 'block';
+  if (oi === questions[qi].ans) score++;
+  document.getElementById('scorenum').textContent = score;
+  document.getElementById('scorefill').style.width = (answered.filter(Boolean).length / questions.length * 100) + '%';
+}
+
+function buildQuiz() {
+  const c = document.getElementById('quiz-container');
+  questions.forEach((q, qi) => {
+    c.innerHTML += `<div class="q-block">
+      <div class="q-text">${qi+1}. ${q.q}</div>
+      ${q.opts.map((o,oi) => `<div class="opt" onclick="answer(${qi},${oi})">${o}</div>`).join('')}
+      <div class="explanation">💡 ${q.exp}</div>
+    </div>`;
+  });
+}
+buildQuiz();
+</script>
+</body>
+</html>
